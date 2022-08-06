@@ -220,7 +220,7 @@
                                 {{ $performance->date_return }}
                             </td>
                             <td class="py-4 px-6 whitespace-nowrap">
-                                {{ $performance->status == 1 ? 'CLOSED' : 'OPEN' }}
+                                {{ $performance->status == 1 ? ($performance->breach ? 'Breach' : 'CLosed') : 'Open' }}
                             </td>
                         </tr>
                     @endforeach

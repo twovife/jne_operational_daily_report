@@ -47,9 +47,10 @@ Route::prefix('opr')->middleware('auth')->name('opr.')->group(function () {
             Route::get('/create', [OprUnDeliveryController::class, 'create'])->middleware(['can:opr undel create'])->name('create'); // can 'opr undel create'
             Route::post('/', [OprUnDeliveryController::class, 'store'])->middleware(['can:opr undel create'])->name('store'); // can 'opr undel create'
             Route::get('/{oprUnDelivery}/edit', [OprUnDeliveryController::class, 'edit'])->middleware(['can:opr undel create'])->name('edit'); //'can 'opr undel create'
-            Route::put('/{oprUnDelivery}', [OprUnDeliveryController::class, 'update'])->middleware(['can:opr undel create'])->name('update'); //'can 'opr undel update'
+            Route::put('/{oprUnDelivery}', [OprUnDeliveryController::class, 'update'])->middleware(['can:opr undel create'])->name('update'); //'can 'opr undel create'
             Route::put('/{oprUnDelivery}/action', [OprUnDeliveryController::class, 'action'])->middleware(['can:opr undel create'])->name('action'); //'can 'opr undel create'
-            Route::delete('/{oprUnDelivery}', [OprUnDeliveryController::class, 'delete'])->middleware(['can:opr undel delete'])->name('delete'); //'can 'opr undel delete'
+            Route::delete('/{oprUnDelivery}', [OprUnDeliveryController::class, 'destroy'])->middleware(['can:opr undel delete'])->name('destroy'); //'can 'opr undel delete'
+            Route::delete('/{OprUnDeliveriesAction}/action', [OprUnDeliveryController::class, 'actdestroy'])->middleware(['can:opr undel create'])->name('actdestroy'); //'can 'opr undel delete'
 
         });
 
@@ -59,7 +60,7 @@ Route::prefix('opr')->middleware('auth')->name('opr.')->group(function () {
             // Route::post('/{breach}', [BreachController::class, 'store'])->name('store'); // lek create ndak ya store juga ndak lah boi
             Route::get('/{breach}/edit', [BreachController::class, 'edit'])->name('edit');
             Route::put('/{breach}', [BreachController::class, 'update'])->name('update');
-            Route::delete('/{breach}', [BreachController::class, 'delete'])->name('delete');
+            Route::delete('/{breach}', [BreachController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('customer')->name('customer.')->group(function () {
@@ -67,13 +68,14 @@ Route::prefix('opr')->middleware('auth')->name('opr.')->group(function () {
         });
 
 
+        // kurang download
         Route::prefix('unstatus')->name('unstatus.')->group(function () {
             Route::get('/', [OprUpdatePodController::class, 'index'])->name('index');
             Route::get('/create', [OprUpdatePodController::class, 'create'])->name('create');
             Route::post('/', [OprUpdatePodController::class, 'store'])->name('store');
             Route::get('/{oprUpdatePod}/edit', [OprUpdatePodController::class, 'edit'])->name('edit');
             Route::put('/{oprUpdatePod}', [OprUpdatePodController::class, 'update'])->name('update');
-            Route::delete('/{oprUpdatePod}', [OprUpdatePodController::class, 'delete'])->name('delete');
+            Route::delete('/{oprUpdatePod}', [OprUpdatePodController::class, 'destroy'])->name('destroy');
             Route::get('/{oprUpdatePod}/download', [OprUpdatePodController::class, 'download'])->name('download');
         });
 
@@ -83,7 +85,7 @@ Route::prefix('opr')->middleware('auth')->name('opr.')->group(function () {
             Route::post('/', [OprPodDetailController::class, 'store'])->name('store');
             Route::get('/{oprPodDetail}/edit', [OprPodDetailController::class, 'edit'])->name('edit');
             Route::put('/{oprPodDetail}', [OprPodDetailController::class, 'update'])->name('update');
-            Route::delete('/{oprPodDetail}', [OprPodDetailController::class, 'delete'])->name('delete');
+            Route::delete('/{oprPodDetail}', [OprPodDetailController::class, 'destroy'])->name('destroy');
             Route::get('/{oprPodDetail}/download', [OprPodDetailController::class, 'download'])->name('download');
         });
     });

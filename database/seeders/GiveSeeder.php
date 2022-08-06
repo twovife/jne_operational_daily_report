@@ -28,7 +28,6 @@ class GiveSeeder extends Seeder
             // data undel permission
             'opr undel show',
             'opr undel create',
-            'opr undel update',
             'opr undel download',
 
             // data customer permission

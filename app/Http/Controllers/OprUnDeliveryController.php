@@ -8,9 +8,11 @@ use App\Http\Requests\UpdateOprUnDeliveryRequest;
 use App\Models\Employee;
 use App\Models\Hub;
 use App\Models\OprCustomerAccount;
+use App\Models\OprUnDeliveriesAction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class OprUnDeliveryController extends Controller
@@ -154,7 +156,20 @@ class OprUnDeliveryController extends Controller
      */
     public function destroy(OprUnDelivery $oprUnDelivery)
     {
-        //
+        $data = OprUnDelivery::with('breach')->find($oprUnDelivery->id);
+        if ($data->img_name) {
+            Storage::delete($data->img_name);
+        }
+        $oprUnDelivery->breach()->delete();
+        $oprUnDelivery->actions()->delete();
+        $oprUnDelivery->delete();
+        return redirect()->route('opr.daily-report.undel.index')->with('green', 'Data Berhasil dihapus');
+    }
+
+    public function actDestroy(OprUnDeliveriesAction $OprUnDeliveriesAction)
+    {
+        $OprUnDeliveriesAction->delete();
+        return redirect()->route('opr.daily-report.undel.edit', $OprUnDeliveriesAction->opr_un_delivery_id)->with('green', 'Data berhasil ditambahkan');
     }
 
     public function action(Request $request, OprUnDelivery $oprUnDelivery)

@@ -6,6 +6,7 @@ use App\Models\OprPodDetail;
 use App\Http\Requests\StoreOprPodDetailRequest;
 use App\Http\Requests\UpdateOprPodDetailRequest;
 use App\Models\Hub;
+use App\Models\OprUpdatePod;
 use Illuminate\Support\Facades\Auth;
 
 class OprPodDetailController extends Controller
@@ -62,7 +63,12 @@ class OprPodDetailController extends Controller
      */
     public function store(StoreOprPodDetailRequest $request)
     {
-        //
+        // return $request->all();
+        $parent = OprUpdatePod::find($request->opr_update_pod_id);
+        OprPodDetail::create($request->all());
+        $parent->open_pod = $parent->open_pod + 1;
+        $parent->save();
+        return redirect()->route('opr.daily-report.unstatus.edit', $request->opr_update_pod_id)->with('green', 'data berhasil di tambahkan');
     }
 
     /**
@@ -84,7 +90,8 @@ class OprPodDetailController extends Controller
      */
     public function edit(OprPodDetail $oprPodDetail)
     {
-        return response()->json(['data' => $oprPodDetail]);
+        $data = OprPodDetail::with('employee')->find($oprPodDetail->id);
+        return response()->json(['data' => $data]);
     }
 
     /**
@@ -96,7 +103,9 @@ class OprPodDetailController extends Controller
      */
     public function update(UpdateOprPodDetailRequest $request, OprPodDetail $oprPodDetail)
     {
-        //
+        $oprPodDetail->update($request->all());
+        return redirect()->route('opr.daily-report.unstatus.edit', $oprPodDetail->opr_update_pod_id)->with('green', 'data berhasil di ubah');
+        return $request->all();
     }
 
     /**
@@ -107,6 +116,10 @@ class OprPodDetailController extends Controller
      */
     public function destroy(OprPodDetail $oprPodDetail)
     {
-        //
+        $oprPodDetail->delete();
+        $updatePod = OprUpdatePod::find($oprPodDetail->opr_update_pod_id);
+        $updatePod->open_pod = $updatePod->open_pod - 1;
+        $updatePod->save();
+        return redirect()->route('opr.daily-report.unstatus.edit', $oprPodDetail->opr_update_pod_id)->with('green', 'data berhasil di kurangi');
     }
 }

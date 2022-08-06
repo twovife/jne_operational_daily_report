@@ -7,6 +7,7 @@ use App\Http\Requests\StoreOprUpdatePodRequest;
 use App\Http\Requests\UpdateOprUpdatePodRequest;
 use App\Models\Employee;
 use App\Models\Hub;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class OprUpdatePodController extends Controller
@@ -113,10 +114,16 @@ class OprUpdatePodController extends Controller
      */
     public function edit(OprUpdatePod $oprUpdatePod)
     {
+        if (Auth::user()->roles->where('name', 'opr pod')->first()) {
+            $employee = Employee::where('hub', Auth::user()->employee->hub);
+        } else {
+            $employee = Employee::where('hub', '!=', 'KEDIRI');
+        }
         $data = OprUpdatePod::with('oprPodDetail', 'oprPodDetail.employee')->find($oprUpdatePod->id);
         return view('operasional.unstatus.edit', [
             'hubs' => Hub::all(),
-            'data' => $data
+            'data' => $data,
+            'employees' => $employee->orderBy('hub')->orderBy('nama')->get(),
         ]);
     }
 
@@ -129,7 +136,8 @@ class OprUpdatePodController extends Controller
      */
     public function update(UpdateOprUpdatePodRequest $request, OprUpdatePod $oprUpdatePod)
     {
-        //
+        $oprUpdatePod->update($request->all());
+        return redirect()->route('opr.daily-report.unstatus.edit', $oprUpdatePod->id);
     }
 
     /**
@@ -140,6 +148,8 @@ class OprUpdatePodController extends Controller
      */
     public function destroy(OprUpdatePod $oprUpdatePod)
     {
-        //
+        $oprUpdatePod->oprPodDetail()->delete();
+        $oprUpdatePod->delete();
+        return redirect()->route('opr.daily-report.unstatus.index')->with('green', 'Your data has been deleted');
     }
 }

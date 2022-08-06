@@ -91,6 +91,13 @@
                         value="{{ date('Y-m-d') }}" required="">
                 </div>
                 <div>
+                    <label for="origin"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 required">Origin</label>
+                    <input type="text" id="origin" name="origin"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Origin Code" required="">
+                </div>
+                <div>
                     <label for="consignee"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 required">Consignee</label>
                     <input type="text" id="consignee" name="consignee"
