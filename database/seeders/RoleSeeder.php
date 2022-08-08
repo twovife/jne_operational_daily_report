@@ -15,30 +15,6 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-
-        // permision
-        Permission::create([
-            'name' => 'opr daily show'
-        ]);
-        Permission::create([
-            'name' => 'opr daily create'
-        ]);
-        Permission::create([
-            'name' => 'opr daily edit'
-        ]);
-        Permission::create([
-            'name' => 'opr daily delete'
-        ]);
-        Permission::create([
-            'name' => 'opr daily download'
-        ]);
-        Permission::create([
-            'name' => 'opr daily monitoring'
-        ]);
-
-
-
-
         // role
         Role::create([
             'name' => 'super admin',

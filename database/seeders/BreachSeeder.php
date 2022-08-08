@@ -14,17 +14,6 @@ class BreachSeeder extends Seeder
      */
     public function run()
     {
-        Permission::create([
-            'name' => 'opr breach show'
-        ]);
-        Permission::create([
-            'name' => 'opr breach create' // this permission includes create, update status and add last action
-        ]);
-        Permission::create([
-            'name' => 'opr breach delete'
-        ]);
-        Permission::create([
-            'name' => 'opr breach update' // this permission just for who can update main data
-        ]);
+        //
     }
 }

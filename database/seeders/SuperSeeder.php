@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class DataKaryawanSeeder extends Seeder
+class SuperSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,7 +15,6 @@ class DataKaryawanSeeder extends Seeder
     public function run()
     {
         User::factory()->create();
-
         User::first()->assignRole('super admin');
     }
 }

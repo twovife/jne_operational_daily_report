@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 
-class UpdatePodSeeder extends Seeder
+class OprDailyPerformanceSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,16 +15,22 @@ class UpdatePodSeeder extends Seeder
     public function run()
     {
         Permission::create([
-            'name' => 'opr unstatuspod geberate'
+            'name' => 'opr daily show'
         ]);
         Permission::create([
-            'name' => 'opr unstatuspod edit'
+            'name' => 'opr daily create'
         ]);
         Permission::create([
-            'name' => 'opr unstatuspod delete'
+            'name' => 'opr daily edit'
         ]);
         Permission::create([
-            'name' => 'opr unstatuspod download'
+            'name' => 'opr daily delete'
+        ]);
+        Permission::create([
+            'name' => 'opr daily download'
+        ]);
+        Permission::create([
+            'name' => 'opr daily monitoring'
         ]);
     }
 }

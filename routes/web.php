@@ -34,9 +34,9 @@ Route::prefix('opr')->middleware('auth')->name('opr.')->group(function () {
             Route::get('/', [OprDailyPerformanceController::class, 'index'])->middleware(['can:opr daily show'])->name('index'); //opr daily show
             Route::get('/create', [OprDailyPerformanceController::class, 'create'])->middleware(['can:opr daily show'])->name('create'); //opr daily show
             Route::post('/', [OprDailyPerformanceController::class, 'store'])->middleware(['can:opr daily create'])->name('store'); //opr daily create
+            Route::get('/{oprDailyPerformance}/edit', [OprDailyPerformanceController::class, 'edit'])->middleware(['can:opr daily show'])->name('edit'); //detail data
             Route::put('/{oprDailyPerformance}', [OprDailyPerformanceController::class, 'update'])->middleware(['can:opr daily edit'])->name('update'); // update edit
             Route::delete('/{oprDailyPerformance}', [OprDailyPerformanceController::class, 'destroy'])->middleware(['can:opr daily delete'])->name('destroy'); //delete data
-            Route::get('/{oprDailyPerformance}/edit', [OprDailyPerformanceController::class, 'edit'])->middleware(['can:opr daily show'])->name('edit'); //show data
             Route::get('/export', [OprDailyPerformanceController::class, 'export'])->middleware(['can:opr daily download'])->name('export');
             Route::get('/exportsum', [OprDailyPerformanceController::class, 'exportsum'])->middleware(['can:opr daily download'])->name('exportsum');
             Route::get('/summary', [OprDailyPerformanceController::class, 'summary'])->middleware(['can:opr daily monitoring'])->name('summary');

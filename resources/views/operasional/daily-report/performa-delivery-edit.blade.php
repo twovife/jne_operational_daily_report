@@ -77,12 +77,14 @@
                         required="">
                 </div>
             </div>
-            <div class="flex justify-between items-center">
-                <button type="submit"
-                    class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Update</button>
-                <button type="button" data-modal-toggle="popup-modal"
-                    class="flex items-center text-white bg-rose-700 hover:bg-rose-800 focus:ring focus:outline-none focus:ring-rose-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center dark:bg-rose-600 dark:hover:bg-rose-700 dark:focus:ring-rose-800">delete</button>
-            </div>
+            @can('opr daily delete')
+                <div class="flex justify-between items-center">
+                    <button type="submit"
+                        class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Update</button>
+                    <button type="button" data-modal-toggle="popup-modal"
+                        class="flex items-center text-white bg-rose-700 hover:bg-rose-800 focus:ring focus:outline-none focus:ring-rose-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center dark:bg-rose-600 dark:hover:bg-rose-700 dark:focus:ring-rose-800">delete</button>
+                </div>
+            @endcan
         </div>
     </form>
 
@@ -158,8 +160,10 @@
                         <button type="submit"
                             class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Update</button>
                     @else
-                        <button type="submit" {{ $data->date_0 ? 'disabled' : '' }}
-                            class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Update</button>
+                        @if (Auth::user()->roles->where('name', 'opr pod')->first())
+                            <button type="submit" {{ $data->date_0 ? 'disabled' : '' }}
+                                class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Add</button>
+                        @endif
                     @endcan
 
                 </div>
@@ -239,8 +243,10 @@
                         <button type="submit"
                             class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Update</button>
                     @else
-                        <button type="submit" {{ $data->date_1 ? 'disabled' : '' }}
-                            class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Update</button>
+                        @if (Auth::user()->roles->where('name', 'opr pod')->first())
+                            <button type="submit" {{ $data->date_1 ? 'disabled' : '' }}
+                                class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Add</button>
+                        @endif
                     @endcan
 
                 </div>
@@ -320,8 +326,10 @@
                         <button type="submit"
                             class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Update</button>
                     @else
-                        <button type="submit" {{ $data->date_2 ? 'disabled' : '' }}
-                            class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Update</button>
+                        @if (Auth::user()->roles->where('name', 'opr pod')->first())
+                            <button type="submit" {{ $data->date_2 ? 'disabled' : '' }}
+                                class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Add</button>
+                        @endif
                     @endcan
 
                 </div>
@@ -401,8 +409,10 @@
                         <button type="submit"
                             class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Update</button>
                     @else
-                        <button type="submit" {{ $data->date_3 ? 'disabled' : '' }}
-                            class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Update</button>
+                        @if (Auth::user()->roles->where('name', 'opr pod')->first())
+                            <button type="submit" {{ $data->date_3 ? 'disabled' : '' }}
+                                class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Add</button>
+                        @endif
                     @endcan
 
                 </div>
@@ -482,8 +492,10 @@
                         <button type="submit"
                             class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Update</button>
                     @else
-                        <button type="submit" {{ $data->date_4 ? 'disabled' : '' }}
-                            class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Update</button>
+                        @if (Auth::user()->roles->where('name', 'opr pod')->first())
+                            <button type="submit" {{ $data->date_4 ? 'disabled' : '' }}
+                                class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Add</button>
+                        @endif
                     @endcan
 
                 </div>
@@ -563,8 +575,10 @@
                         <button type="submit"
                             class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Update</button>
                     @else
-                        <button type="submit" {{ $data->date_5 ? 'disabled' : '' }}
-                            class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Update</button>
+                        @if (Auth::user()->roles->where('name', 'opr pod')->first())
+                            <button type="submit" {{ $data->date_5 ? 'disabled' : '' }}
+                                class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Add</button>
+                        @endif
                     @endcan
 
                 </div>
@@ -644,8 +658,10 @@
                         <button type="submit"
                             class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Update</button>
                     @else
-                        <button type="submit" {{ $data->date_6 ? 'disabled' : '' }}
-                            class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Update</button>
+                        @if (Auth::user()->roles->where('name', 'opr pod')->first())
+                            <button type="submit" {{ $data->date_6 ? 'disabled' : '' }}
+                                class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Add</button>
+                        @endif
                     @endcan
 
                 </div>
@@ -725,8 +741,10 @@
                         <button type="submit"
                             class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Update</button>
                     @else
-                        <button type="submit" {{ $data->date_7 ? 'disabled' : '' }}
-                            class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Update</button>
+                        @if (Auth::user()->roles->where('name', 'opr pod')->first())
+                            <button type="submit" {{ $data->date_7 ? 'disabled' : '' }}
+                                class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Add</button>
+                        @endif
                     @endcan
 
                 </div>

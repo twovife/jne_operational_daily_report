@@ -103,8 +103,7 @@
                     <label for="total_0"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 required">Total
                         Cnote</label>
-                    <input data-name="sumit" value="{{ old('total_0') }}" type="number" id="total_0"
-                        name="total_0"
+                    <input data-name="sumit" value="{{ old('total_0') }}" type="number" id="total_0" name="total_0"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
                         required="">
                 </div>
@@ -158,8 +157,10 @@
                         required="">
                 </div>
             </div>
-            <button type="submit"
-                class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Submit</button>
+            @can('opr daily create')
+                <button type="submit"
+                    class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Submit</button>
+            @endcan
         </div>
     </form>
 
