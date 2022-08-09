@@ -1,14 +1,40 @@
+<div>
+    <span class="text-gray-800 font-semibold text-sm dark:text-white">Operasional</span>
+</div>
+<x-sidebar-navigation-standart :href="route('opr.daily-report.dailyperformance.summary')" :active="request()->routeIs('opr.daily-report.dailyperformance.summary')">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+        stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round"
+            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+    </svg>
+    <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item="">Monitoring Daily Report</span>
+</x-sidebar-navigation-standart>
+
+<hr>
+
+<div>
+    <span class="text-gray-800 font-semibold text-sm dark:text-white">Admin POD</span>
+</div>
+<x-sidebar-navigation-standart :href="route('opr.daily-report.dailyperformance.index')" :active="request()->routeIs('opr.daily-report.dailyperformance.*')">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+        stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round"
+            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+    </svg>
+    <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item="">Monitoring Daily Report</span>
+</x-sidebar-navigation-standart>
+
+
 <li>
-    <button aria-expanded="{{ request()->segment(2) == 'daily-report' ? 'true' : 'false' }}" type="button"
-        class="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-        aria-controls="daily-report" data-collapse-toggle="daily-report">
-        <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
-            fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd"
-                d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
-                clip-rule="evenodd"></path>
+    <button aria-expanded="{{ request()->routeIs('opr.daily-report.undel.*') ? 'true' : 'false' }}" type="button"
+        class="flex items-center p-2 w-full text-base font-semibold text-white rounded-lg transition duration-75 group hover:bg-gray-100 hover:text-gray-900 dark:text-white dark:hover:bg-gray-700"
+        aria-controls="undel" data-collapse-toggle="undel">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
         </svg>
-        <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item="">Daily Report</span>
+        <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item="">Undel Report</span>
         <svg sidebar-toggle-item="" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd"
@@ -16,12 +42,8 @@
                 clip-rule="evenodd"></path>
         </svg>
     </button>
-    <ul id="daily-report" class="py-2 space-y-2 {{ request()->segment(2) != 'daily-report' ? 'hidden' : '' }}">
-        <li>
-            <a href="{{ route('opr.daily-report.dailyperformance.index') }}"
-                class="{{ request()->is('opr/daily-report/performa-delivery') ? 'bg-gray-200' : '' }} flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Performa
-                Delivery</a>
-        </li>
+
+    <ul id="undel" class="py-2 space-y-2 {{ request()->routeIs('opr.daily-report.undel.*') ? '' : 'hidden' }}">
         <li>
             <a href="{{ route('opr.daily-report.undel.index') }}"
                 class="{{ request()->is('opr/daily-report/undel') ? 'bg-gray-200' : '' }} flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Data

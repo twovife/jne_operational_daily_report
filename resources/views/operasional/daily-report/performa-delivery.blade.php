@@ -11,8 +11,7 @@
             <span class="font-medium">Perhaian !!! </span> {{ Session::get('yellow') }}
         </div>
     @endif
-    <div class="rounded bg-white px-4 py-3 w-full mb-3">
-
+    <div class="rounded bg-white p-4 w-full">
         <div class="flex justify-between items-center mb-3">
             <h2 class="text-xl text-gray-900">
                 Filters
@@ -59,7 +58,7 @@
             </div>
         </form>
     </div>
-    <div class="rounded bg-white px-4 py-3 w-full">
+    <div class="rounded bg-white p-4 w-full">
         <div class="flex justify-between items-center mb-3">
             <h2 class="text-xl text-gray-900">
                 Performa Delivery
