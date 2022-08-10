@@ -16,6 +16,7 @@ class OprUpdatePod extends Model
         'open_pod',
     ];
 
+
     public function oprPodDetail()
     {
         return $this->hasMany(OprPodDetail::class, 'opr_update_pod_id', 'id');

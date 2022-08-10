@@ -21,7 +21,7 @@ class CreateOprPodDetailsTable extends Migration
             $table->string('user_kurir', 255)->nullable();
             $table->string('remark', 255)->nullable();
             $table->string('remark_status', 1000)->nullable();
-            $table->string('folluw_up', 1000)->nullable();
+            $table->string('follow_up', 1000)->nullable();
             $table->date('closed_date')->nullable();
             $table->timestamps();
         });

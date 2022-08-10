@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\OprPodDetail;
 use App\Http\Requests\StoreOprPodDetailRequest;
 use App\Http\Requests\UpdateOprPodDetailRequest;
+use App\Models\Employee;
 use App\Models\Hub;
 use App\Models\OprUpdatePod;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,7 @@ class OprPodDetailController extends Controller
     public function index()
     {
         $query = OprPodDetail::with('OprUpdatePod', 'employee');
+        // return $query->get();
 
         if (request('from') || request('thru')) {
             $query->whereHas('OprUpdatePod', function ($que) {
@@ -27,21 +29,26 @@ class OprPodDetailController extends Controller
         };
 
         if (request('hub')) {
-            $query->whereHas('undelivery', function ($que) {
+            $query->whereHas('OprUpdatePod', function ($que) {
                 $que->where('hub',  request('hub'));
             });
         }
 
 
         if (Auth::user()->roles->where('name', 'opr pod')->first()) {
-            $query->whereHas('undelivery', function ($que) {
+            $query->whereHas('OprUpdatePod', function ($que) {
                 $que->where('hub',  Auth::user()->employee->hub);
             });
+            $employee = Employee::where('hub', Auth::user()->employee->hub);
+        } else {
+            $employee = Employee::where('hub', '!=', 'KEDIRI');
         }
+
 
         return view('operasional.unstatus-detail.index', [
             'datas' => $query->paginate(20),
-            'hubs' => Hub::all()
+            'hubs' => Hub::all(),
+            'employees' => $employee->orderBy('hub')->orderBy('nama')->get(),
         ]);
     }
 

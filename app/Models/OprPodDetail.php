@@ -16,7 +16,7 @@ class OprPodDetail extends Model
         'user_kurir',
         'remark',
         'remark_status',
-        'folluw_up',
+        'follow_up',
         'closed_date',
     ];
 

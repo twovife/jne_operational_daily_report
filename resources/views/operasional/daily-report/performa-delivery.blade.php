@@ -11,9 +11,9 @@
             <span class="font-medium">Perhaian !!! </span> {{ Session::get('yellow') }}
         </div>
     @endif
-    <div class="rounded bg-white p-4 w-full">
+    <div class="rounded bg-white dark:bg-gray-800 dark:text-white p-4 w-full">
         <div class="flex justify-between items-center mb-3">
-            <h2 class="text-xl text-gray-900">
+            <h2 class="text-xl text-gray-900 dark:text-white">
                 Filters
             </h2>
         </div>
@@ -52,36 +52,42 @@
                     </div>
                 @endif
                 <div class="flex items-end space-x-3">
-                    <button type="submit"
-                        class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Search</button>
+                    <x-btn-action type="submit">Search</x-btn-action>
                 </div>
             </div>
         </form>
     </div>
-    <div class="rounded bg-white p-4 w-full">
+    <div class="rounded bg-white dark:bg-gray-800 dark:text-white p-4 w-full">
         <div class="flex justify-between items-center mb-3">
-            <h2 class="text-xl text-gray-900">
+            <h2 class="text-xl text-gray-900 dark:text-white">
                 Performa Delivery
             </h2>
             <div class="flex justify-start space-x-2">
-                <a role="button" href="{{ route('opr.daily-report.dailyperformance.create') }}"
-                    class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
-                    Create
-                </a>
+                <x-btn-link :href="route('opr.daily-report.dailyperformance.create')">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                    <span>Craete</span>
+                </x-btn-link>
                 @can('opr daily monitoring')
-                    <a role="button" href="{{ route('opr.daily-report.dailyperformance.summary') }}"
-                        class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
-                        Summary
-                    </a>
+                    <x-btn-link :href="route('opr.daily-report.dailyperformance.summary')">
+                        <span>Summary</span>
+                    </x-btn-link>
                 @endcan
-                <form action="{{ route('opr.daily-report.dailyperformance.export') }}" method="GET">
+                <x-btn-action onclick="downloadIt()" type="button" :btntype="'success'">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                    </svg>
+                    <span>Export</span>
+                </x-btn-action>
+                <form id="exportReport" action="{{ route('opr.daily-report.dailyperformance.export') }}" method="GET">
                     <input type="hidden" name="from" value="{{ request('from') }}">
                     <input type="hidden" name="thru" value="{{ request('thru') }}">
                     <input type="hidden" name="hub" value="{{ request('hub') }}">
-                    <button type="submit"
-                        class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:focus:ring-yellow-900">
-                        Export</button>
-
                 </form>
             </div>
         </div>
@@ -105,25 +111,25 @@
                         <th rowspan="2" scope="col" class="px-6 py-3 text-center">
                             Total Nominal COD
                         </th>
-                        <th colspan="11" scope="col" class="px-6 py-3 text-center bg-gray-100">
+                        <th colspan="11" scope="col" class="px-6 py-3 text-center bg-gray-100 dark:bg-gray-600">
                             H 0
                         </th>
                         <th colspan="11" scope="col" class="px-6 py-3 text-center">
                             H+1
                         </th>
-                        <th colspan="11" scope="col" class="px-6 py-3 text-center bg-gray-100">
+                        <th colspan="11" scope="col" class="px-6 py-3 text-center bg-gray-100 dark:bg-gray-600">
                             H+2
                         </th>
                         <th colspan="11" scope="col" class="px-6 py-3 text-center">
                             H+3
                         </th>
-                        <th colspan="11" scope="col" class="px-6 py-3 text-center bg-gray-100">
+                        <th colspan="11" scope="col" class="px-6 py-3 text-center bg-gray-100 dark:bg-gray-600">
                             H+4
                         </th>
                         <th colspan="11" scope="col" class="px-6 py-3 text-center">
                             H+5
                         </th>
-                        <th colspan="11" scope="col" class="px-6 py-3 text-center bg-gray-100">
+                        <th colspan="11" scope="col" class="px-6 py-3 text-center bg-gray-100 dark:bg-gray-600">
                             H+6
                         </th>
                         <th colspan="11" scope="col" class="px-6 py-3 text-center">
@@ -168,37 +174,37 @@
                         </th>
 
                         {{-- h1 --}}
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             TTL Cnote
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Un Runsheet
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Delivered
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             CR
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Undel
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Un Status
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Return
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Sukses Del
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Unrunsheet
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Return
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Failed Delivery
                         </th>
 
@@ -237,37 +243,37 @@
                             %Failed Delivery
                         </th>
                         {{-- h3 --}}
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             TTL Cnote
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Un Runsheet
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Delivered
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             CR
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Undel
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Un Status
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Return
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Sukses Del
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Unrunsheet
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Return
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Failed Delivery
                         </th>
                         {{-- h4 --}}
@@ -305,37 +311,37 @@
                             %Failed Delivery
                         </th>
                         {{-- h5 --}}
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             TTL Cnote
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Un Runsheet
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Delivered
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             CR
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Undel
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Un Status
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Return
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Sukses Del
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Unrunsheet
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Return
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Failed Delivery
                         </th>
                         {{-- h6 --}}
@@ -373,37 +379,37 @@
                             %Failed Delivery
                         </th>
                         {{-- h7 --}}
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             TTL Cnote
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Un Runsheet
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Delivered
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             CR
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Undel
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Un Status
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Return
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Sukses Del
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Unrunsheet
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Return
                         </th>
-                        <th scope="col" class="bg-gray-100 px-6 py-3 text-center">
+                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Failed Delivery
                         </th>
                     </tr>
@@ -728,6 +734,13 @@
         <div class="px-6 py-2">
             {{ $performances->links() }}
         </div>
-
     </div>
+
+    <x-slot name="javascript">
+        <script>
+            function downloadIt() {
+                document.getElementById('exportReport').submit()
+            }
+        </script>
+    </x-slot>
 </x-sidebar-layout>

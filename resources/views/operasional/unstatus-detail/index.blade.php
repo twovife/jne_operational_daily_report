@@ -65,10 +65,6 @@
                 Performa Delivery
             </h2>
             <div class="flex justify-start space-x-2">
-                <a role="button" href="{{ route('opr.daily-report.unstatus.create') }}"
-                    class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
-                    Create
-                </a>
                 <form action="{{ route('opr.daily-report.dailyperformance.export') }}" method="GET">
                     <input type="hidden" name="from" value="{{ request('from') }}">
                     <input type="hidden" name="thru" value="{{ request('thru') }}">
@@ -122,7 +118,7 @@
                     @foreach ($datas as $data)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <td class="py-4 px-6">
-                                <a href="{{ route('opr.daily-report.unstatus.edit', $data->id) }}"
+                                <button onclick="showModal(this)" data-id="{{ $data->id }}"
                                     class="text-indigo-500 flex items-center justify-center">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -130,19 +126,34 @@
                                             d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
                                         </path>
                                     </svg>
-                                </a>
+                                </button>
                             </td>
                             <td class="py-4 px-6">
-                                {{-- {{ $data->awb }} --}}date
+                                {{ date('d/m/Y', strtotime($data->OprUpdatePod->date)) }}
                             </td>
                             <td class="py-4 px-6">
-                                {{-- {{ $data->hub }} --}}hub
+                                {{ $data->OprUpdatePod->hub }}
                             </td>
                             <td class="py-4 px-6">
                                 {{ $data->awb }}
                             </td>
                             <td class="py-4 px-6">
                                 {{ $data->runsheet }}
+                            </td>
+                            <td class="py-4 px-6">
+                                {{ $data->employee->nama }}
+                            </td>
+                            <td class="py-4 px-6">
+                                {{ $data->remark }}
+                            </td>
+                            <td class="py-4 px-6">
+                                {{ $data->remark_status }}
+                            </td>
+                            <td class="py-4 px-6">
+                                {{ $data->follow_up }}
+                            </td>
+                            <td class="py-4 px-6">
+                                {{ $data->closed_date }}
                             </td>
 
                         </tr>
@@ -153,9 +164,147 @@
 
 
 
-        {{-- <div class="px-6 py-2">
+        <div class="px-6 py-2">
             {{ $datas->links() }}
-        </div> --}}
+        </div>
 
     </div>
+
+    <div id="editModal" tabindex="-1" aria-hidden="true"
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+        <div class="relative p-4 w-full max-w-4xl h-full md:h-auto">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <form id="formInput" method="POST">
+                    @csrf
+                    <input type="hidden" id="id">
+                    <!-- Modal header -->
+                    <div class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                            Terms of Service
+                        </h3>
+                        <button type="button" onclick="hideModal()"
+                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+
+                    <div class="p-6 grid grid-cols-4 gap-4">
+                        <div>
+                            <label for="awb"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">AWB</label>
+                            <input type="text" id="awb" name="awb"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+                                placeholder="John" required>
+                        </div>
+                        <div>
+                            <label for="runsheet"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Runsheet</label>
+                            <input type="text" id="runsheet" name="runsheet"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+                                placeholder="John" required>
+                        </div>
+                        <div class="col-span-2">
+                            <label for="user_kurir"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">User
+                                Kurir</label>
+                            <select id="user_kurir" name="user_kurir" required=""
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                                @foreach ($employees as $employee)
+                                    <option value="{{ $employee->id }}">{{ $employee->nama }} -
+                                        {{ $employee->divisi }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label for="remark"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 required">Remark</label>
+                            <select id="remark" name="remark" required=""
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                                <option value="system">System</option>
+                                <option value="user">User</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="remark_status"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remark
+                                Status</label>
+                            <input type="text" id="remark_status" name="remark_status"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+                                placeholder="John" required>
+                        </div>
+                        <div>
+                            <label for="folluw_up"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Follow
+                                Up</label>
+                            <input type="text" id="folluw_up" name="folluw_up"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+                                placeholder="John" required>
+                        </div>
+                        <div>
+                            <label for="closed_date"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Closed
+                                Date</label>
+                            <input type="date" id="closed_date" name="closed_date"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+                                placeholder="John" required>
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div
+                        class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                        <button type="submit" id="submit"
+                            class="disabled:bg-indigo-800 text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Submit</button>
+                        <button onclick="hideModal()"
+                            class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-indigo-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+
+    <x-slot name="javascript">
+        <script>
+            const editEl = document.getElementById('editModal');
+            const options = {
+                onShow: async () => {
+                    const id = editEl.getAttribute('data-id');
+                    axios.get(`/opr/daily-report/unstatus-detail/${id}/edit`)
+                        .then((response) => {
+                            const data = response.data.data
+                            editEl.querySelector('#id').value = data.id
+                            editEl.querySelector('#awb').value = data.awb
+                            editEl.querySelector('#runsheet').value = data.runsheet
+                            editEl.querySelector('#user_kurir').value = data.user_kurir
+                            editEl.querySelector('#remark').value = data.remark
+                            editEl.querySelector('#remark_status').value = data.remark_status
+                            editEl.querySelector('#folluw_up').value = data.folluw_up
+                            editEl.querySelector('#closed_date').value = data.closed_date
+                        })
+                },
+            };
+
+
+            const modal = new Modal(editEl, options);
+
+
+            function showModal(e) {
+                editEl.setAttribute("data-id", e.getAttribute('data-id'))
+                modal.show()
+            }
+
+            function hideModal() {
+                modal.hide()
+            }
+        </script>
+    </x-slot>
 </x-sidebar-layout>
