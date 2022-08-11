@@ -2,40 +2,29 @@
 
 
 
-    <div class="rounded bg-white px-4 py-3 w-full mb-3">
-        <div class="flex justify-between items-center mb-3">
-            <h2 class="text-xl text-gray-900">
+    <div class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
+        <div class="flex justify-between items-center">
+            <h2 class="text-xl">
                 Input Data POD
             </h2>
             <div class="flex justify-start">
-                <a role="button" href="{{ route('opr.daily-report.unstatus.index') }}"
-                    class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                <x-btn-link :href="route('opr.daily-report.unstatus.index')">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                     </svg>
-                    Back
-                </a>
+                    <x-btn-label>Back</x-btn-label>
+                </x-btn-link>
             </div>
         </div>
     </div>
 
-    @if (Session::has('errors'))
-        <div class="p-4 mb-3 text-sm text-rose-700 bg-rose-100 rounded-lg dark:bg-rose-200 dark:text-rose-800"
-            role="alert">
-            <div class="text-lg text-red-600">
-                {{ __('Whoops! Terjadi Kesalahan .') }}
-            </div>
-            @foreach ($errors->all() as $error)
-                <span class="font-medium">- </span> {{ $error }}
-            @endforeach
-        </div>
-    @endif
+    <x-error-input-alert :status="session('errors')"></x-error-input-alert>
 
     <form action="{{ route('opr.daily-report.unstatus.store') }}" method="POST">
         @csrf
-        <div class="rounded bg-white px-4 py-3 w-full mb-3">
+        <div class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
             <div class="grid gap-6 mb-6 md:grid-cols-6">
                 <div>
                     <label for="date"
@@ -70,7 +59,8 @@
             </div>
         </div>
         <div id="asd">
-            <div class="rounded bg-white px-4 py-3 w-full mb-3" data-group="detail_field">
+            <div class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3"
+                data-group="detail_field">
                 <div class="grid gap-6 mb-6 md:grid-cols-6">
                     <div>
                         <label for="awb"
@@ -139,11 +129,23 @@
             </div>
         </div>
         <div class="flex justify-start items-center gap-3">
-            <button type="button" onclick="addOne()"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add
-                Detail</button>
-            <button type="submit"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+            <x-btn-action type="button" :btntype="'warn'" onclick="addOne()">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <x-btn-label>Add Row</x-btn-label>
+            </x-btn-action>
+            @can('opr daily create')
+                <x-btn-action type="submit" :btntype="'success'">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <x-btn-label>Submit</x-btn-label>
+                </x-btn-action>
+            @endcan
         </div>
     </form>
 
@@ -151,10 +153,6 @@
 
     <x-slot name="javascript">
         <script>
-            // function removeIt(event) {
-            //     event.parentNode.parentNode.parentNode.remove()
-            // }
-
             document.addEventListener('click', function(event) {
                 if (event.target.getAttribute('data-type') == "remover") {
                     const mainParent = event.target.parentNode.parentNode

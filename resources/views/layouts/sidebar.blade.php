@@ -48,7 +48,7 @@
             class="w-64 z-10 h-screen lg:transform-none lg:opacity-100 bg-cyan-600 dark:bg-gray-800 text-white fixed inset-0 transform duration-200 shadow"
             :class="{ '-translate-x-full ease-out opacity-0': !open, 'translate-x-0 ease-in opacity-100': open }"
             aria-label="Sidebar">
-            <div class=" overflow-y-auto p-4 bg-cyan-600 dark:bg-gray-800 text-white">
+            <div class=" overflow-y-auto p-4">
                 <div class="flex justify-between items-center drop-shadow mb-4">
                     <a href="#">
                         <div class="space-y-1">

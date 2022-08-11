@@ -22,7 +22,7 @@ switch ($btntype) {
 
 @endphp
 
-<button type="submit" {{ $disabled ? 'disabled' : '' }} {!! $attributes->merge([
+<button {{ $disabled ? 'disabled' : '' }} {!! $attributes->merge([
     'type' => 'button',
     'class' => $classes,
 ]) !!}>{{ $slot }}

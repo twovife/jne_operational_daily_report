@@ -1,24 +1,22 @@
 <x-sidebar-layout>
 
-    @if (Session::has('green'))
-        <div class="p-4 mb-3 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
-            role="alert">
-            <span class="font-medium">Berhasil !!! </span> {{ Session::get('green') }}
-        </div>
-    @elseif (Session::has('yellow'))
-        <div class="p-4 mb-3 text-sm text-amber-700 bg-amber-100 rounded-lg dark:bg-amber-200 dark:text-amber-800"
-            role="alert">
-            <span class="font-medium">Perhaian !!! </span> {{ Session::get('yellow') }}
-        </div>
+    @if (session()->has('green'))
+        <x-alert-message :message="session('green')" :color="'green'"></x-alert-message>
     @endif
-    <div class="rounded bg-white px-4 py-3 w-full mb-3">
+    @if (session()->has('yellow'))
+        <x-alert-message :message="session('yellow')" :color="'yellow'"></x-alert-message>
+    @endif
+
+
+
+    <div class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
         <div class="flex justify-between items-center mb-3">
-            <h2 class="text-xl text-gray-900">
+            <h2 class="text-xl">
                 Filters
             </h2>
         </div>
         <form action="{{ route('opr.daily-report.dailyperformance.index') }}">
-            <div class="grid lg:grid-cols-6 mb-3 space-x-3">
+            <div class="grid lg:grid-cols-6 mb-3 space-y-2 lg:space-y-0 space-x-0 lg:space-x-2">
                 <div>
                     <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Date
                         From</label>
@@ -52,31 +50,45 @@
                         </select>
                     </div>
                 @endif
-                <div class="flex items-end space-x-3">
-                    <button type="submit"
-                        class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Search</button>
+                <div class="flex items-end space-y-2 lg:space-y-0 space-x-0 lg:space-x-2">
+                    <x-btn-action type="submit">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                        <x-btn-label>Search</x-btn-label>
+                    </x-btn-action>
                 </div>
             </div>
         </form>
     </div>
-    <div class="rounded bg-white px-4 py-3 w-full">
+    <div class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full">
         <div class="flex justify-between items-center mb-3">
-            <h2 class="text-xl text-gray-900">
+            <h2 class="text-xl">
                 Performa Delivery
             </h2>
             <div class="flex justify-start space-x-2">
-                <a role="button" href="{{ route('opr.daily-report.unstatus.create') }}"
-                    class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
-                    Create
-                </a>
-                <form action="{{ route('opr.daily-report.dailyperformance.export') }}" method="GET">
+                <x-btn-link :href="route('opr.daily-report.unstatus.create')">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                    <x-btn-label>Craete</x-btn-label>
+                </x-btn-link>
+                <x-btn-action onclick="downloadIt()" type="button" :btntype="'success'">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                    </svg>
+                    <x-btn-label>Export</x-btn-label>
+                </x-btn-action>
+                <form id="exportReport" action="{{ route('opr.daily-report.dailyperformance.export') }}" method="GET">
                     <input type="hidden" name="from" value="{{ request('from') }}">
                     <input type="hidden" name="thru" value="{{ request('thru') }}">
                     <input type="hidden" name="hub" value="{{ request('hub') }}">
-                    <button type="submit"
-                        class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:focus:ring-yellow-900">
-                        Export</button>
-
                 </form>
             </div>
         </div>
@@ -111,7 +123,7 @@
                 </thead>
                 <tbody class="text-center">
                     @foreach ($datas as $data)
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <tr class="bg-white dark:bg-gray-800 dark:text-white border-b dark:border-gray-700">
                             <td class="py-4 px-6">
                                 <a href="{{ route('opr.daily-report.unstatus.edit', $data->id) }}"
                                     class="text-indigo-500 flex items-center justify-center">
@@ -146,12 +158,16 @@
                 </tbody>
             </table>
         </div>
-
-
-
-        {{-- <div class="px-6 py-2">
+        <div class="px-6 py-2">
             {{ $datas->links() }}
-        </div> --}}
+        </div>
 
     </div>
+    <x-slot name="javascript">
+        <script>
+            function downloadIt() {
+                document.getElementById('exportReport').submit()
+            }
+        </script>
+    </x-slot>
 </x-sidebar-layout>

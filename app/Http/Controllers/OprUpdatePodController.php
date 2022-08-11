@@ -7,6 +7,7 @@ use App\Http\Requests\StoreOprUpdatePodRequest;
 use App\Http\Requests\UpdateOprUpdatePodRequest;
 use App\Models\Employee;
 use App\Models\Hub;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -83,7 +84,7 @@ class OprUpdatePodController extends Controller
                     'user_kurir' => $request->user_kurir[$i],
                     'remark' => $request->remark[$i],
                     'remark_status' => $request->remark_status[$i],
-                    'folluw_up' => $request->folluw_up[$i],
+                    'follow_up' => $request->follow_up[$i],
                     'closed_date' => $request->closed_date[$i],
                 ];
             }
@@ -93,6 +94,8 @@ class OprUpdatePodController extends Controller
         if (count($request->awb) > 0) {
             $query->oprPodDetail()->createMany($dataDetail);
         }
+
+        return redirect()->route('opr.daily-report.unstatus.index')->with('green', 'Data berhasil ditambahkan');
     }
 
     /**

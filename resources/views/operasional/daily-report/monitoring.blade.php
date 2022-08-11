@@ -11,15 +11,15 @@
             <span class="font-medium">Perhaian !!! </span> {{ Session::get('yellow') }}
         </div>
     @endif
-    <div class="rounded bg-white px-4 py-3 w-full mb-3">
+    <div class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
 
         <div class="flex justify-between items-center mb-3">
-            <h2 class="text-xl text-gray-900">
+            <h2 class="text-xl">
                 Filters
             </h2>
         </div>
         <form action="{{ route('opr.daily-report.dailyperformance.index') }}">
-            <div class="grid lg:grid-cols-6 mb-3 space-x-3">
+            <div class="grid lg:grid-cols-6 mb-3 space-y-2 lg:space-y-0 space-x-0 lg:space-x-2"">
                 <div>
                     <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Date
                         From</label>
@@ -34,30 +34,46 @@
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
                         placeholder="John" value="{{ request('thru') }}">
                 </div>
-                <div class="flex items-end space-x-3">
-                    <button type="submit"
-                        class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Search</button>
+                <div class="flex items-end space-y-2 lg:space-y-0 space-x-0 lg:space-x-2">
+                    <x-btn-action type="submit">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                        <x-btn-label>Search</x-btn-label>
+                    </x-btn-action>
                 </div>
             </div>
         </form>
     </div>
-    <div class="rounded bg-white px-4 py-3 w-full">
+    <div class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full">
         <div class="flex justify-between items-center mb-3">
-            <h2 class="text-xl text-gray-900">
+            <h2 class="text-xl">
                 Performa Delivery
             </h2>
             <div class="flex justify-start space-x-2">
-                <a role="button" href="{{ route('opr.daily-report.dailyperformance.create') }}"
-                    class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
-                    Create
-                </a>
-                <form action="{{ route('opr.daily-report.dailyperformance.exportsum') }}" method="GET">
+                <x-btn-link :href="route('opr.daily-report.dailyperformance.index')">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z">
+                        </path>
+                    </svg>
+                    <x-btn-label>Performa Delivery</x-btn-label>
+                </x-btn-link>
+                <x-btn-action onclick="downloadIt()" type="button" :btntype="'success'">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                    </svg>
+                    <x-btn-label>Export</x-btn-label>
+                </x-btn-action>
+                <form id="exportReport" action="{{ route('opr.daily-report.dailyperformance.exportsum') }}"
+                    method="GET">
                     <input type="hidden" name="from" value="{{ request('from') }}">
                     <input type="hidden" name="thru" value="{{ request('thru') }}">
-                    <button type="submit"
-                        class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:focus:ring-yellow-900">
-                        Export</button>
-
                 </form>
             </div>
         </div>
@@ -384,7 +400,7 @@
                 <tbody class="text-center">
                     @foreach ($performances as $performance)
                         <tr
-                            class="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700">
+                            class="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white dark:text-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700">
                             <th class="px-6 py-4">
                                 {{ date('d/m/Y', strtotime($performance->inbound_date)) }}
                             </th>
@@ -695,6 +711,12 @@
         <div class="px-6 py-2">
             {{ $performances->links() }}
         </div>
-
     </div>
+    <x-slot name="javascript">
+        <script>
+            function downloadIt() {
+                document.getElementById('exportReport').submit()
+            }
+        </script>
+    </x-slot>
 </x-sidebar-layout>

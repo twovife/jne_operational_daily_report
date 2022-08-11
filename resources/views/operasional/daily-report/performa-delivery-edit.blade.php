@@ -1,27 +1,29 @@
 <x-sidebar-layout>
-    <div class="rounded bg-white px-4 py-3 w-full mb-3">
-        <div class="flex justify-between items-center mb-3">
-            <h2 class="text-xl text-gray-900">
+    <div class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
+        <div class="flex justify-between items-center">
+            <h2 class="text-xl">
                 Input Data Performa Delivery
             </h2>
             <div class="flex justify-start">
-                <a role="button" href="{{ route('opr.daily-report.dailyperformance.index') }}"
-                    class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                <x-btn-link :href="route('opr.daily-report.dailyperformance.index')">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18">
+                        </path>
                     </svg>
-                    Back
-                </a>
+                    <x-btn-label>Back</x-btn-label>
+                </x-btn-link>
             </div>
         </div>
     </div>
 
+    <x-error-input-alert :status="session('errors')"></x-error-input-alert>
+
     <form action="{{ route('opr.daily-report.dailyperformance.update', $data->id) }}" method="POST">
         @csrf
         @method('PUT')
-        <div class="rounded bg-white px-4 py-3 w-full mb-3">
+        <div class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
             <div class="grid gap-6 mb-6 lg:grid-cols-4">
                 <div class="lg:col-span-2">
                     <label for="inbound_date"
@@ -78,11 +80,25 @@
                 </div>
             </div>
             @can('opr daily delete')
-                <div class="flex justify-between items-center">
-                    <button type="submit"
-                        class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Update</button>
-                    <button type="button" data-modal-toggle="popup-modal"
-                        class="flex items-center text-white bg-rose-700 hover:bg-rose-800 focus:ring focus:outline-none focus:ring-rose-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center dark:bg-rose-600 dark:hover:bg-rose-700 dark:focus:ring-rose-800">delete</button>
+                <div class="flex justify-end items-center gap-2">
+                    <x-btn-action type="submit" :btntype="'success'">
+                        <svg class="w-5 h-" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4">
+                            </path>
+                        </svg>
+                        <x-btn-label>Save</x-btn-label>
+                    </x-btn-action>
+                    <x-btn-action type="button" :btntype="'danger'" data-modal-toggle="popup-modal">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                            </path>
+                        </svg>
+                        <x-btn-label>Delete</x-btn-label>
+                    </x-btn-action>
                 </div>
             @endcan
         </div>
@@ -94,8 +110,9 @@
         @csrf
         @method('PUT')
         <input type="hidden" name="d_day" value="0">
-        <div onkeyup="thisIsChange(this)" class="rounded bg-white px-4 py-3 w-full mb-3">
-            <h2 class="text-xl text-gray-900 mb-3">
+        <div onkeyup="thisIsChange(this)"
+            class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
+            <h2 class="text-xl mb-3">
                 H+0
             </h2>
             <div class="grid gap-6 mb-6 grid-cols-4 md:grid-cols-8 items-end">
@@ -110,8 +127,8 @@
                 <div>
                     <label for="ur_0" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
                         received</label>
-                    <input value="{{ $data->ur_0 }}" data-name="sumit" data-id="ur" type="number" id="ur_0"
-                        name="ur_0"
+                    <input value="{{ $data->ur_0 }}" data-name="sumit" data-id="ur" type="number"
+                        id="ur_0" name="ur_0"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
@@ -157,15 +174,26 @@
                 </div>
                 <div>
                     @can('opr daily edit')
-                        <button type="submit"
-                            class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Update</button>
+                        <x-btn-action type="submit" :btntype="'success'">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <x-btn-label>{{ $data->date_0 ? 'Update' : 'Add' }} </x-btn-label>
+                        </x-btn-action>
                     @else
                         @if (Auth::user()->roles->where('name', 'opr pod')->first())
-                            <button type="submit" {{ $data->date_0 ? 'disabled' : '' }}
-                                class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Add</button>
+                            <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_0 ? true : false">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <x-btn-label>Add</x-btn-label>
+                            </x-btn-action>
                         @endif
                     @endcan
-
                 </div>
             </div>
         </div>
@@ -176,8 +204,9 @@
         @csrf
         @method('PUT')
         <input type="hidden" name="d_day" value="1">
-        <div onkeyup="thisIsChange(this)" class="rounded bg-white px-4 py-3 w-full mb-3">
-            <h2 class="text-xl text-gray-900 mb-3">
+        <div onkeyup="thisIsChange(this)"
+            class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
+            <h2 class="text-xl mb-3">
                 H+1
             </h2>
             <div class="grid gap-6 mb-6 grid-cols-4 md:grid-cols-8 items-end">
@@ -240,15 +269,26 @@
                 </div>
                 <div>
                     @can('opr daily edit')
-                        <button type="submit"
-                            class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Update</button>
+                        <x-btn-action type="submit" :btntype="'success'">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <x-btn-label>{{ $data->date_1 ? 'Update' : 'Add' }} </x-btn-label>
+                        </x-btn-action>
                     @else
                         @if (Auth::user()->roles->where('name', 'opr pod')->first())
-                            <button type="submit" {{ $data->date_1 ? 'disabled' : '' }}
-                                class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Add</button>
+                            <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_1 ? true : false">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <x-btn-label>Add</x-btn-label>
+                            </x-btn-action>
                         @endif
                     @endcan
-
                 </div>
             </div>
         </div>
@@ -259,8 +299,9 @@
         @csrf
         @method('PUT')
         <input type="hidden" name="d_day" value="2">
-        <div onkeyup="thisIsChange(this)" class="rounded bg-white px-4 py-3 w-full mb-3">
-            <h2 class="text-xl text-gray-900 mb-3">
+        <div onkeyup="thisIsChange(this)"
+            class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
+            <h2 class="text-xl mb-3">
                 H+2
             </h2>
             <div class="grid gap-6 mb-6 grid-cols-4 md:grid-cols-8 items-end">
@@ -323,15 +364,26 @@
                 </div>
                 <div>
                     @can('opr daily edit')
-                        <button type="submit"
-                            class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Update</button>
+                        <x-btn-action type="submit" :btntype="'success'">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <x-btn-label>{{ $data->date_2 ? 'Update' : 'Add' }} </x-btn-label>
+                        </x-btn-action>
                     @else
                         @if (Auth::user()->roles->where('name', 'opr pod')->first())
-                            <button type="submit" {{ $data->date_2 ? 'disabled' : '' }}
-                                class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Add</button>
+                            <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_2 ? true : false">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <x-btn-label>Add</x-btn-label>
+                            </x-btn-action>
                         @endif
                     @endcan
-
                 </div>
             </div>
         </div>
@@ -342,8 +394,9 @@
         @csrf
         @method('PUT')
         <input type="hidden" name="d_day" value="3">
-        <div onkeyup="thisIsChange(this)" class="rounded bg-white px-4 py-3 w-full mb-3">
-            <h2 class="text-xl text-gray-900 mb-3">
+        <div onkeyup="thisIsChange(this)"
+            class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
+            <h2 class="text-xl mb-3">
                 H+3
             </h2>
             <div class="grid gap-6 mb-6 grid-cols-4 md:grid-cols-8 items-end">
@@ -406,12 +459,24 @@
                 </div>
                 <div>
                     @can('opr daily edit')
-                        <button type="submit"
-                            class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Update</button>
+                        <x-btn-action type="submit" :btntype="'success'">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <x-btn-label>{{ $data->date_3 ? 'Update' : 'Add' }} </x-btn-label>
+                        </x-btn-action>
                     @else
                         @if (Auth::user()->roles->where('name', 'opr pod')->first())
-                            <button type="submit" {{ $data->date_3 ? 'disabled' : '' }}
-                                class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Add</button>
+                            <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_3 ? true : false">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <x-btn-label>Add</x-btn-label>
+                            </x-btn-action>
                         @endif
                     @endcan
 
@@ -425,8 +490,9 @@
         @csrf
         @method('PUT')
         <input type="hidden" name="d_day" value="4">
-        <div onkeyup="thisIsChange(this)" class="rounded bg-white px-4 py-3 w-full mb-3">
-            <h2 class="text-xl text-gray-900 mb-3">
+        <div onkeyup="thisIsChange(this)"
+            class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
+            <h2 class="text-xl mb-3">
                 H+4
             </h2>
             <div class="grid gap-6 mb-6 grid-cols-4 md:grid-cols-8 items-end">
@@ -489,12 +555,24 @@
                 </div>
                 <div>
                     @can('opr daily edit')
-                        <button type="submit"
-                            class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Update</button>
+                        <x-btn-action type="submit" :btntype="'success'">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <x-btn-label>{{ $data->date_4 ? 'Update' : 'Add' }} </x-btn-label>
+                        </x-btn-action>
                     @else
                         @if (Auth::user()->roles->where('name', 'opr pod')->first())
-                            <button type="submit" {{ $data->date_4 ? 'disabled' : '' }}
-                                class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Add</button>
+                            <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_4 ? true : false">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <x-btn-label>Add</x-btn-label>
+                            </x-btn-action>
                         @endif
                     @endcan
 
@@ -508,8 +586,9 @@
         @csrf
         @method('PUT')
         <input type="hidden" name="d_day" value="5">
-        <div onkeyup="thisIsChange(this)" class="rounded bg-white px-4 py-3 w-full mb-3">
-            <h2 class="text-xl text-gray-900 mb-3">
+        <div onkeyup="thisIsChange(this)"
+            class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
+            <h2 class="text-xl mb-3">
                 H+5
             </h2>
             <div class="grid gap-6 mb-6 grid-cols-4 md:grid-cols-8 items-end">
@@ -572,12 +651,24 @@
                 </div>
                 <div>
                     @can('opr daily edit')
-                        <button type="submit"
-                            class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Update</button>
+                        <x-btn-action type="submit" :btntype="'success'">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <x-btn-label>{{ $data->date_5 ? 'Update' : 'Add' }} </x-btn-label>
+                        </x-btn-action>
                     @else
                         @if (Auth::user()->roles->where('name', 'opr pod')->first())
-                            <button type="submit" {{ $data->date_5 ? 'disabled' : '' }}
-                                class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Add</button>
+                            <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_5 ? true : false">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <x-btn-label>Add</x-btn-label>
+                            </x-btn-action>
                         @endif
                     @endcan
 
@@ -591,8 +682,9 @@
         @csrf
         @method('PUT')
         <input type="hidden" name="d_day" value="6">
-        <div onkeyup="thisIsChange(this)" class="rounded bg-white px-4 py-3 w-full mb-3">
-            <h2 class="text-xl text-gray-900 mb-3">
+        <div onkeyup="thisIsChange(this)"
+            class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
+            <h2 class="text-xl mb-3">
                 H+6
             </h2>
             <div class="grid gap-6 mb-6 grid-cols-4 md:grid-cols-8 items-end">
@@ -655,12 +747,24 @@
                 </div>
                 <div>
                     @can('opr daily edit')
-                        <button type="submit"
-                            class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Update</button>
+                        <x-btn-action type="submit" :btntype="'success'">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <x-btn-label>{{ $data->date_6 ? 'Update' : 'Add' }} </x-btn-label>
+                        </x-btn-action>
                     @else
                         @if (Auth::user()->roles->where('name', 'opr pod')->first())
-                            <button type="submit" {{ $data->date_6 ? 'disabled' : '' }}
-                                class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Add</button>
+                            <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_6 ? true : false">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <x-btn-label>Add</x-btn-label>
+                            </x-btn-action>
                         @endif
                     @endcan
 
@@ -674,8 +778,9 @@
         @csrf
         @method('PUT')
         <input type="hidden" name="d_day" value="7">
-        <div onkeyup="thisIsChange(this)" class="rounded bg-white px-4 py-3 w-full mb-3">
-            <h2 class="text-xl text-gray-900 mb-3">
+        <div onkeyup="thisIsChange(this)"
+            class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
+            <h2 class="text-xl mb-3">
                 H+7
             </h2>
             <div class="grid gap-6 mb-6 grid-cols-4 md:grid-cols-8 items-end">
@@ -738,12 +843,24 @@
                 </div>
                 <div>
                     @can('opr daily edit')
-                        <button type="submit"
-                            class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Update</button>
+                        <x-btn-action type="submit" :btntype="'success'">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <x-btn-label>{{ $data->date_7 ? 'Update' : 'Add' }} </x-btn-label>
+                        </x-btn-action>
                     @else
                         @if (Auth::user()->roles->where('name', 'opr pod')->first())
-                            <button type="submit" {{ $data->date_7 ? 'disabled' : '' }}
-                                class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-3 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 disabled:cursor-not-allowed">Add</button>
+                            <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_7 ? true : false">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <x-btn-label>Add</x-btn-label>
+                            </x-btn-action>
                         @endif
                     @endcan
 
@@ -757,7 +874,7 @@
     <div id="popup-modal" tabindex="-1"
         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
         <div class="relative p-4 w-full max-w-md h-full md:h-auto">
-            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <div class="relative bg-white dark:bg-gray-800 dark:text-white rounded-lg shadow">
                 <button type="button"
                     class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
                     data-modal-toggle="popup-modal">
@@ -786,7 +903,7 @@
                             </button>
                         </form>
                         <button data-modal-toggle="popup-modal" type="button"
-                            class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No,
+                            class="text-gray-500 bg-white dark:bg-gray-800 dark:text-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No,
                             cancel</button>
                     </div>
 

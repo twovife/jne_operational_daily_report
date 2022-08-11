@@ -38,8 +38,8 @@ Route::prefix('opr')->middleware('auth')->name('opr.')->group(function () {
             Route::put('/{oprDailyPerformance}', [OprDailyPerformanceController::class, 'update'])->middleware(['can:opr daily edit'])->name('update'); // update edit
             Route::delete('/{oprDailyPerformance}', [OprDailyPerformanceController::class, 'destroy'])->middleware(['can:opr daily delete'])->name('destroy'); //delete data
             Route::get('/export', [OprDailyPerformanceController::class, 'export'])->middleware(['can:opr daily download'])->name('export');
-            Route::get('/exportsum', [OprDailyPerformanceController::class, 'exportsum'])->middleware(['can:opr daily download'])->name('exportsum');
             Route::get('/summary', [OprDailyPerformanceController::class, 'summary'])->middleware(['can:opr daily monitoring'])->name('summary');
+            Route::get('/exportsum', [OprDailyPerformanceController::class, 'exportsum'])->middleware(['can:opr daily download'])->name('exportsum');
         });
 
         Route::prefix('undel')->name('undel.')->group(function () {
