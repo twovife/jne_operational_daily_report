@@ -44,7 +44,7 @@ class OprPodDetailController extends Controller
             $employee = Employee::where('hub', '!=', 'KEDIRI');
         }
 
-
+        // return $query->get();
         return view('operasional.unstatus-detail.index', [
             'datas' => $query->paginate(20),
             'hubs' => Hub::all(),

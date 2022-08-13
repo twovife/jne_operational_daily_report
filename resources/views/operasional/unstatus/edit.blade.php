@@ -1,41 +1,36 @@
 <x-sidebar-layout>
 
-    <div class="rounded bg-white px-4 py-3 w-full mb-3">
+    <div class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
         <div class="flex justify-start items-center mb-3 gap-4">
-            <h2 class="text-xl text-gray-900">
+            <h2 class="text-xl">
                 Input Data Undel
             </h2>
-            <div class="flex justify-start ml-auto">
-                <button type="button" onclick="craeteModal()"
-                    class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <div class="flex justify-start ml-auto gap-2">
+                <x-btn-action onclick="craeteModal()" type="button" :btntype="'success'">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    Add
-                </button>
-            </div>
-            <div class="flex justify-start">
-                <button type="button" data-modal-toggle="delete-modal-1"
-                    class="flex items-center text-white bg-rose-700 hover:bg-rose-800 focus:ring focus:outline-none focus:ring-rose-200 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-rose-600 dark:hover:bg-rose-700 dark:focus:ring-rose-800">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    <x-btn-label>Add</x-btn-label>
+                </x-btn-action>
+                <x-btn-action data-modal-toggle="delete-modal-1" type="button" :btntype="'danger'">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                        </path>
                     </svg>
-                    Delete
-                </button>
-            </div>
-            <div class="flex justify-start">
-                <a role="button" href="{{ route('opr.daily-report.undel.index') }}"
-                    class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    <x-btn-label>Delete</x-btn-label>
+                </x-btn-action>
+                <x-btn-link :href="route('opr.daily-report.undel.index')" :btntype="'primary'">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                     </svg>
-                    Back
-                </a>
+                    <x-btn-label>Back</x-btn-label>
+                </x-btn-link>
             </div>
         </div>
     </div>
@@ -64,7 +59,7 @@
         </div>
     @endif
 
-    <div class="rounded bg-white px-4 py-3 w-full mb-3">
+    <div class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
         <form action="{{ route('opr.daily-report.unstatus.update', $data->id) }}" method="POST">
             @csrf
             @method('PUT')
@@ -103,13 +98,19 @@
                 </div>
             </div>
             <div class="flex justify-end items-center">
-                <button type="submit" id="submit"
-                    class="disabled:bg-indigo-800 text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 flex items-center justify-center">Update</button>
-
+                <x-btn-action type="submit" id="submit" :btntype="'success'">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4">
+                        </path>
+                    </svg>
+                    <x-btn-label>Update</x-btn-label>
+                </x-btn-action>
             </div>
         </form>
     </div>
-    <div class="rounded bg-white px-4 py-3 w-full mb-3">
+    <div class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
 
         <div class="overflow-x-auto relative">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -154,20 +155,22 @@
                                 <div class="flex justify-center items-center gap-4">
                                     <button data-id="{{ $data_detail->id }}" type="button"
                                         onclick="showModal(this)"
-                                        class="text-indigo-500 flex items-center justify-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                        class="text-indigo-500 flex items-center justify-center hover:text-white hover:bg-indigo-500 p-1 rounded">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
+                                            </path>
                                         </svg>
                                     </button>
                                     <button data-id="{{ $data_detail->id }}" type="button"
                                         onclick="deleteModal(this)"
-                                        class="text-rose-500 flex items-center justify-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        class="text-rose-500 flex items-center justify-center hover:text-white hover:bg-rose-500 p-1 rounded">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                            </path>
                                         </svg>
                                     </button>
                                 </div>

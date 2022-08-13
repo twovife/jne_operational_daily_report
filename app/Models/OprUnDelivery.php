@@ -32,8 +32,9 @@ class OprUnDelivery extends Model
 
     public function actions()
     {
-        return $this->hasMany(OprUnDeliveriesAction::class)->orderBy('action_date');
+        return $this->hasMany(OprUnDeliveriesAction::class)->orderBy('action_date', 'desc');
     }
+
     public function customer_account()
     {
         return $this->belongsTo(OprCustomerAccount::class, 'opr_customer_account_id', 'id');

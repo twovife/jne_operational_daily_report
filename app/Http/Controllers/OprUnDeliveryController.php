@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\OprUndeliveryExport;
 use App\Models\OprUnDelivery;
 use App\Http\Requests\StoreOprUnDeliveryRequest;
 use App\Http\Requests\UpdateOprUnDeliveryRequest;
@@ -14,6 +15,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OprUnDeliveryController extends Controller
 {
@@ -24,7 +26,7 @@ class OprUnDeliveryController extends Controller
      */
     public function index()
     {
-        $query = OprUnDelivery::with('customer_account', 'shipper_name');
+        $query = OprUnDelivery::with('customer_account', 'shipper_name', 'actions');
 
         if (request('from') || request('thru')) {
             $query->whereBetween('inbound_date', [request('from'), request('thru')]);
@@ -38,7 +40,7 @@ class OprUnDeliveryController extends Controller
             $query->where('hub', Auth::user()->employee->hub);
         }
 
-        // return OprDailyPerformance::with('OprDailyPerformanceDetail')->get();
+        // return $query->get();
         return view('operasional.daily-undel.index', [
             'performances' => $query->paginate(),
             'hubs' => Hub::all()
@@ -219,5 +221,9 @@ class OprUnDeliveryController extends Controller
 
             return redirect()->route('opr.daily-report.breach.edit', $oprUnDelivery->breach->id)->with('green', 'Breach Ditambahkan, silahkan ubah / lengkapi data');
         }
+    }
+    public function export()
+    {
+        return Excel::download(new OprUndeliveryExport, 'undelivery.xlsx');
     }
 }

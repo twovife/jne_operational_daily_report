@@ -51,7 +51,7 @@ Route::prefix('opr')->middleware('auth')->name('opr.')->group(function () {
             Route::put('/{oprUnDelivery}/action', [OprUnDeliveryController::class, 'action'])->middleware(['can:opr undel create'])->name('action'); //'can 'opr undel create'
             Route::delete('/{oprUnDelivery}', [OprUnDeliveryController::class, 'destroy'])->middleware(['can:opr undel delete'])->name('destroy'); //'can 'opr undel delete'
             Route::delete('/{OprUnDeliveriesAction}/action', [OprUnDeliveryController::class, 'actdestroy'])->middleware(['can:opr undel create'])->name('actdestroy'); //'can 'opr undel delete'
-
+            Route::get('/export-main', [OprUnDeliveryController::class, 'export'])->middleware(['can:opr undel download'])->name('exportmain');
         });
 
         Route::prefix('breach')->name('breach.')->group(function () {
