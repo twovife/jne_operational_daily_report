@@ -5,8 +5,8 @@
                 Edit Data Un-Delivery
             </h2>
 
-            @can('opr undel delete')
-                <div class="flex justify-start ml-auto">
+            <div class="flex justify-start ml-auto gap-2">
+                @can('opr undel delete')
                     <x-btn-action data-modal-toggle="delete-modal-1" type="button" :btntype="'danger'">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
@@ -16,22 +16,16 @@
                         </svg>
                         <x-btn-label>Delete</x-btn-label>
                     </x-btn-action>
-                </div>
-            @endcan
-
-
-            <div class="flex justify-start @can('opr undel delete') '' @else {{ 'ml-auto' }} @endcan ">
-                <a role="button" href="{{ route('opr.daily-report.undel.index') }}"
-                    class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z" />
+                @endcan
+                <x-btn-link :href="route('opr.daily-report.undel.index')" :btntype="'primary'">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                     </svg>
-                    Back
-                </a>
+                    <x-btn-label>Back</x-btn-label>
+                </x-btn-link>
             </div>
-
         </div>
     </div>
 

@@ -210,10 +210,10 @@
                                 {{ $performance->date_inbound }}
                             </td>
                             <td class="py-4 px-6">
-                                {{ $performance->customer_account->nomor_account }}
+                                {{ $performance->customer_account->nomor_account ?? '-' }}
                             </td>
                             <td class="py-4 px-6 whitespace-nowrap">
-                                {{ $performance->customer_account->customer_name }}
+                                {{ $performance->customer_account->customer_name ?? '-' }}
                             </td>
                             <td class="py-4 px-6 whitespace-nowrap">
                                 {{ $performance->sla }}
@@ -222,16 +222,16 @@
                                 {{ $performance->date_return }}
                             </td>
                             <td class="py-4 px-6 whitespace-nowrap">
-                                {{ $performance->actions->first()->action_date }}
+                                {{ $performance->actions->first()->action_date ?? '-' }}
                             </td>
                             <td class="py-4 px-6 whitespace-nowrap">
-                                {{ $performance->actions->first()->follow_up }}
+                                {{ $performance->actions->first()->follow_up ?? '-' }}
                             </td>
                             <td class="py-4 px-6 whitespace-nowrap">
-                                {{ $performance->actions->first()->last_action }}
+                                {{ $performance->actions->first()->last_action ?? '-' }}
                             </td>
                             <td class="py-4 px-6 whitespace-nowrap">
-                                {{ $performance->actions->first()->description }}
+                                {{ $performance->actions->first()->description ?? '-' }}
                             </td>
                             <td class="py-4 px-6 whitespace-nowrap">
                                 {{ $performance->status == 1 ? ($performance->breach ? 'Breach' : 'CLosed') : 'Open' }}
@@ -241,9 +241,6 @@
                 </tbody>
             </table>
         </div>
-
-
-
         <div class="px-6 py-2">
             {{ $performances->links() }}
         </div>
