@@ -15,7 +15,7 @@
                 Filters
             </h2>
         </div>
-        <form action="{{ route('opr.daily-report.dailyperformance.index') }}">
+        <form action="{{ route('opr.openstatus.unstatus.index') }}">
             <div class="grid lg:grid-cols-6 mb-3 space-y-2 lg:space-y-0 space-x-0 lg:space-x-2">
                 <div>
                     <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Date
@@ -69,7 +69,7 @@
                 Performa Delivery
             </h2>
             <div class="flex justify-start space-x-2">
-                <x-btn-link :href="route('opr.daily-report.unstatus.create')">
+                <x-btn-link :href="route('opr.openstatus.unstatus.create')">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -85,7 +85,7 @@
                     </svg>
                     <x-btn-label>Export</x-btn-label>
                 </x-btn-action>
-                <form id="exportReport" action="{{ route('opr.daily-report.dailyperformance.export') }}" method="GET">
+                <form id="exportReport" action="{{ route('opr.openstatus.unstatus.index') }}" method="GET">
                     <input type="hidden" name="from" value="{{ request('from') }}">
                     <input type="hidden" name="thru" value="{{ request('thru') }}">
                     <input type="hidden" name="hub" value="{{ request('hub') }}">
@@ -125,7 +125,7 @@
                     @foreach ($datas as $data)
                         <tr class="bg-white dark:bg-gray-800 dark:text-white border-b dark:border-gray-700">
                             <td class="py-4 px-6">
-                                <a href="{{ route('opr.daily-report.unstatus.edit', $data->id) }}"
+                                <a href="{{ route('opr.openstatus.unstatus.edit', $data->id) }}"
                                     class="text-indigo-500 flex items-center justify-center">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -148,10 +148,10 @@
                                 {{ $data->open_pod }}
                             </td>
                             <td class="py-4 px-6">
-                                {{ round((($data->ttl_runsheet - $data->open_pod) / $data->ttl_runsheet) * 100) }} %
+                                {{ round((($data->ttl_runsheet - $data->open_pod) / $data->ttl_runsheet) * 100, 2) }} %
                             </td>
                             <td class="py-4 px-6">
-                                {{ round(($data->open_pod / $data->ttl_runsheet) * 100) }} %
+                                {{ round(($data->open_pod / $data->ttl_runsheet) * 100, 2) }} %
                             </td>
                         </tr>
                     @endforeach

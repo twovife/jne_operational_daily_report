@@ -23,7 +23,7 @@
                     </svg>
                     <x-btn-label>Delete</x-btn-label>
                 </x-btn-action>
-                <x-btn-link :href="route('opr.daily-report.unstatus.index')" :btntype="'primary'">
+                <x-btn-link :href="route('opr.openstatus.unstatus.index')" :btntype="'primary'">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -60,7 +60,7 @@
     @endif
 
     <div class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
-        <form action="{{ route('opr.daily-report.unstatus.update', $data->id) }}" method="POST">
+        <form action="{{ route('opr.openstatus.unstatus.update', $data->id) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="grid gap-6 mb-6 md:grid-cols-6">
@@ -97,17 +97,19 @@
                         required="" value="{{ $data->ttl_runsheet }}">
                 </div>
             </div>
-            <div class="flex justify-end items-center">
-                <x-btn-action type="submit" id="submit" :btntype="'success'">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4">
-                        </path>
-                    </svg>
-                    <x-btn-label>Update</x-btn-label>
-                </x-btn-action>
-            </div>
+            @can('opr unstatus update')
+                <div class="flex justify-end items-center">
+                    <x-btn-action type="submit" id="submit" :btntype="'success'">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4">
+                            </path>
+                        </svg>
+                        <x-btn-label>Update</x-btn-label>
+                    </x-btn-action>
+                </div>
+            @endcan
         </form>
     </div>
     <div class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
@@ -149,7 +151,7 @@
                     </tr>
                 </thead>
                 <tbody class="text-center">
-                    @foreach ($data->oprPodDetail as $data_detail)
+                    @foreach ($data->details as $data_detail)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <td class="py-4 px-6">
                                 <div class="flex justify-center items-center gap-4">
@@ -163,16 +165,18 @@
                                             </path>
                                         </svg>
                                     </button>
-                                    <button data-id="{{ $data_detail->id }}" type="button"
-                                        onclick="deleteModal(this)"
-                                        class="text-rose-500 flex items-center justify-center hover:text-white hover:bg-rose-500 p-1 rounded">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
-                                            </path>
-                                        </svg>
-                                    </button>
+                                    @can('opr unstatus delete')
+                                        <button data-id="{{ $data_detail->id }}" type="button"
+                                            onclick="deleteModal(this)"
+                                            class="text-rose-500 flex items-center justify-center hover:text-white hover:bg-rose-500 p-1 rounded">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                    @endcan
                                 </div>
                             </td>
                             <td class="py-4 px-6">
@@ -251,7 +255,7 @@
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Runsheet</label>
                             <input type="text" id="runsheet" name="runsheet"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
-                                placeholder="John" required>
+                                placeholder="No. Runsheet" required>
                         </div>
                         <div class="col-span-2">
                             <label for="user_kurir"
@@ -280,7 +284,7 @@
                                 Status</label>
                             <input type="text" id="remark_status" name="remark_status"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
-                                placeholder="John" required>
+                                placeholder="ex : Lupa Status / Unsycron System" required>
                         </div>
                         <div>
                             <label for="folluw_up"
@@ -288,7 +292,7 @@
                                 Up</label>
                             <input type="text" id="folluw_up" name="folluw_up"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
-                                placeholder="John" required>
+                                placeholder="ex : Done / Syncron System" required>
                         </div>
                         <div>
                             <label for="closed_date"
@@ -319,9 +323,9 @@
         <div class="relative p-4 w-full max-w-4xl h-full md:h-auto">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <form action="{{ route('opr.daily-report.unstatus-detail.store') }}" method="POST">
+                <form action="{{ route('opr.openstatus.detail.store') }}" method="POST">
                     @csrf
-                    <input type="hidden" id="opr_update_pod_id" name="opr_update_pod_id"
+                    <input type="hidden" id="opr_open_status_id" name="opr_open_status_id"
                         value="{{ $data->id }}">
                     <!-- Modal header -->
                     <div class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
@@ -354,7 +358,7 @@
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Runsheet</label>
                             <input type="text" id="runsheet" name="runsheet"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
-                                placeholder="John" required>
+                                placeholder="no. runsheet" required>
                         </div>
                         <div class="col-span-2">
                             <label for="user_kurir"
@@ -383,7 +387,7 @@
                                 Status</label>
                             <input type="text" id="remark_status" name="remark_status"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
-                                placeholder="John" required>
+                                placeholder="ex: lupa status / unsyncron system" required>
                         </div>
                         <div>
                             <label for="folluw_up"
@@ -391,7 +395,7 @@
                                 Up</label>
                             <input type="text" id="folluw_up" name="folluw_up"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
-                                placeholder="John" required>
+                                placeholder="ex: syncron system / done" required>
                         </div>
                         <div>
                             <label for="closed_date"
@@ -439,7 +443,7 @@
                     <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to
                         delete this data?</h3>
                     <div class="flex justify-center items-center">
-                        <form action="{{ route('opr.daily-report.unstatus.destroy', $data->id) }}" method="POST">
+                        <form action="{{ route('opr.openstatus.unstatus.destroy', $data->id) }}" method="POST">
                             @csrf
                             @method('delete')
                             <button type="submit"
@@ -507,7 +511,7 @@
             const options = {
                 onShow: async () => {
                     const id = targetEl.getAttribute('data-id');
-                    axios.get(`/opr/daily-report/unstatus-detail/${id}/edit`)
+                    axios.get(`/opr/openstatus/detail/${id}/edit`)
                         .then((response) => {
                             const data = response.data.data
                             targetEl.querySelector('#id').value = data.id
@@ -539,7 +543,7 @@
             const form = document.getElementById('formInput');
             form.addEventListener('submit', (e) => {
                 // e.preventDefault()
-                const url = `/opr/daily-report/unstatus-detail/${e.target.querySelector('#id').value}`
+                const url = `/opr/openstatus/detail/${e.target.querySelector('#id').value}`
                 let input = document.createElement("input");
                 input.type = "hidden";
                 input.name = "_method";
@@ -568,7 +572,7 @@
             function deleteModal(e) {
                 modalDel.show()
                 const id = e.getAttribute('data-id');
-                let url = `/opr/daily-report/unstatus-detail/${id}`;
+                let url = `/opr/openstatus/detail/${id}`;
                 deleteEl.querySelector('#delForm').setAttribute('action', url);
             }
 

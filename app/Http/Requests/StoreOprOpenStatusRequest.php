@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\OprOpenStatus;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\ValidationException;
 
 class StoreOprOpenStatusRequest extends FormRequest
 {
@@ -13,7 +15,7 @@ class StoreOprOpenStatusRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +26,19 @@ class StoreOprOpenStatusRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'date' => ['required'],
+            'hub' => ['required'],
+            'ttl_runsheet' => ['required']
         ];
+    }
+
+    public function authenticate()
+    {
+        $data = OprOpenStatus::where('date', $this->only('date'))->where('hub', $this->only('hub'))->first();
+        if ($data) {
+            throw ValidationException::withMessages([
+                'date' => trans('data tanggal ini sudah terinput'),
+            ]);
+        }
     }
 }

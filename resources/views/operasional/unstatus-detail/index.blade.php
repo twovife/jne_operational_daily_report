@@ -17,7 +17,7 @@
                 Filters
             </h2>
         </div>
-        <form action="{{ route('opr.daily-report.dailyperformance.index') }}">
+        <form action="{{ route('opr.openstatus.detail.index') }}">
             <div class="grid lg:grid-cols-6 mb-3 space-y-2 lg:space-y-0 space-x-0 lg:space-x-2">
                 <div>
                     <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Date
@@ -79,7 +79,7 @@
                     </svg>
                     <x-btn-label>Export</x-btn-label>
                 </x-btn-action>
-                <form id="exportReport" action="{{ route('opr.daily-report.dailyperformance.export') }}" method="GET">
+                <form id="exportReport" action="{{ route('opr.openstatus.detail.index') }}" method="GET">
                     <input type="hidden" name="from" value="{{ request('from') }}">
                     <input type="hidden" name="thru" value="{{ request('thru') }}">
                     <input type="hidden" name="hub" value="{{ request('hub') }}">
@@ -139,10 +139,10 @@
                                 </button>
                             </td>
                             <td class="py-4 px-6">
-                                {{ date('d/m/Y', strtotime($data->OprUpdatePod->date)) }}
+                                {{ date('d/m/Y', strtotime($data->openpod->date)) }}
                             </td>
                             <td class="py-4 px-6">
-                                {{ $data->OprUpdatePod->hub }}
+                                {{ $data->openpod->hub }}
                             </td>
                             <td class="py-4 px-6">
                                 {{ $data->awb }}
@@ -288,7 +288,7 @@
             const options = {
                 onShow: async () => {
                     const id = editEl.getAttribute('data-id');
-                    axios.get(`/opr/daily-report/unstatus-detail/${id}/edit`)
+                    axios.get(`/opr/openstatus/detail/${id}/edit`)
                         .then((response) => {
                             const data = response.data.data
                             editEl.querySelector('#id').value = data.id
@@ -323,7 +323,7 @@
             const form = document.getElementById('formInput');
             form.addEventListener('submit', (e) => {
                 // e.preventDefault()
-                const url = `/opr/daily-report/unstatus-detail/${e.target.querySelector('#id').value}`
+                const url = `/opr/openstatus/detail/${e.target.querySelector('#id').value}`
                 let input = document.createElement("input");
                 input.type = "hidden";
                 input.name = "_method";

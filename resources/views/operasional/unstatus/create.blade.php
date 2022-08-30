@@ -8,7 +8,7 @@
                 Input Data POD
             </h2>
             <div class="flex justify-start">
-                <x-btn-link :href="route('opr.daily-report.unstatus.index')">
+                <x-btn-link :href="route('opr.openstatus.unstatus.index')">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -22,7 +22,7 @@
 
     <x-error-input-alert :status="session('errors')"></x-error-input-alert>
 
-    <form action="{{ route('opr.daily-report.unstatus.store') }}" method="POST">
+    <form action="{{ route('opr.openstatus.unstatus.store') }}" method="POST">
         @csrf
         <div class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
             <div class="grid gap-6 mb-6 md:grid-cols-6">
@@ -137,7 +137,7 @@
                 </svg>
                 <x-btn-label>Add Row</x-btn-label>
             </x-btn-action>
-            @can('opr daily create')
+            @can('opr unstatus create')
                 <x-btn-action type="submit" :btntype="'success'">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">

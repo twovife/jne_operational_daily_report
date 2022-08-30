@@ -7,6 +7,8 @@ use App\Http\Controllers\OprBreachController;
 use App\Http\Controllers\OprCustomerAccountController;
 use App\Http\Controllers\OprDailyExpressPerformanceController;
 use App\Http\Controllers\OprDailyPerformanceController;
+use App\Http\Controllers\OprOpenStatusController;
+use App\Http\Controllers\OprOpenStatusDetailController;
 use App\Http\Controllers\OprPodDetailController;
 use App\Http\Controllers\OprUndelController;
 use App\Http\Controllers\OprUnDeliveryController;
@@ -85,44 +87,36 @@ Route::prefix('opr')->middleware('auth')->name('opr.')->group(function () {
         Route::delete('/{oprBreach}', [OprBreachController::class, 'destroy'])->name('destroy');
     });
 
+    Route::prefix('openstatus')->name('openstatus.')->group(function () {
+        Route::prefix('unstatus')->name('unstatus.')->group(function () {
+            Route::get('/', [OprOpenStatusController::class, 'index'])->middleware(['can:opr unstatus read'])->name('index');
+            Route::get('/create', [OprOpenStatusController::class, 'create'])->middleware(['can:opr unstatus read'])->name('create');
+            Route::post('/', [OprOpenStatusController::class, 'store'])->middleware(['can:opr unstatus create'])->name('store');
+            Route::get('/{oprOpenStatus}/edit', [OprOpenStatusController::class, 'edit'])->middleware(['can:opr unstatus read'])->name('edit');
+            Route::put('/{oprOpenStatus}', [OprOpenStatusController::class, 'update'])->middleware(['can:opr unstatus create'])->name('update');
+            Route::delete('/{oprOpenStatus}', [OprOpenStatusController::class, 'destroy'])->middleware(['can:opr unstatus delete'])->name('destroy');
+            Route::get('/{oprOpenStatus}/download', [OprOpenStatusController::class, 'download'])->middleware(['can:opr unstatus read'])->name('download');
+        });
+        Route::prefix('detail')->name('detail.')->group(function () {
+            Route::get('/', [OprOpenStatusDetailController::class, 'index'])->middleware(['can:opr unstatus read'])->name('index');
+            Route::get('/create', [OprOpenStatusDetailController::class, 'create'])->middleware(['can:opr unstatus read'])->name('create');
+            Route::post('/', [OprOpenStatusDetailController::class, 'store'])->middleware(['can:opr unstatus create'])->name('store');
+            Route::get('/{oprOpenStatusDetail}/edit', [OprOpenStatusDetailController::class, 'edit'])->middleware(['can:opr unstatus read'])->name('edit');
+            Route::put('/{oprOpenStatusDetail}', [OprOpenStatusDetailController::class, 'update'])->middleware(['can:opr unstatus create'])->name('update');
+            Route::delete('/{oprOpenStatusDetail}', [OprOpenStatusDetailController::class, 'destroy'])->middleware(['can:opr unstatus delete'])->name('destroy');
+            Route::get('/{oprOpenStatusDetail}/download', [OprOpenStatusDetailController::class, 'download'])->middleware(['can:opr unstatus read'])->name('download');
+        });
+    });
+
 
     Route::prefix('daily-report')->name('daily-report.')->group(function () {
-
-
         Route::prefix('customer')->name('customer.')->group(function () {
             Route::get('/apishow', [OprCustomerAccountController::class, 'apishow'])->name('apishow'); //'opr customer show'
         });
-
-
-        // kurang download
-        Route::prefix('unstatus')->name('unstatus.')->group(function () {
-            Route::get('/', [OprUpdatePodController::class, 'index'])->name('index');
-            Route::get('/create', [OprUpdatePodController::class, 'create'])->name('create');
-            Route::post('/', [OprUpdatePodController::class, 'store'])->name('store');
-            Route::get('/{oprUpdatePod}/edit', [OprUpdatePodController::class, 'edit'])->name('edit');
-            Route::put('/{oprUpdatePod}', [OprUpdatePodController::class, 'update'])->name('update');
-            Route::delete('/{oprUpdatePod}', [OprUpdatePodController::class, 'destroy'])->name('destroy');
-            Route::get('/{oprUpdatePod}/download', [OprUpdatePodController::class, 'download'])->name('download');
-        });
-
-        Route::prefix('unstatus-detail')->name('unstatus-detail.')->group(function () {
-            Route::get('/', [OprPodDetailController::class, 'index'])->name('index');
-            Route::get('/create', [OprPodDetailController::class, 'create'])->name('create');
-            Route::post('/', [OprPodDetailController::class, 'store'])->name('store');
-            Route::get('/{oprPodDetail}/edit', [OprPodDetailController::class, 'edit'])->name('edit');
-            Route::put('/{oprPodDetail}', [OprPodDetailController::class, 'update'])->name('update');
-            Route::delete('/{oprPodDetail}', [OprPodDetailController::class, 'destroy'])->name('destroy');
-            Route::get('/{oprPodDetail}/download', [OprPodDetailController::class, 'download'])->name('download');
-        });
     });
 });
 
-Route::prefix('master')->name('master.')->group(function () {
-    Route::prefix('employee')->name('employee.')->group(function () {
-        Route::get('/', [EmployeeController::class, 'index'])->name('index');
-        Route::get('/import', [EmployeeController::class, 'import'])->name('import');
-    });
-});
+
 
 Route::prefix('su')->name('su.')->middleware(['role:super admin'])->group(function () {
     Route::prefix('user')->name('user.')->group(function () {
@@ -132,16 +126,6 @@ Route::prefix('su')->name('su.')->middleware(['role:super admin'])->group(functi
     });
 });
 
-
-Route::prefix('mng')->name('mng.')->group(function () {
-    Route::prefix('employee')->name('employee.')->group(function () {
-        Route::get('/', [EmployeeController::class, 'index'])->name('index');
-        Route::get('/import', [EmployeeController::class, 'import'])->name('import');
-    });
-});
-Route::get('/makemesuper', function () {
-    return User::find(1)->assignRole('super admin');
-});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
