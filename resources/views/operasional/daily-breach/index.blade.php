@@ -17,7 +17,7 @@
                 Filters
             </h2>
         </div>
-        <form action="{{ route('opr.daily-report.dailyperformance.index') }}">
+        <form action="{{ route('opr.breach.index') }}">
             <div class="grid lg:grid-cols-6 mb-3 space-x-3">
                 <div>
                     <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Date
@@ -65,11 +65,11 @@
                 Performa Delivery
             </h2>
             <div class="flex justify-start space-x-2">
-                <a role="button" href="{{ route('opr.daily-report.undel.create') }}"
+                <a role="button" href="{{ route('opr.undel.create') }}"
                     class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
                     Create
                 </a>
-                <form action="{{ route('opr.daily-report.dailyperformance.export') }}" method="GET">
+                <form action="{{ route('opr.undel.create') }}" method="GET">
                     <input type="hidden" name="from" value="{{ request('from') }}">
                     <input type="hidden" name="thru" value="{{ request('thru') }}">
                     <input type="hidden" name="hub" value="{{ request('hub') }}">
@@ -112,7 +112,7 @@
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row"
                                     class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    <a href="{{ route('opr.daily-report.breach.edit', $data->id) }}"
+                                    <a href="{{ route('opr.breach.edit', $data->id) }}"
                                         class="flex justify-center items-center text-indigo-500">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -136,7 +136,7 @@
                                     {{ $data->reason }}
                                 </td>
                                 <td class="py-4 px-6">
-                                    <a href="{{ route('opr.daily-report.undel.edit', $data->opr_un_delivery_id) }}"
+                                    <a href="{{ route('opr.undel.edit', $data->opr_undel_id) }}"
                                         class="flex justify-center items-center text-indigo-500">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                             xmlns="http://www.w3.org/2000/svg">

@@ -2,12 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Models\OprDailyPerformance;
-use App\Models\OprDailyPerformanceDetail;
+use App\Models\OprDailyExpressPerformance;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class StoreOprDailyPerformanceRequest extends FormRequest
+class StoreOprDailyExpressPerformanceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -78,7 +77,7 @@ class StoreOprDailyPerformanceRequest extends FormRequest
     }
     public function authenticate()
     {
-        $data = OprDailyPerformance::where('inbound_date', $this->only('inbound_date'))->where('zone', $this->only('zone'))->where('hub', $this->only('hub'))->first();
+        $data = OprDailyExpressPerformance::where('inbound_date', $this->only('inbound_date'))->where('zone', $this->only('zone'))->where('hub', $this->only('hub'))->first();
         if ($data) {
             throw ValidationException::withMessages([
                 'inbound_date' => trans('Zona & Tanggal sudah terinput'),

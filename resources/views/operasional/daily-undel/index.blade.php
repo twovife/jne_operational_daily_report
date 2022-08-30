@@ -17,7 +17,7 @@
                 Filters
             </h2>
         </div>
-        <form action="{{ route('opr.daily-report.dailyperformance.index') }}">
+        <form action="{{ route('opr.undel.index') }}">
             <div class="grid lg:grid-cols-6 mb-3 space-y-2 lg:space-y-0 space-x-0 lg:space-x-2">
                 <div>
                     <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Date
@@ -71,7 +71,7 @@
                 Performa Delivery
             </h2>
             <div class="flex justify-start space-x-2">
-                <x-btn-link :href="route('opr.daily-report.undel.create')">
+                <x-btn-link :href="route('opr.undel.create')">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -87,7 +87,7 @@
                     </svg>
                     <x-btn-label>Export</x-btn-label>
                 </x-btn-action>
-                <form id="exportReport" action="{{ route('opr.daily-report.undel.exportmain') }}" method="GET">
+                <form id="exportReport" action="{{ route('opr.undel.exportmain') }}" method="GET">
                     <input type="hidden" name="from" value="{{ request('from') }}">
                     <input type="hidden" name="thru" value="{{ request('thru') }}">
                     <input type="hidden" name="hub" value="{{ request('hub') }}">
@@ -171,7 +171,7 @@
                     @foreach ($performances as $performance)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <td class="py-4 px-6 whitespace-nowrap">
-                                <a href="{{ route('opr.daily-report.undel.edit', $performance->id) }}"
+                                <a href="{{ route('opr.undel.edit', $performance->id) }}"
                                     class="text-indigo-700 hover:text-indigo-900 focus:text-indigo-900 hover:font-semibold focus:font-semibold">
                                     {{ $performance->date }}
                                 </a>

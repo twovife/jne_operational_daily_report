@@ -20,9 +20,8 @@
 
     <x-error-input-alert :status="session('errors')"></x-error-input-alert>
 
-    <form
-        @can('opr dailyperformance create')
-    action="{{ route('opr.dailyperformance.nonexpress.store') }}"
+    <form @can('opr dailyperformance create')
+    action="{{ route('opr.dailyperformance.express.store') }}"
     @endcan
         method="POST">
         @csrf
@@ -92,7 +91,7 @@
 
         <div class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full b-3">
             <h2 class="text-xl mb-4">Report H+0</h2>
-            <div class="grid gap-6 mb-6 lg:grid-cols-10">
+            <div class="grid gap-6 mb-6 lg:grid-cols-9">
                 <div>
                     <label for="total_0"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 required">Total

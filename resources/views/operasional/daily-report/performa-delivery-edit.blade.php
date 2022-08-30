@@ -5,7 +5,7 @@
                 Input Data Performa Delivery
             </h2>
             <div class="flex justify-start">
-                <x-btn-link :href="route('opr.daily-report.dailyperformance.index')">
+                <x-btn-link :href="route('opr.dailyperformance.nonexpress.index')">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -20,7 +20,7 @@
 
     <x-error-input-alert :status="session('errors')"></x-error-input-alert>
 
-    <form action="{{ route('opr.daily-report.dailyperformance.update', $data->id) }}" method="POST">
+    <form action="{{ route('opr.dailyperformance.nonexpress.update', $data->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
@@ -79,7 +79,7 @@
                         required="">
                 </div>
             </div>
-            @can('opr daily delete')
+            @can('opr dailyperformance delete')
                 <div class="flex justify-end items-center gap-2">
                     <x-btn-action type="submit" :btntype="'success'">
                         <svg class="w-5 h-" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -106,7 +106,7 @@
 
 
     {{-- 0 --}}
-    <form action="{{ route('opr.daily-report.dailyperformance.update', $data->id) }}" method="POST">
+    <form action="{{ route('opr.dailyperformance.nonexpress.update', $data->id) }}" method="POST">
         @csrf
         @method('PUT')
         <input type="hidden" name="d_day" value="0">
@@ -125,18 +125,27 @@
                         required>
                 </div>
                 <div>
-                    <label for="ur_0" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
+                    <label for="unrunsheet_0"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
                         received</label>
-                    <input value="{{ $data->ur_0 }}" data-name="sumit" data-id="ur" type="number"
-                        id="ur_0" name="ur_0"
+                    <input value="{{ $data->unrunsheet_0 }}" data-name="sumit" data-id="ur" type="number"
+                        id="unrunsheet_0" name="unrunsheet_0"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    <label for="d_0"
+                    <label for="delivered_0"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Delivered</label>
-                    <input readonly value="{{ $data->d_0 }}" data-name="sumit" data-id="delivered"
-                        type="number" id="d_0" name="d_0"
+                    <input readonly value="{{ $data->delivered_0 }}" data-name="sumit" data-id="delivered"
+                        type="number" id="delivered_0" name="delivered_0"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required>
+                </div>
+                <div>
+                    <label for="successreturn_0"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sukses Return</label>
+                    <input value="{{ $data->successreturn_0 }}" data-name="sumit" data-id="successreturn"
+                        type="number" id="successreturn_0" name="successreturn_0"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
@@ -149,31 +158,42 @@
                         required>
                 </div>
                 <div>
-                    <label for="u_0"
+                    <label for="undel_0"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Undel</label>
-                    <input value="{{ $data->u_0 }}" data-name="sumit" data-id="undel" type="number"
-                        id="u_0" name="u_0"
+                    <input value="{{ $data->undel_0 }}" data-name="sumit" data-id="undel" type="number"
+                        id="undel_0" name="undel_0"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    <label for="o_0" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
+                    <label for="open_0" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
                         Status</label>
-                    <input value="{{ $data->o_0 }}" data-name="sumit" data-id="open" type="number"
-                        id="o_0" name="o_0"
+                    <input value="{{ $data->open_0 }}" data-name="sumit" data-id="open" type="number"
+                        id="open_0" name="open_0"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    <label for="r_0"
+                    <label for="return_0"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Return</label>
-                    <input value="{{ $data->r_0 }}" data-name="sumit" data-id="return" type="number"
-                        id="r_0" name="r_0"
+                    <input value="{{ $data->return_0 }}" data-name="sumit" data-id="return" type="number"
+                        id="return_0" name="return_0"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
+
                 <div>
-                    @can('opr daily edit')
+                    <label for="wh_0"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">WH1</label>
+                    <input value="{{ $data->wh_0 }}" data-name="sumit" data-id="wh" type="number"
+                        id="wh_0" name="wh_0"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required>
+                </div>
+
+
+                <div>
+                    @can('opr dailyperformance update')
                         <x-btn-action type="submit" :btntype="'success'">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -200,7 +220,7 @@
     </form>
 
     {{-- 1 --}}
-    <form action="{{ route('opr.daily-report.dailyperformance.update', $data->id) }}" method="POST">
+    <form action="{{ route('opr.dailyperformance.nonexpress.update', $data->id) }}" method="POST">
         @csrf
         @method('PUT')
         <input type="hidden" name="d_day" value="1">
@@ -220,18 +240,27 @@
                         required>
                 </div>
                 <div>
-                    <label for="ur_1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
+                    <label for="unrunsheet_1"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
                         received</label>
-                    <input value="{{ $data->ur_1 }}" data-name="sumit" data-id="ur" type="number" x
-                        id="ur_1" name="ur_1"
+                    <input value="{{ $data->unrunsheet_1 }}" data-name="sumit" data-id="ur" type="number" x
+                        id="unrunsheet_1" name="unrunsheet_1"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    <label for="d_1"
+                    <label for="delivered_1"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Delivered</label>
-                    <input readonly value="{{ $data->d_1 }}" data-name="sumit" data-id="delivered"
-                        type="number" id="d_1" name="d_1"
+                    <input readonly value="{{ $data->delivered_1 }}" data-name="sumit" data-id="delivered"
+                        type="number" id="delivered_1" name="delivered_1"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required>
+                </div>
+                <div>
+                    <label for="successreturn_1"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sukses Return</label>
+                    <input value="{{ $data->successreturn_1 }}" data-name="sumit" data-id="successreturn"
+                        type="number" id="successreturn_1" name="successreturn_1"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
@@ -244,31 +273,41 @@
                         required>
                 </div>
                 <div>
-                    <label for="u_1"
+                    <label for="undel_1"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Undel</label>
-                    <input value="{{ $data->u_1 }}" data-name="sumit" data-id="undel" type="number"
-                        id="u_1" name="u_1"
+                    <input value="{{ $data->undel_1 }}" data-name="sumit" data-id="undel" type="number"
+                        id="undel_1" name="undel_1"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    <label for="o_1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
+                    <label for="open_1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
                         Status</label>
-                    <input value="{{ $data->o_1 }}" data-name="sumit" data-id="open" type="number"
-                        id="o_1" name="o_1"
+                    <input value="{{ $data->open_1 }}" data-name="sumit" data-id="open" type="number"
+                        id="open_1" name="open_1"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    <label for="r_1"
+                    <label for="return_1"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Return</label>
-                    <input value="{{ $data->r_1 }}" data-name="sumit" data-id="return" type="number"
-                        id="r_1" name="r_1"
+                    <input value="{{ $data->return_1 }}" data-name="sumit" data-id="return" type="number"
+                        id="return_1" name="return_1"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
+
                 <div>
-                    @can('opr daily edit')
+                    <label for="wh_1"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">WH1</label>
+                    <input value="{{ $data->wh_1 }}" data-name="sumit" data-id="wh" type="number"
+                        id="wh_1" name="wh_1"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required>
+                </div>
+
+                <div>
+                    @can('opr dailyperformance update')
                         <x-btn-action type="submit" :btntype="'success'">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -295,7 +334,7 @@
     </form>
 
     {{-- 2 --}}
-    <form action="{{ route('opr.daily-report.dailyperformance.update', $data->id) }}" method="POST">
+    <form action="{{ route('opr.dailyperformance.nonexpress.update', $data->id) }}" method="POST">
         @csrf
         @method('PUT')
         <input type="hidden" name="d_day" value="2">
@@ -315,18 +354,27 @@
                         required>
                 </div>
                 <div>
-                    <label for="ur_2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
+                    <label for="unrunsheet_2"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
                         received</label>
-                    <input value="{{ $data->ur_2 }}" data-name="sumit" data-id="ur" type="number" x
-                        id="ur_1" name="ur_2"
+                    <input value="{{ $data->unrunsheet_2 }}" data-name="sumit" data-id="ur" type="number" x
+                        id="unrunsheet_1" name="unrunsheet_2"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    <label for="d_2"
+                    <label for="delivered_2"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Delivered</label>
-                    <input readonly value="{{ $data->d_2 }}" data-name="sumit" data-id="delivered"
-                        type="number" id="d_2" name="d_2"
+                    <input readonly value="{{ $data->delivered_2 }}" data-name="sumit" data-id="delivered"
+                        type="number" id="delivered_2" name="delivered_2"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required>
+                </div>
+                <div>
+                    <label for="successreturn_2"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sukses Return</label>
+                    <input value="{{ $data->successreturn_2 }}" data-name="sumit" data-id="successreturn"
+                        type="number" id="successreturn_2" name="successreturn_2"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
@@ -339,31 +387,41 @@
                         required>
                 </div>
                 <div>
-                    <label for="u_2"
+                    <label for="undel_2"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Undel</label>
-                    <input value="{{ $data->u_2 }}" data-name="sumit" data-id="undel" type="number"
-                        id="u_2" name="u_2"
+                    <input value="{{ $data->undel_2 }}" data-name="sumit" data-id="undel" type="number"
+                        id="undel_2" name="undel_2"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    <label for="o_2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
+                    <label for="open_2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
                         Status</label>
-                    <input value="{{ $data->o_2 }}" data-name="sumit" data-id="open" type="number"
-                        id="o_2" name="o_2"
+                    <input value="{{ $data->open_2 }}" data-name="sumit" data-id="open" type="number"
+                        id="open_2" name="open_2"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    <label for="r_2"
+                    <label for="return_2"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Return</label>
-                    <input value="{{ $data->r_2 }}" data-name="sumit" data-id="return" type="number"
-                        id="r_2" name="r_2"
+                    <input value="{{ $data->return_2 }}" data-name="sumit" data-id="return" type="number"
+                        id="return_2" name="return_2"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
+
                 <div>
-                    @can('opr daily edit')
+                    <label for="wh_2"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">WH1</label>
+                    <input value="{{ $data->wh_2 }}" data-name="sumit" data-id="wh" type="number"
+                        id="wh_2" name="wh_2"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required>
+                </div>
+
+                <div>
+                    @can('opr dailyperformance update')
                         <x-btn-action type="submit" :btntype="'success'">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -390,7 +448,7 @@
     </form>
 
     {{-- 3 --}}
-    <form action="{{ route('opr.daily-report.dailyperformance.update', $data->id) }}" method="POST">
+    <form action="{{ route('opr.dailyperformance.nonexpress.update', $data->id) }}" method="POST">
         @csrf
         @method('PUT')
         <input type="hidden" name="d_day" value="3">
@@ -410,18 +468,27 @@
                         required>
                 </div>
                 <div>
-                    <label for="ur_3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
+                    <label for="unrunsheet_3"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
                         received</label>
-                    <input value="{{ $data->ur_3 }}" data-name="sumit" data-id="ur" type="number" x
-                        id="ur_1" name="ur_3"
+                    <input value="{{ $data->unrunsheet_3 }}" data-name="sumit" data-id="ur" type="number" x
+                        id="unrunsheet_1" name="unrunsheet_3"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    <label for="d_3"
+                    <label for="delivered_3"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Delivered</label>
-                    <input readonly value="{{ $data->d_3 }}" data-name="sumit" data-id="delivered"
-                        type="number" id="d_3" name="d_3"
+                    <input readonly value="{{ $data->delivered_3 }}" data-name="sumit" data-id="delivered"
+                        type="number" id="delivered_3" name="delivered_3"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required>
+                </div>
+                <div>
+                    <label for="successreturn_3"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sukses Return</label>
+                    <input value="{{ $data->successreturn_3 }}" data-name="sumit" data-id="successreturn"
+                        type="number" id="successreturn_3" name="successreturn_3"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
@@ -434,31 +501,41 @@
                         required>
                 </div>
                 <div>
-                    <label for="u_3"
+                    <label for="undel_3"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Undel</label>
-                    <input value="{{ $data->u_3 }}" data-name="sumit" data-id="undel" type="number"
-                        id="u_3" name="u_3"
+                    <input value="{{ $data->undel_3 }}" data-name="sumit" data-id="undel" type="number"
+                        id="undel_3" name="undel_3"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    <label for="o_3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
+                    <label for="open_3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
                         Status</label>
-                    <input value="{{ $data->o_3 }}" data-name="sumit" data-id="open" type="number"
-                        id="o_3" name="o_3"
+                    <input value="{{ $data->open_3 }}" data-name="sumit" data-id="open" type="number"
+                        id="open_3" name="open_3"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    <label for="r_3"
+                    <label for="return_3"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Return</label>
-                    <input value="{{ $data->r_3 }}" data-name="sumit" data-id="return" type="number"
-                        id="r_3" name="r_3"
+                    <input value="{{ $data->return_3 }}" data-name="sumit" data-id="return" type="number"
+                        id="return_3" name="return_3"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
+
                 <div>
-                    @can('opr daily edit')
+                    <label for="wh_3"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">WH1</label>
+                    <input value="{{ $data->wh_3 }}" data-name="sumit" data-id="wh" type="number"
+                        id="wh_3" name="wh_3"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required>
+                </div>
+
+                <div>
+                    @can('opr dailyperformance update')
                         <x-btn-action type="submit" :btntype="'success'">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -486,7 +563,7 @@
     </form>
 
     {{-- 4 --}}
-    <form action="{{ route('opr.daily-report.dailyperformance.update', $data->id) }}" method="POST">
+    <form action="{{ route('opr.dailyperformance.nonexpress.update', $data->id) }}" method="POST">
         @csrf
         @method('PUT')
         <input type="hidden" name="d_day" value="4">
@@ -506,18 +583,27 @@
                         required>
                 </div>
                 <div>
-                    <label for="ur_4" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
+                    <label for="unrunsheet_4"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
                         received</label>
-                    <input value="{{ $data->ur_4 }}" data-name="sumit" data-id="ur" type="number" x
-                        id="ur_1" name="ur_4"
+                    <input value="{{ $data->unrunsheet_4 }}" data-name="sumit" data-id="ur" type="number" x
+                        id="unrunsheet_1" name="unrunsheet_4"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    <label for="d_4"
+                    <label for="delivered_4"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Delivered</label>
-                    <input readonly value="{{ $data->d_4 }}" data-name="sumit" data-id="delivered"
-                        type="number" id="d_4" name="d_4"
+                    <input readonly value="{{ $data->delivered_4 }}" data-name="sumit" data-id="delivered"
+                        type="number" id="delivered_4" name="delivered_4"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required>
+                </div>
+                <div>
+                    <label for="successreturn_4"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sukses Return</label>
+                    <input value="{{ $data->successreturn_4 }}" data-name="sumit" data-id="successreturn"
+                        type="number" id="successreturn_4" name="successreturn_4"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
@@ -530,31 +616,40 @@
                         required>
                 </div>
                 <div>
-                    <label for="u_4"
+                    <label for="undel_4"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Undel</label>
-                    <input value="{{ $data->u_4 }}" data-name="sumit" data-id="undel" type="number"
-                        id="u_4" name="u_4"
+                    <input value="{{ $data->undel_4 }}" data-name="sumit" data-id="undel" type="number"
+                        id="undel_4" name="undel_4"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    <label for="o_4" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
+                    <label for="open_4" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
                         Status</label>
-                    <input value="{{ $data->o_4 }}" data-name="sumit" data-id="open" type="number"
-                        id="o_4" name="o_4"
+                    <input value="{{ $data->open_4 }}" data-name="sumit" data-id="open" type="number"
+                        id="open_4" name="open_4"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    <label for="r_4"
+                    <label for="return_4"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Return</label>
-                    <input value="{{ $data->r_4 }}" data-name="sumit" data-id="return" type="number"
-                        id="r_4" name="r_4"
+                    <input value="{{ $data->return_4 }}" data-name="sumit" data-id="return" type="number"
+                        id="return_4" name="return_4"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    @can('opr daily edit')
+                    <label for="wh_4"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">WH1</label>
+                    <input value="{{ $data->wh_4 }}" data-name="sumit" data-id="wh" type="number"
+                        id="wh_4" name="wh_4"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required>
+                </div>
+
+                <div>
+                    @can('opr dailyperformance update')
                         <x-btn-action type="submit" :btntype="'success'">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -582,7 +677,7 @@
     </form>
 
     {{-- 5 --}}
-    <form action="{{ route('opr.daily-report.dailyperformance.update', $data->id) }}" method="POST">
+    <form action="{{ route('opr.dailyperformance.nonexpress.update', $data->id) }}" method="POST">
         @csrf
         @method('PUT')
         <input type="hidden" name="d_day" value="5">
@@ -602,18 +697,27 @@
                         required>
                 </div>
                 <div>
-                    <label for="ur_5" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
+                    <label for="unrunsheet_5"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
                         received</label>
-                    <input value="{{ $data->ur_5 }}" data-name="sumit" data-id="ur" type="number" x
-                        id="ur_1" name="ur_5"
+                    <input value="{{ $data->unrunsheet_5 }}" data-name="sumit" data-id="ur" type="number" x
+                        id="unrunsheet_1" name="unrunsheet_5"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    <label for="d_5"
+                    <label for="delivered_5"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Delivered</label>
-                    <input readonly value="{{ $data->d_5 }}" data-name="sumit" data-id="delivered"
-                        type="number" id="d_5" name="d_5"
+                    <input readonly value="{{ $data->delivered_5 }}" data-name="sumit" data-id="delivered"
+                        type="number" id="delivered_5" name="delivered_5"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required>
+                </div>
+                <div>
+                    <label for="successreturn_5"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sukses Return</label>
+                    <input value="{{ $data->successreturn_5 }}" data-name="sumit" data-id="successreturn"
+                        type="number" id="successreturn_5" name="successreturn_5"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
@@ -626,31 +730,40 @@
                         required>
                 </div>
                 <div>
-                    <label for="u_5"
+                    <label for="undel_5"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Undel</label>
-                    <input value="{{ $data->u_5 }}" data-name="sumit" data-id="undel" type="number"
-                        id="u_5" name="u_5"
+                    <input value="{{ $data->undel_5 }}" data-name="sumit" data-id="undel" type="number"
+                        id="undel_5" name="undel_5"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    <label for="o_5" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
+                    <label for="open_5" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
                         Status</label>
-                    <input value="{{ $data->o_5 }}" data-name="sumit" data-id="open" type="number"
-                        id="o_5" name="o_5"
+                    <input value="{{ $data->open_5 }}" data-name="sumit" data-id="open" type="number"
+                        id="open_5" name="open_5"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    <label for="r_5"
+                    <label for="return_5"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Return</label>
-                    <input value="{{ $data->r_5 }}" data-name="sumit" data-id="return" type="number"
-                        id="r_5" name="r_5"
+                    <input value="{{ $data->return_5 }}" data-name="sumit" data-id="return" type="number"
+                        id="return_5" name="return_5"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    @can('opr daily edit')
+                    <label for="wh_5"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">WH1</label>
+                    <input value="{{ $data->wh_5 }}" data-name="sumit" data-id="wh" type="number"
+                        id="wh_5" name="wh_5"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required>
+                </div>
+
+                <div>
+                    @can('opr dailyperformance update')
                         <x-btn-action type="submit" :btntype="'success'">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -678,7 +791,7 @@
     </form>
 
     {{-- 6 --}}
-    <form action="{{ route('opr.daily-report.dailyperformance.update', $data->id) }}" method="POST">
+    <form action="{{ route('opr.dailyperformance.nonexpress.update', $data->id) }}" method="POST">
         @csrf
         @method('PUT')
         <input type="hidden" name="d_day" value="6">
@@ -698,18 +811,27 @@
                         required>
                 </div>
                 <div>
-                    <label for="ur_6" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
+                    <label for="unrunsheet_6"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
                         received</label>
-                    <input value="{{ $data->ur_6 }}" data-name="sumit" data-id="ur" type="number" x
-                        id="ur_1" name="ur_6"
+                    <input value="{{ $data->unrunsheet_6 }}" data-name="sumit" data-id="ur" type="number" x
+                        id="unrunsheet_1" name="unrunsheet_6"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    <label for="d_6"
+                    <label for="delivered_6"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Delivered</label>
-                    <input readonly value="{{ $data->d_6 }}" data-name="sumit" data-id="delivered"
-                        type="number" id="d_6" name="d_6"
+                    <input readonly value="{{ $data->delivered_6 }}" data-name="sumit" data-id="delivered"
+                        type="number" id="delivered_6" name="delivered_6"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required>
+                </div>
+                <div>
+                    <label for="successreturn_6"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sukses Return</label>
+                    <input value="{{ $data->successreturn_6 }}" data-name="sumit" data-id="successreturn"
+                        type="number" id="successreturn_6" name="successreturn_6"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
@@ -722,31 +844,40 @@
                         required>
                 </div>
                 <div>
-                    <label for="u_6"
+                    <label for="undel_6"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Undel</label>
-                    <input value="{{ $data->u_6 }}" data-name="sumit" data-id="undel" type="number"
-                        id="u_6" name="u_6"
+                    <input value="{{ $data->undel_6 }}" data-name="sumit" data-id="undel" type="number"
+                        id="undel_6" name="undel_6"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    <label for="o_6" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
+                    <label for="open_6" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
                         Status</label>
-                    <input value="{{ $data->o_6 }}" data-name="sumit" data-id="open" type="number"
-                        id="o_6" name="o_6"
+                    <input value="{{ $data->open_6 }}" data-name="sumit" data-id="open" type="number"
+                        id="open_6" name="open_6"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    <label for="r_6"
+                    <label for="return_6"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Return</label>
-                    <input value="{{ $data->r_6 }}" data-name="sumit" data-id="return" type="number"
-                        id="r_6" name="r_6"
+                    <input value="{{ $data->return_6 }}" data-name="sumit" data-id="return" type="number"
+                        id="return_6" name="return_6"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    @can('opr daily edit')
+                    <label for="wh_6"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">WH1</label>
+                    <input value="{{ $data->wh_6 }}" data-name="sumit" data-id="wh" type="number"
+                        id="wh_6" name="wh_6"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required>
+                </div>
+
+                <div>
+                    @can('opr dailyperformance update')
                         <x-btn-action type="submit" :btntype="'success'">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -774,7 +905,7 @@
     </form>
 
     {{-- 7 --}}
-    <form action="{{ route('opr.daily-report.dailyperformance.update', $data->id) }}" method="POST">
+    <form action="{{ route('opr.dailyperformance.nonexpress.update', $data->id) }}" method="POST">
         @csrf
         @method('PUT')
         <input type="hidden" name="d_day" value="7">
@@ -794,18 +925,27 @@
                         required>
                 </div>
                 <div>
-                    <label for="ur_7" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
+                    <label for="unrunsheet_7"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
                         received</label>
-                    <input value="{{ $data->ur_7 }}" data-name="sumit" data-id="ur" type="number" x
-                        id="ur_1" name="ur_7"
+                    <input value="{{ $data->unrunsheet_7 }}" data-name="sumit" data-id="ur" type="number" x
+                        id="unrunsheet_1" name="unrunsheet_7"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    <label for="d_7"
+                    <label for="delivered_7"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Delivered</label>
-                    <input readonly value="{{ $data->d_7 }}" data-name="sumit" data-id="delivered"
-                        type="number" id="d_7" name="d_7"
+                    <input readonly value="{{ $data->delivered_7 }}" data-name="sumit" data-id="delivered"
+                        type="number" id="delivered_7" name="delivered_7"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required>
+                </div>
+                <div>
+                    <label for="successreturn_7"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sukses Return</label>
+                    <input value="{{ $data->successreturn_7 }}" data-name="sumit" data-id="successreturn"
+                        type="number" id="successreturn_7" name="successreturn_7"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
@@ -818,31 +958,154 @@
                         required>
                 </div>
                 <div>
-                    <label for="u_7"
+                    <label for="undel_7"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Undel</label>
-                    <input value="{{ $data->u_7 }}" data-name="sumit" data-id="undel" type="number"
-                        id="u_7" name="u_7"
+                    <input value="{{ $data->undel_7 }}" data-name="sumit" data-id="undel" type="number"
+                        id="undel_7" name="undel_7"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    <label for="o_7" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
+                    <label for="open_7" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
                         Status</label>
-                    <input value="{{ $data->o_7 }}" data-name="sumit" data-id="open" type="number"
-                        id="o_7" name="o_7"
+                    <input value="{{ $data->open_7 }}" data-name="sumit" data-id="open" type="number"
+                        id="open_7" name="open_7"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    <label for="r_7"
+                    <label for="return_7"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Return</label>
-                    <input value="{{ $data->r_7 }}" data-name="sumit" data-id="return" type="number"
-                        id="r_7" name="r_7"
+                    <input value="{{ $data->return_7 }}" data-name="sumit" data-id="return" type="number"
+                        id="return_7" name="return_7"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required>
                 </div>
                 <div>
-                    @can('opr daily edit')
+                    <label for="wh_7"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">WH1</label>
+                    <input value="{{ $data->wh_7 }}" data-name="sumit" data-id="wh" type="number"
+                        id="wh_7" name="wh_7"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required>
+                </div>
+
+                <div>
+                    @can('opr dailyperformance update')
+                        <x-btn-action type="submit" :btntype="'success'">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <x-btn-label>{{ $data->date_7 ? 'Update' : 'Add' }} </x-btn-label>
+                        </x-btn-action>
+                    @else
+                        @if (Auth::user()->roles->where('name', 'opr pod')->first())
+                            <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_7 ? true : false">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <x-btn-label>Add</x-btn-label>
+                            </x-btn-action>
+                        @endif
+                    @endcan
+
+                </div>
+            </div>
+        </div>
+    </form>
+
+    {{-- 8 --}}
+    <form action="{{ route('opr.dailyperformance.nonexpress.update', $data->id) }}" method="POST">
+        @csrf
+        @method('PUT')
+        <input type="hidden" name="d_day" value="8">
+        <div onkeyup="thisIsChange(this)"
+            class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
+            <h2 class="text-xl mb-3">
+                H+ >7
+            </h2>
+            <div class="grid gap-6 mb-6 grid-cols-4 md:grid-cols-8 items-end">
+                <div>
+                    <label for="total_8"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Total
+                        Cnote</label>
+                    <input value="{{ $data->total_8 }}" data-name="sumit" data-id="total_cnote" type="number"
+                        id="total_8" name="total_8"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required>
+                </div>
+                <div>
+                    <label for="unrunsheet_8"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
+                        received</label>
+                    <input value="{{ $data->unrunsheet_8 }}" data-name="sumit" data-id="ur" type="number" x
+                        id="unrunsheet_1" name="unrunsheet_8"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required>
+                </div>
+                <div>
+                    <label for="delivered_8"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Delivered</label>
+                    <input readonly value="{{ $data->delivered_8 }}" data-name="sumit" data-id="delivered"
+                        type="number" id="delivered_8" name="delivered_8"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required>
+                </div>
+                <div>
+                    <label for="successreturn_8"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sukses Return</label>
+                    <input value="{{ $data->successreturn_8 }}" data-name="sumit" data-id="successreturn"
+                        type="number" id="successreturn_8" name="successreturn_8"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required>
+                </div>
+                <div>
+                    <label for="cr_8"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">CR</label>
+                    <input value="{{ $data->cr_8 }}" data-name="sumit" data-id="cr" type="number"
+                        id="cr_8" name="cr_8"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required>
+                </div>
+                <div>
+                    <label for="undel_8"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Undel</label>
+                    <input value="{{ $data->undel_8 }}" data-name="sumit" data-id="undel" type="number"
+                        id="undel_8" name="undel_8"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required>
+                </div>
+                <div>
+                    <label for="open_8" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
+                        Status</label>
+                    <input value="{{ $data->open_8 }}" data-name="sumit" data-id="open" type="number"
+                        id="open_8" name="open_8"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required>
+                </div>
+                <div>
+                    <label for="return_8"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Return</label>
+                    <input value="{{ $data->return_8 }}" data-name="sumit" data-id="return" type="number"
+                        id="return_8" name="return_8"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required>
+                </div>
+                <div>
+                    <label for="wh_8"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">WH1</label>
+                    <input value="{{ $data->wh_8 }}" data-name="sumit" data-id="wh" type="number"
+                        id="wh_8" name="wh_8"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required>
+                </div>
+
+                <div>
+                    @can('opr dailyperformance update')
                         <x-btn-action type="submit" :btntype="'success'">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -878,7 +1141,8 @@
                 <button type="button"
                     class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
                     data-modal-toggle="popup-modal">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"
                             d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                             clip-rule="evenodd"></path>
@@ -893,7 +1157,7 @@
                     <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to
                         delete this data?</h3>
                     <div class="flex justify-center items-center">
-                        <form action="{{ route('opr.daily-report.dailyperformance.destroy', $data->id) }}"
+                        <form action="{{ route('opr.dailyperformance.nonexpress.destroy', $data->id) }}"
                             method="post">
                             @csrf
                             @method('delete')
@@ -931,8 +1195,10 @@
                     const undel = event.querySelector('[data-id="undel"]').value
                     const un_status = event.querySelector('[data-id="open"]').value
                     const rt = event.querySelector('[data-id="return"]').value
+                    const wh = event.querySelector('[data-id="wh"]').value
+                    const sr = event.querySelector('[data-id="successreturn"]').value
 
-                    return total_cnote - un_runsheet - cr - undel - un_status - rt
+                    return total_cnote - un_runsheet - cr - undel - un_status - rt - wh - sr
                 }
             }
         </script>

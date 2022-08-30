@@ -3,12 +3,16 @@
 use App\Http\Controllers\BreachController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\OprBreachController;
 use App\Http\Controllers\OprCustomerAccountController;
+use App\Http\Controllers\OprDailyExpressPerformanceController;
 use App\Http\Controllers\OprDailyPerformanceController;
 use App\Http\Controllers\OprPodDetailController;
+use App\Http\Controllers\OprUndelController;
 use App\Http\Controllers\OprUnDeliveryController;
 use App\Http\Controllers\OprUpdatePodController;
 use App\Http\Controllers\UserController;
+use App\Models\OprDailyExpressPerformance;
 use App\Models\User;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
@@ -28,40 +32,62 @@ Route::middleware('auth')->get('/', [DashboardController::class, '__invoke']);
 
 
 Route::prefix('opr')->middleware('auth')->name('opr.')->group(function () {
-    Route::prefix('daily-report')->name('daily-report.')->group(function () {
-        Route::prefix('oprDailyPerformance')->name('dailyperformance.')->group(function () {
-
-            Route::get('/', [OprDailyPerformanceController::class, 'index'])->middleware(['can:opr daily show'])->name('index'); //opr daily show
-            Route::get('/create', [OprDailyPerformanceController::class, 'create'])->middleware(['can:opr daily show'])->name('create'); //opr daily show
-            Route::post('/', [OprDailyPerformanceController::class, 'store'])->middleware(['can:opr daily create'])->name('store'); //opr daily create
-            Route::get('/{oprDailyPerformance}/edit', [OprDailyPerformanceController::class, 'edit'])->middleware(['can:opr daily show'])->name('edit'); //detail data
-            Route::put('/{oprDailyPerformance}', [OprDailyPerformanceController::class, 'update'])->middleware(['can:opr daily edit'])->name('update'); // update edit
-            Route::delete('/{oprDailyPerformance}', [OprDailyPerformanceController::class, 'destroy'])->middleware(['can:opr daily delete'])->name('destroy'); //delete data
+    Route::prefix('daily-performance')->middleware('auth')->name('dailyperformance.')->group(function () {
+        Route::prefix('express')->middleware('auth')->name('express.')->group(function () {
+            Route::get('/', [OprDailyExpressPerformanceController::class, 'index'])->name('index');
+            Route::get('/create', [OprDailyExpressPerformanceController::class, 'create'])->middleware(['can:opr dailyperformance read'])->name('create');
+            Route::post('/', [OprDailyExpressPerformanceController::class, 'store'])->middleware(['can:opr dailyperformance create'])->name('store');
+            Route::get('/{oprDailyExpressPerformance}/edit', [OprDailyExpressPerformanceController::class, 'edit'])->middleware(['can:opr dailyperformance read'])->name('edit');
+            Route::put('/{oprDailyExpressPerformance}', [OprDailyExpressPerformanceController::class, 'update'])->middleware(['can:opr dailyperformance create'])->name('update');
+            Route::delete('/{oprDailyExpressPerformance}', [OprDailyExpressPerformanceController::class, 'destroy'])->middleware(['can:opr dailyperformance delete'])->name('destroy');
+            Route::get('/export', [OprDailyExpressPerformanceController::class, 'export'])->middleware(['can:opr daily download'])->name('export');
+        });
+        Route::prefix('non-express')->middleware('auth')->name('nonexpress.')->group(function () {
+            Route::get('/', [OprDailyPerformanceController::class, 'index'])->middleware(['can:opr dailyperformance read'])->name('index');
+            Route::get('/create', [OprDailyPerformanceController::class, 'create'])->middleware(['can:opr dailyperformance read'])->name('create');
+            Route::post('/', [OprDailyPerformanceController::class, 'store'])->middleware(['can:opr dailyperformance create'])->name('store');
+            Route::get('/{oprDailyPerformance}/edit', [OprDailyPerformanceController::class, 'edit'])->middleware(['can:opr dailyperformance read'])->name('edit');
+            Route::put('/{oprDailyPerformance}', [OprDailyPerformanceController::class, 'update'])->middleware(['can:opr dailyperformance create'])->name('update');
+            Route::delete('/{oprDailyPerformance}', [OprDailyPerformanceController::class, 'destroy'])->middleware(['can:opr dailyperformance delete'])->name('destroy');
             Route::get('/export', [OprDailyPerformanceController::class, 'export'])->middleware(['can:opr daily download'])->name('export');
-            Route::get('/summary', [OprDailyPerformanceController::class, 'summary'])->middleware(['can:opr daily monitoring'])->name('summary');
-            Route::get('/exportsum', [OprDailyPerformanceController::class, 'exportsum'])->middleware(['can:opr daily download'])->name('exportsum');
         });
+        Route::prefix('summary')->middleware('auth')->name('summary.')->group(function () {
+            Route::prefix('non-express')->name('nonexpress.')->group(function () {
+                Route::get('/', [OprDailyPerformanceController::class, 'summary'])->middleware(['can:opr dailyperformance summary'])->name('index');
+                Route::get('/export', [OprDailyPerformanceController::class, 'exportsum'])->middleware(['can:opr daily download'])->name('export');
+            });
+            Route::prefix('express')->middleware('auth')->name('express.')->group(function () {
+                Route::get('/', [OprDailyExpressPerformanceController::class, 'summary'])->middleware(['can:opr dailyperformance summary'])->name('index');
+                Route::get('/export', [OprDailyExpressPerformanceController::class, 'exportsum'])->middleware(['can:opr daily download'])->name('export');
+            });
+        });
+    });
 
-        Route::prefix('undel')->name('undel.')->group(function () {
-            Route::get('/', [OprUnDeliveryController::class, 'index'])->middleware(['can:opr undel show'])->name('index'); //can 'opr undel show'
-            Route::get('/create', [OprUnDeliveryController::class, 'create'])->middleware(['can:opr undel create'])->name('create'); // can 'opr undel create'
-            Route::post('/', [OprUnDeliveryController::class, 'store'])->middleware(['can:opr undel create'])->name('store'); // can 'opr undel create'
-            Route::get('/{oprUnDelivery}/edit', [OprUnDeliveryController::class, 'edit'])->middleware(['can:opr undel create'])->name('edit'); //'can 'opr undel create'
-            Route::put('/{oprUnDelivery}', [OprUnDeliveryController::class, 'update'])->middleware(['can:opr undel create'])->name('update'); //'can 'opr undel create'
-            Route::put('/{oprUnDelivery}/action', [OprUnDeliveryController::class, 'action'])->middleware(['can:opr undel create'])->name('action'); //'can 'opr undel create'
-            Route::delete('/{oprUnDelivery}', [OprUnDeliveryController::class, 'destroy'])->middleware(['can:opr undel delete'])->name('destroy'); //'can 'opr undel delete'
-            Route::delete('/{OprUnDeliveriesAction}/action', [OprUnDeliveryController::class, 'actdestroy'])->middleware(['can:opr undel create'])->name('actdestroy'); //'can 'opr undel delete'
-            Route::get('/export-main', [OprUnDeliveryController::class, 'export'])->middleware(['can:opr undel download'])->name('exportmain');
-        });
+    Route::prefix('undel')->middleware('auth')->name('undel.')->group(function () {
+        Route::get('/', [OprUndelController::class, 'index'])->middleware(['can:opr undel read'])->name('index');
+        Route::get('/create', [OprUndelController::class, 'create'])->middleware(['can:opr undel read'])->name('create');
+        Route::post('/', [OprUndelController::class, 'store'])->middleware(['can:opr undel create'])->name('store');
+        Route::get('/{oprUndel}/edit', [OprUndelController::class, 'edit'])->middleware(['can:opr undel read'])->name('edit');
+        Route::put('/{oprUndel}', [OprUndelController::class, 'update'])->middleware(['can:opr undel create'])->name('update');
+        Route::put('/{oprUndel}/action', [OprUndelController::class, 'action'])->middleware(['can:opr undel create'])->name('action');
+        Route::delete('/{oprUndel}', [OprUndelController::class, 'destroy'])->middleware(['can:opr undel delete'])->name('destroy');
+        Route::delete('/{oprUndelAction}/action', [OprUndelController::class, 'actdestroy'])->middleware(['can:opr undel delete'])->name('actdestroy');
+        Route::get('/export-main', [OprUndelController::class, 'export'])->middleware(['can:opr undel read'])->name('exportmain');
+    });
 
-        Route::prefix('breach')->name('breach.')->group(function () {
-            Route::get('/', [BreachController::class, 'index'])->name('index');
-            // Route::get('/create', [BreachController::class, 'create'])->name('create'); //craete tidak di butuhkan agar input breach hanya satu pintu -> penerusan dari undel
-            // Route::post('/{breach}', [BreachController::class, 'store'])->name('store'); // lek create ndak ya store juga ndak lah boi
-            Route::get('/{breach}/edit', [BreachController::class, 'edit'])->name('edit');
-            Route::put('/{breach}', [BreachController::class, 'update'])->name('update');
-            Route::delete('/{breach}', [BreachController::class, 'destroy'])->name('destroy');
-        });
+
+    Route::prefix('breach')->name('breach.')->group(function () {
+        Route::get('/', [OprBreachController::class, 'index'])->name('index');
+        // Route::get('/create', [BreachController::class, 'create'])->name('create'); //craete tidak di butuhkan agar input breach hanya satu pintu -> penerusan dari undel
+        // Route::post('/{oprBreach}', [BreachController::class, 'store'])->name('store'); // lek create ndak ya store juga ndak lah boi
+        Route::get('/{oprBreach}/edit', [OprBreachController::class, 'edit'])->name('edit');
+        Route::put('/{oprBreach}', [OprBreachController::class, 'update'])->name('update');
+        Route::delete('/{oprBreach}', [OprBreachController::class, 'destroy'])->name('destroy');
+    });
+
+
+    Route::prefix('daily-report')->name('daily-report.')->group(function () {
+
 
         Route::prefix('customer')->name('customer.')->group(function () {
             Route::get('/apishow', [OprCustomerAccountController::class, 'apishow'])->name('apishow'); //'opr customer show'
@@ -91,6 +117,13 @@ Route::prefix('opr')->middleware('auth')->name('opr.')->group(function () {
     });
 });
 
+Route::prefix('master')->name('master.')->group(function () {
+    Route::prefix('employee')->name('employee.')->group(function () {
+        Route::get('/', [EmployeeController::class, 'index'])->name('index');
+        Route::get('/import', [EmployeeController::class, 'import'])->name('import');
+    });
+});
+
 Route::prefix('su')->name('su.')->middleware(['role:super admin'])->group(function () {
     Route::prefix('user')->name('user.')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
@@ -98,6 +131,7 @@ Route::prefix('su')->name('su.')->middleware(['role:super admin'])->group(functi
         Route::put('/{user}', [UserController::class, 'update'])->name('update');
     });
 });
+
 
 Route::prefix('mng')->name('mng.')->group(function () {
     Route::prefix('employee')->name('employee.')->group(function () {

@@ -1,14 +1,14 @@
 <x-sidebar-layout>
 
 
-
+    {{-- {{ Auth::user()->roles }} --}}
     <div class="rounded bg-white px-4 py-3 w-full mb-3">
         <div class="flex justify-between items-center mb-3">
             <h2 class="text-xl text-gray-900">
                 Input Data Undel
             </h2>
             <div class="flex justify-start">
-                <a role="button" href="{{ route('opr.daily-report.undel.index') }}"
+                <a role="button" href="{{ route('opr.undel.index') }}"
                     class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
@@ -35,7 +35,7 @@
 
 
     <div class="rounded bg-white px-4 py-3 w-full mb-3">
-        <form action="{{ route('opr.daily-report.undel.store') }}" method="POST">
+        <form action="{{ route('opr.undel.store') }}" method="POST">
             @csrf
             <div class="grid gap-6 mb-6 lg:grid-cols-3">
                 <div>
@@ -65,7 +65,8 @@
                     <select id="hub" name="hub" required=""
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         @if (Auth::user()->roles->where('name', 'opr pod')->first())
-                            <option value="{{ Auth::user()->employee->hub }}">{{ Auth::user()->employee->hub }}
+                            <option value="{{ Auth::user()->employee->kurir->hub }}">
+                                {{ Auth::user()->employee->kurir->hub }}
                             </option>
                         @else
                             <option value="">Choose a HUB</option>
@@ -175,7 +176,7 @@
                     </div>
                 </div>
             </div>
-            @can('opr daily create')
+            @can('opr undel create')
                 <x-btn-action type="submit" :btntype="'success'">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">

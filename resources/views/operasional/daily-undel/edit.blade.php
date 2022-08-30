@@ -17,7 +17,7 @@
                         <x-btn-label>Delete</x-btn-label>
                     </x-btn-action>
                 @endcan
-                <x-btn-link :href="route('opr.daily-report.undel.index')" :btntype="'primary'">
+                <x-btn-link :href="route('opr.undel.index')" :btntype="'primary'">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -30,7 +30,7 @@
     </div>
 
 
-    <form action="{{ route('opr.daily-report.undel.update', $data->id) }}" method="POST">
+    <form action="{{ route('opr.undel.update', $data->id) }}" method="POST">
         @can('opr undel update')
             @csrf
             @method('PUT')
@@ -230,7 +230,7 @@
             @if ($data->status != 1)
                 @can('opr undel update')
                     <div class="flex justify-end items-center">
-                        <button type="submit" href="{{ route('opr.daily-report.undel.index') }}"
+                        <button type="submit" href="{{ route('opr.undel.index') }}"
                             class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
                             Update
                         </button>
@@ -241,7 +241,7 @@
         </div>
     </form>
     @if ($data->status != 1)
-        <form action="{{ route('opr.daily-report.undel.action', $data->id) }}" method="POST">
+        <form action="{{ route('opr.undel.action', $data->id) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="rounded bg-white px-4 py-3 w-full mb-3">
@@ -292,7 +292,7 @@
                 </div>
 
                 <div class="flex justify-end items-center">
-                    <button type="submit" href="{{ route('opr.daily-report.undel.index') }}"
+                    <button type="submit" href="{{ route('opr.undel.index') }}"
                         class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
                         Add
                     </button>
@@ -446,7 +446,7 @@
                     <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to
                         delete this data?</h3>
                     <div class="flex justify-center items-center">
-                        <form action="{{ route('opr.daily-report.undel.destroy', $data->id) }}" method="POST">
+                        <form action="{{ route('opr.undel.destroy', $data->id) }}" method="POST">
                             @csrf
                             @method('delete')
                             <button type="submit"
@@ -513,7 +513,7 @@
             function deleteModal(e) {
                 modalDel.show()
                 const id = e.getAttribute('data-id');
-                let url = `/opr/daily-report/undel/${id}/action`;
+                let url = `/opr/undel/${id}/action`;
                 deleteEl.querySelector('#delForm').setAttribute('action', url);
             }
 

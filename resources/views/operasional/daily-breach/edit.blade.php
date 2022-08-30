@@ -1,14 +1,11 @@
 <x-sidebar-layout>
-
-
-
     <div class="rounded bg-white px-4 py-3 w-full mb-3">
         <div class="flex justify-between items-center mb-3">
             <h2 class="text-xl text-gray-900">
                 Input Data Undel
             </h2>
             <div class="flex justify-start">
-                <a role="button" href="{{ route('opr.daily-report.undel.index') }}"
+                <a role="button" href="{{ route('opr.breach.index') }}"
                     class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
@@ -34,8 +31,7 @@
     @endif
 
     <div class="rounded bg-white px-4 py-3 w-full mb-3">
-        <form action="{{ route('opr.daily-report.breach.update', $data->id) }}" method="POST"
-            enctype="multipart/form-data">
+        <form action="{{ route('opr.breach.update', $data->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="grid gap-6 mb-6 md:grid-cols-2">
@@ -77,9 +73,6 @@
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
         </form>
     </div>
-
-
-
 
 
 </x-sidebar-layout>

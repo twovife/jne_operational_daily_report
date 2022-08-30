@@ -33,7 +33,7 @@ class EmployeeSeeder extends Seeder
                 $hub = 'KEDIRI';
             };
             Employee::updateOrInsert(
-                ['id' => $value['id']],
+                ['id' => $value['id'], 'name' => $value['name']],
                 [
                     'nama' => $value['nama'],
                     'jabatan' => $value['jabatan'],
