@@ -19,6 +19,7 @@ class OprOpenStatusDetailController extends Controller
      */
     public function index()
     {
+
         $query = OprOpenStatusDetail::with('openpod', 'employee');
 
         if (request('from') || request('thru')) {

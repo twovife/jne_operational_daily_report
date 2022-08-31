@@ -1,18 +1,13 @@
 <?php
 
-use App\Http\Controllers\BreachController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\OprBreachController;
 use App\Http\Controllers\OprCustomerAccountController;
 use App\Http\Controllers\OprDailyExpressPerformanceController;
 use App\Http\Controllers\OprDailyPerformanceController;
 use App\Http\Controllers\OprOpenStatusController;
 use App\Http\Controllers\OprOpenStatusDetailController;
-use App\Http\Controllers\OprPodDetailController;
 use App\Http\Controllers\OprUndelController;
-use App\Http\Controllers\OprUnDeliveryController;
-use App\Http\Controllers\OprUpdatePodController;
 use App\Http\Controllers\UserController;
 use App\Models\OprDailyExpressPerformance;
 use App\Models\User;
@@ -72,6 +67,7 @@ Route::prefix('opr')->middleware('auth')->name('opr.')->group(function () {
         Route::get('/{oprUndel}/edit', [OprUndelController::class, 'edit'])->middleware(['can:opr undel read'])->name('edit');
         Route::put('/{oprUndel}', [OprUndelController::class, 'update'])->middleware(['can:opr undel create'])->name('update');
         Route::put('/{oprUndel}/action', [OprUndelController::class, 'action'])->middleware(['can:opr undel create'])->name('action');
+        Route::put('/{breach}/breach', [OprUndelController::class, 'breach'])->middleware(['can:opr undel create'])->name('breach');
         Route::delete('/{oprUndel}', [OprUndelController::class, 'destroy'])->middleware(['can:opr undel delete'])->name('destroy');
         Route::delete('/{oprUndelAction}/action', [OprUndelController::class, 'actdestroy'])->middleware(['can:opr undel delete'])->name('actdestroy');
         Route::get('/export-main', [OprUndelController::class, 'export'])->middleware(['can:opr undel read'])->name('exportmain');
@@ -79,12 +75,12 @@ Route::prefix('opr')->middleware('auth')->name('opr.')->group(function () {
 
 
     Route::prefix('breach')->name('breach.')->group(function () {
-        Route::get('/', [OprBreachController::class, 'index'])->name('index');
-        // Route::get('/create', [BreachController::class, 'create'])->name('create'); //craete tidak di butuhkan agar input breach hanya satu pintu -> penerusan dari undel
-        // Route::post('/{oprBreach}', [BreachController::class, 'store'])->name('store'); // lek create ndak ya store juga ndak lah boi
-        Route::get('/{oprBreach}/edit', [OprBreachController::class, 'edit'])->name('edit');
-        Route::put('/{oprBreach}', [OprBreachController::class, 'update'])->name('update');
-        Route::delete('/{oprBreach}', [OprBreachController::class, 'destroy'])->name('destroy');
+        Route::get('/', [OprBreachController::class, 'index'])->middleware(['can:opr undel read'])->name('index');
+        Route::get('/create', [OprBreachController::class, 'create'])->middleware(['can:opr undel read'])->name('create');
+        Route::post('/', [OprBreachController::class, 'store'])->middleware(['can:opr undel create'])->name('store');
+        Route::get('/{oprBreach}/edit', [OprBreachController::class, 'edit'])->middleware(['can:opr undel read'])->name('edit');
+        Route::put('/{oprBreach}', [OprBreachController::class, 'update'])->middleware(['can:opr undel create'])->name('update');
+        Route::delete('/{oprBreach}', [OprBreachController::class, 'destroy'])->middleware(['can:opr undel delete'])->name('destroy');
     });
 
     Route::prefix('openstatus')->name('openstatus.')->group(function () {

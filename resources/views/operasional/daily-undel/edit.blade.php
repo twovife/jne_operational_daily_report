@@ -1,4 +1,11 @@
 <x-sidebar-layout>
+    @if (session()->has('green'))
+        <x-alert-message :message="session('green')" :color="'green'"></x-alert-message>
+    @endif
+    @if (session()->has('yellow'))
+        <x-alert-message :message="session('yellow')" :color="'yellow'"></x-alert-message>
+    @endif
+
     <div class="rounded bg-white px-4 py-3 w-full mb-3">
         <div class="flex justify-start items-center mb-3 gap-4">
             <h2 class="text-xl font-semibold text-gray-900">
@@ -382,46 +389,74 @@
     </div>
 
     @if ($data->breach)
-        <div class="rounded bg-white px-4 py-3 w-full mb-3">
-            <h2 class="text-xl font-semibold mb-3">Breach</h2>
+        <form action="{{ route('opr.undel.breach', $data->breach->id) }}" enctype="multipart/form-data"
+            method="POST">
+            @csrf
+            @method('PUT')
+            <div class="rounded bg-white px-4 py-3 w-full mb-3">
+                <h2 class="text-xl font-semibold mb-3">Breach</h2>
 
-            <div class="grid gap-6 mb-6 lg:grid-cols-6">
-                <div>
-                    <label for="date_breach"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Breach Date</label>
-                    <input disabled type="text" id="date_breach"
-                        class="disabled:bg-gray-200 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="John" value="{{ $data->breach->date }}">
-                </div>
-                <div>
-                    <label for="breach_status"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Breach
-                        Status</label>
-                    <input disabled type="text" id="breach_status"
-                        class="disabled:bg-gray-200 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="John" value="{{ $data->breach->status }}">
-                </div>
-                <div class="col-span-4">
-                    <label for="breach_reason"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Breach
-                        reason</label>
-                    <input disabled type="text" id="breach_reason"
-                        class="disabled:bg-gray-200 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="John" value="{{ $data->breach->reason }}">
-                </div>
-            </div>
+                <div class="grid gap-6 mb-6 lg:grid-cols-6">
+                    <div>
+                        <label for="breach_date"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Breach
+                            breach_Date</label>
+                        <input type="text" id="breach_date" name="date"
+                            class="disabled:bg-gray-200 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="John" value="{{ $data->breach->date }}">
+                    </div>
+                    <div>
+                        <label for="breach_status"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Breach
+                            Status</label>
+                        <input type="text" id="breach_status" name="status"
+                            class="disabled:bg-gray-200 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="John" value="{{ $data->breach->status }}">
+                    </div>
+                    <div class="col-span-2">
+                        <label for="breach_reason"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Breach
+                            reason</label>
+                        <input type="text" id="breach_reason" name="reason"
+                            class="disabled:bg-gray-200 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="John" value="{{ $data->breach->reason }}">
+                    </div>
 
-            <div>
-                <h2 class="text-lg font-semibold mb-3">Dokumentasi Barang</h2>
-                <div class="grid gap-6 mb-6 lg:grid-cols-4">
-                    <div class="border shadow-sm">
-                        <img src="{{ asset('storage/' . $data->breach->img_name) }}" alt="" srcset=""
-                            class="w-full">
+                    <div class="col-span-2">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                            for="file_input">Upload file</label>
+                        <input
+                            class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                            aria-describedby="file_input_help" id="file_input" name="file_input" type="file">
+                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG, JPG or JPEG
+                            (MAX. 1MB).</p>
                     </div>
                 </div>
-            </div>
 
-        </div>
+                <div>
+                    <h2 class="text-lg font-semibold mb-3">Dokumentasi Barang</h2>
+                    <div class="grid gap-6 mb-6 lg:grid-cols-4">
+                        <div class="border shadow-sm">
+                            <img src="{{ asset('storage/' . $data->breach->img_name) }}" alt=""
+                                srcset="" class="w-full">
+                        </div>
+                    </div>
+                </div>
+                <div class="flex w-full justify-end items-center">
+                    @can('opr undel update')
+                        <x-btn-action type="submit" :btntype="'success'">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <x-btn-label>Update Breach</x-btn-label>
+                        </x-btn-action>
+                    @endcan
+                </div>
+
+            </div>
+        </form>
     @endif
 
     <div id="delete-modal-1" tabindex="-1"

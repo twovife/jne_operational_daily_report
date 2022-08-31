@@ -201,7 +201,7 @@
                                 {{ $data_detail->remark_status }}
                             </td>
                             <td class="py-4 px-6">
-                                {{ $data_detail->folluw_up }}
+                                {{ $data_detail->follow_up }}
                             </td>
                             <td class="py-4 px-6">
                                 {{ $data_detail->closed_date }}

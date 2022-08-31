@@ -30,7 +30,14 @@
         </div>
     @endif
 
-    <div class="rounded bg-white px-4 py-3 w-full mb-3">
+    @if (session()->has('green'))
+        <x-alert-message :message="session('green')" :color="'green'"></x-alert-message>
+    @endif
+    @if (session()->has('yellow'))
+        <x-alert-message :message="session('yellow')" :color="'yellow'"></x-alert-message>
+    @endif
+
+    {{-- <div class="rounded bg-white px-4 py-3 w-full mb-3">
         <form action="{{ route('opr.breach.update', $data->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -65,13 +72,123 @@
                         aria-describedby="file_input_help" id="file_input" name="file_input" type="file">
                     <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG, JPG or JPEG
                         (MAX. 1MB).</p>
-
                 </div>
             </div>
 
             <button type="submit"
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
         </form>
+    </div> --}}
+
+    <div class="rounded bg-white px-4 py-3 w-full mb-3">
+        <form action="{{ route('opr.breach.update', $data->id) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <div class="grid gap-6 mb-6 lg:grid-cols-3">
+                <div>
+                    <label for="date"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 required">Date</label>
+                    <input type="date" id="date" name="date"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="John" required="" value="{{ $data->date }}">
+                </div>
+                <div>
+                    <label for="hub"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 required">HUB</label>
+                    <select id="hub" name="hub" required=""
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="{{ $data->arrivebreach->hub }}">{{ $data->arrivebreach->hub }}</option>
+                        @foreach ($hubs as $hub)
+                            <option value="{{ $hub->hub }}">{{ $hub->hub }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label for="no_awb"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 required">No. AWB</label>
+                    <input type="text" id="no_awb" name="no_awb"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="35xxxxxxxxxxxx01" value="{{ $data->arrivebreach->no_awb }}" required="">
+                </div>
+                <div>
+                    <label for="date_inbound"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 required">Inbound
+                        Date</label>
+                    <input type="date" id="date_inbound" name="date_inbound"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        value="{{ date('Y-m-d') }}" value="{{ $data->arrivebreach->date_inbound }}" required="">
+                </div>
+                <div>
+                    <label for="origin"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 required">Origin</label>
+                    <input type="text" id="origin" name="origin"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Origin Code" required="" value="{{ $data->arrivebreach->origin }}">
+                </div>
+                <div>
+                    <label for="goods_desc"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 required">Goods
+                        Desc</label>
+                    <input type="text" id="goods_desc" name="goods_desc"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Goods Description" value="{{ $data->arrivebreach->goods_desc }}" required="">
+                </div>
+
+                <div>
+                    <label for="status"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 required">Status</label>
+                    <input type="text" id="status" name="status"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Status Code" required="" value="{{ $data->status }}">
+                </div>
+                <div>
+                    <label for="reason"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 required">Reason</label>
+                    <input type="text" id="reason" name="reason"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Reason" required="" value="{{ $data->reason }}">
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        for="file_input">Upload file</label>
+                    <input
+                        class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                        aria-describedby="file_input_help" id="file_input" name="file_input" type="file">
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG, JPG or JPEG
+                        (MAX. 1MB).</p>
+                </div>
+                <div>
+                    <label for="opr_customer_account_id"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 required">Customer</label>
+                    <input disabled type="text" id="opr_customer_account_id" name="opr_customer_account_id"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="opr_customer_account_id"
+                        value="{{ $data->arrivebreach->customer->nomor_account }} - {{ $data->arrivebreach->customer->customer_name }}">
+                </div>
+
+            </div>
+            @can('opr undel create')
+                <x-btn-action type="submit" :btntype="'success'">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <x-btn-label>Submit</x-btn-label>
+                </x-btn-action>
+            @endcan
+        </form>
+    </div>
+
+    <div class="rounded bg-white px-4 py-3 w-full mb-3">
+        <div>
+            <h2 class="text-lg font-semibold mb-3">Dokumentasi Barang</h2>
+            <div class="grid gap-6 mb-6 lg:grid-cols-4">
+                <div class="border shadow-sm">
+                    <img src="{{ asset('storage/' . $data->img_name) }}" alt="" srcset=""
+                        class="w-full">
+                </div>
+            </div>
+        </div>
     </div>
 
 

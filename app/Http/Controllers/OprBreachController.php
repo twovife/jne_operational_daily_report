@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateOprBreachRequest;
+use App\Models\HrEmployee;
+use App\Models\OprArrivalBreach;
 use App\Models\OprBreach;
+use App\Models\OprCustomerAccount;
 use App\Models\OprHub;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,27 +20,39 @@ class OprBreachController extends Controller
      */
     public function index()
     {
-
-        $breaches = OprBreach::with('undelivery', 'undelivery.customer_account', 'undelivery.shipper_name');
+        // return Auth::user()->employee->kurir->id;
+        $breaches = OprBreach::with('undelivery', 'undelivery.customer_account', 'undelivery.shipper_name', 'arrivebreach');
         if (request('from') || request('thru')) {
             $breaches->whereBetween('date', [request('from'), request('thru')]);
         };
+
         if (request('hub')) {
             $breaches->whereHas('undelivery', function ($query) {
+                $query->where('hub', request('hub'));
+            })->orWhereHas('arrivebreach', function ($query) {
                 $query->where('hub', request('hub'));
             });
         }
 
-        if (Auth::user()->roles->where('name', 'opr pod')->first()) {
+        if (Auth::user()->employee->kurir->id) {
             $breaches->whereHas('undelivery', function ($query) {
-                $query->where('hub',  Auth::user()->employee->hub);
+                $query->where('hub',  Auth::user()->employee->kurir->hub);
+            })->orWhereHas('arrivebreach', function ($query) {
+                $query->where('hub', Auth::user()->employee->kurir->hub);
             });
         }
 
+        if (Auth::user()->employee->kurir) {
+            $hub = OprHub::where('hub', Auth::user()->employee->kurir->hub)->get();
+        } else {
+            $hub = OprHub::all();
+        }
+
+        // return $hub;
         // return $breaches->get();
         return view('operasional.daily-breach.index', [
-            'datas' => $breaches->paginate(10),
-            'hubs' => OprHub::all()
+            'datas' => $breaches->paginate(),
+            'hubs' => $hub
         ]);
     }
 
@@ -48,7 +63,15 @@ class OprBreachController extends Controller
      */
     public function create()
     {
-        //
+        if (Auth::user()->employee->kurir) {
+            $hub = OprHub::where('hub', Auth::user()->employee->kurir->hub)->get();
+        } else {
+            $hub = OprHub::all();
+        }
+        return view('operasional.daily-breach.create', [
+            'customers' => OprCustomerAccount::all(),
+            'hubs' => $hub
+        ]);
     }
 
     /**
@@ -59,7 +82,32 @@ class OprBreachController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return $request->all();
+        $validate = $request->validate([
+            'date' => ['required', 'date'],
+            'date_inbound' => ['required', 'date'],
+            'hub' => ['required', 'string'],
+            'no_awb' => ['required', 'string'],
+            'origin' => ['required', 'string'],
+            'goods_desc' => ['required', 'string'],
+            'status' => ['required', 'string'],
+            'file_input' => ['required', 'image', 'file', 'max:2048']
+        ]);
+        $data = $request->all();
+        if ($request->file('file_input')) {
+            $data['img_name'] = $request->file('file_input')->store('brach-images');
+        }
+
+        $mainData = [
+            'date' => $data['date'],
+            'status' => $data['status'],
+            'reason' => $data['reason'],
+            'img_name' => $data['img_name'],
+        ];
+        // return $mainData;
+        $query = OprBreach::create($mainData);
+        $query->arrivebreach()->create($request->all());
+        return redirect()->route('opr.breach.index')->with('green', 'Data Telah di Tambahkan');
     }
 
     /**
@@ -81,8 +129,16 @@ class OprBreachController extends Controller
      */
     public function edit(OprBreach $oprBreach)
     {
+        $oprBreach->load('arrivebreach', 'arrivebreach.customer');
+        if (Auth::user()->employee->kurir) {
+            $hub = OprHub::where('hub', Auth::user()->employee->kurir->hub)->get();
+        } else {
+            $hub = OprHub::all();
+        }
+        // return $oprBreach;
         return view('operasional.daily-breach.edit', [
-            'data' => $oprBreach
+            'data' => $oprBreach,
+            'hubs' => $hub
         ]);
     }
 
@@ -95,13 +151,32 @@ class OprBreachController extends Controller
      */
     public function update(UpdateOprBreachRequest $request, OprBreach $oprBreach)
     {
+        $validate = $request->validate([
+            'date' => ['required', 'date'],
+            'date_inbound' => ['required', 'date'],
+            'hub' => ['required', 'string'],
+            'no_awb' => ['required', 'string'],
+            'origin' => ['required', 'string'],
+            'goods_desc' => ['required', 'string'],
+            'status' => ['required', 'string'],
+            'file_input' => ['image', 'file', 'max:2048']
+        ]);
         $data = $request->all();
+        $mainData = [
+            'date' => $data['date'],
+            'status' => $data['status'],
+            'reason' => $data['reason'],
+        ];
+
         if ($request->file('file_input')) {
-            $data['img_name'] = $request->file('file_input')->store('brach-images');
+            $mainData['img_name'] = $request->file('file_input')->store('brach-images');
         }
 
-        $oprBreach->update($data);
 
+
+        $oprBreach->update($mainData);
+        $arival = OprArrivalBreach::where('opr_breach_id', $oprBreach->id)->first();
+        $arival->update($request->all());
         return redirect()->route('opr.breach.index')->with('green', 'Data Telah di Tambahkan');
     }
 

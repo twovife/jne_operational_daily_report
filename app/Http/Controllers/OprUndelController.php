@@ -6,6 +6,7 @@ use App\Exports\OprUndeliveryExport;
 use App\Http\Requests\StoreOprUndelRequest;
 use App\Http\Requests\UpdateOprUndelRequest;
 use App\Models\HrEmployee;
+use App\Models\OprBreach;
 use App\Models\OprCustomerAccount;
 use App\Models\OprHub;
 use App\Models\OprUndel;
@@ -26,7 +27,7 @@ class OprUndelController extends Controller
      */
     public function index()
     {
-        $query = OprUndel::with('customer_account', 'shipper_name', 'actions');
+        $query = OprUndel::with('aging', 'customer_account', 'shipper_name', 'actions');
 
         if (request('from') || request('thru')) {
             $query->whereBetween('inbound_date', [request('from'), request('thru')]);
@@ -36,14 +37,16 @@ class OprUndelController extends Controller
             $query->where('hub', request('hub'));
         }
 
-        if (Auth::user()->roles->where('name', 'opr pod')->first()) {
+        if (Auth::user()->employee->kurir) {
+            $hub = OprHub::where('hub', Auth::user()->employee->kurir->hub)->get();
             $query->where('hub', Auth::user()->employee->kurir->hub);
+        } else {
+            $hub = OprHub::all();
         }
 
-        // return $query->get();
         return view('operasional.daily-undel.index', [
-            'performances' => $query->paginate(),
-            'hubs' => OprHub::all()
+            'performances' => $query->orderBy('date_return')->paginate(),
+            'hubs' => $hub
         ]);
     }
 
@@ -54,12 +57,13 @@ class OprUndelController extends Controller
      */
     public function create()
     {
-
-        if (Auth::user()->roles->where('name', 'opr pod')->first()) {
+        if (Auth::user()->employee->kurir) {
+            $hub = OprHub::where('hub', Auth::user()->employee->kurir->hub)->get();
             $courier_lists = HrEmployee::with('kurir')->whereHas('kurir', function ($query) {
                 $query->where('hub', Auth::user()->employee->kurir->hub)->orderBy('hub')->orderBy('nama');
             });
         } else {
+            $hub = OprHub::all();
             $courier_lists = HrEmployee::with('kurir')->whereHas('kurir', function ($query) {
                 $query->whereNotNull('id');
             });
@@ -67,7 +71,7 @@ class OprUndelController extends Controller
         return view('operasional.daily-undel.create', [
             'customers' => OprCustomerAccount::all(),
             'employees' => $courier_lists->orderBy('divisi')->orderBy('nama')->get(),
-            'hubs' => OprHub::all()
+            'hubs' => $hub
         ]);
     }
 
@@ -117,23 +121,24 @@ class OprUndelController extends Controller
     {
 
         $data = OprUndel::with('actions', 'customer_account', 'shipper_name', 'breach')->find($oprUndel->id);
-        if (Auth::user()->roles->where('name', 'opr pod')->first()) {
-            $employee = HrEmployee::with('kurir')->whereHas('kurir', function ($query) {
-                $query->whereNotNull('id');
+
+        if (Auth::user()->employee->kurir) {
+            $hub = OprHub::where('hub', Auth::user()->employee->kurir->hub)->get();
+            $courier_lists = HrEmployee::with('kurir')->whereHas('kurir', function ($query) {
+                $query->where('hub', Auth::user()->employee->kurir->hub)->orderBy('hub')->orderBy('nama');
             });
-            $hub = OprHub::where('hub', Auth::user()->employee->hub)->orderBy('id')->get();
         } else {
-            $employee = HrEmployee::with('kurir')->whereHas('kurir', function ($query) {
+            $hub = OprHub::all();
+            $courier_lists = HrEmployee::with('kurir')->whereHas('kurir', function ($query) {
                 $query->whereNotNull('id');
             });
-            $hub = OprHub::all();
         }
 
         // return $data;
 
         return view('operasional.daily-undel.edit', [
             'data' => $data,
-            'employees' => $employee->orderBy('divisi')->orderBy('nama')->get(),
+            'employees' => $courier_lists->orderBy('divisi')->orderBy('nama')->get(),
             'hubs' => $hub
         ]);
     }
@@ -158,7 +163,7 @@ class OprUndelController extends Controller
             ]);
         }
 
-        return redirect()->route('opr.undel.index')->with('green', 'Data Berhasil ditambah');
+        return redirect()->route('opr.undel.edit', $oprUndel->id)->with('green', 'Data Berhasil ditambah');
     }
 
     /**
@@ -233,12 +238,26 @@ class OprUndelController extends Controller
                 'status' => $request->last_action,
             ]);
 
-            return redirect()->route('opr.breach.edit', $oprUndel->breach->id)->with('green', 'Breach Ditambahkan, silahkan ubah / lengkapi data');
+            return redirect()->route('opr.undel.edit', $oprUndel->id)->with('green', 'Data berhasil ditambahkan & Menutup Tiket');
         }
     }
 
     public function export()
     {
         return Excel::download(new OprUndeliveryExport, 'undelivery.xlsx');
+    }
+
+    public function breach(Request $request, OprBreach $breach)
+    {
+        // return $data = [
+        //     'breach' => $breach,
+        //     'request' => $request->all()
+        // ];
+        $data = $request->all();
+        if ($request->file('file_input')) {
+            $data['img_name'] = $request->file('file_input')->store('brach-images');
+        }
+        $breach->update($data);
+        return redirect()->route('opr.undel.edit', $breach->opr_undel_id)->with('green', 'Data berhasil ditambahkan & Menutup Tiket');
     }
 }

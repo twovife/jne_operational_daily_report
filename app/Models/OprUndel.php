@@ -46,4 +46,9 @@ class OprUndel extends Model
     {
         return $this->hasOne(OprBreach::class, 'opr_undel_id', 'id');
     }
+
+    public function aging()
+    {
+        return $this->hasOne(VOprUndelAging::class, 'id', 'id');
+    }
 }

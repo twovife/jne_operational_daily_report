@@ -139,7 +139,7 @@
                                 </button>
                             </td>
                             <td class="py-4 px-6">
-                                {{ date('d/m/Y', strtotime($data->openpod->date)) }}
+                                {{ $data->openpod->date }}
                             </td>
                             <td class="py-4 px-6">
                                 {{ $data->openpod->hub }}

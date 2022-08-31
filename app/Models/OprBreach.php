@@ -21,4 +21,9 @@ class OprBreach extends Model
     {
         return $this->belongsTo(OprUndel::class, 'opr_undel_id', 'id');
     }
+
+    public function arrivebreach()
+    {
+        return $this->hasOne(OprArrivalBreach::class, 'opr_breach_id', 'id');
+    }
 }
