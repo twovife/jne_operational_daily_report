@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\VSummaryOprDailyPerformance;
+use App\Models\VOprSummaryDailyPerformance;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
@@ -13,8 +13,7 @@ class OprDailyPerformanceSummaryExport implements FromView
      */
     public function view(): View
     {
-        $query = VSummaryOprDailyPerformance::all();
-
+        $query = VOprSummaryDailyPerformance::paginate(20);
 
         if (request('from') || request('thru')) {
             $query->whereBetween('inbound_date', [request('from'), request('thru')]);

@@ -387,7 +387,7 @@ class OprDailyPerformanceController extends Controller
 
     public function export()
     {
-        return Excel::download(new OprDailyPerformanceExport, 'dailyReport.xlsx');
+        return Excel::download(new OprDailyPerformanceExport, 'daily_report_nonexpress.xlsx');
     }
 
     public function exportsum()

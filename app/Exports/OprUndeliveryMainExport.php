@@ -2,8 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\OprUnDelivery;
-use Maatwebsite\Excel\Concerns\FromQuery;
+use App\Models\OprUndel;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +12,7 @@ class OprUndeliveryMainExport implements FromView, WithTitle
 {
     public function view(): View
     {
-        $query = OprUnDelivery::with('customer_account', 'shipper_name');
+        $query = OprUndel::with('aging', 'customer_account', 'shipper_name', 'actions');
 
         if (request('from') || request('thru')) {
             $query->whereBetween('inbound_date', [request('from'), request('thru')]);
@@ -23,8 +22,8 @@ class OprUndeliveryMainExport implements FromView, WithTitle
             $query->where('hub', request('hub'));
         }
 
-        if (Auth::user()->roles->where('name', 'opr pod')->first()) {
-            $query->where('hub', Auth::user()->employee->hub);
+        if (Auth::user()->employee->kurir) {
+            $query->where('hub', Auth::user()->employee->kurir->hub);
         }
 
         // return OprDailyPerformance::with('OprDailyPerformanceDetail')->get();

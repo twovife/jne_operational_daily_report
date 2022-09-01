@@ -37,7 +37,7 @@ Route::prefix('opr')->middleware('auth')->name('opr.')->group(function () {
             Route::get('/{oprDailyExpressPerformance}/edit', [OprDailyExpressPerformanceController::class, 'edit'])->middleware(['can:opr dailyperformance read'])->name('edit');
             Route::put('/{oprDailyExpressPerformance}', [OprDailyExpressPerformanceController::class, 'update'])->middleware(['can:opr dailyperformance create'])->name('update');
             Route::delete('/{oprDailyExpressPerformance}', [OprDailyExpressPerformanceController::class, 'destroy'])->middleware(['can:opr dailyperformance delete'])->name('destroy');
-            Route::get('/export', [OprDailyExpressPerformanceController::class, 'export'])->middleware(['can:opr daily download'])->name('export');
+            Route::get('/export', [OprDailyExpressPerformanceController::class, 'export'])->middleware(['can:opr dailyperformance read'])->name('export');
         });
         Route::prefix('non-express')->middleware('auth')->name('nonexpress.')->group(function () {
             Route::get('/', [OprDailyPerformanceController::class, 'index'])->middleware(['can:opr dailyperformance read'])->name('index');
@@ -46,16 +46,16 @@ Route::prefix('opr')->middleware('auth')->name('opr.')->group(function () {
             Route::get('/{oprDailyPerformance}/edit', [OprDailyPerformanceController::class, 'edit'])->middleware(['can:opr dailyperformance read'])->name('edit');
             Route::put('/{oprDailyPerformance}', [OprDailyPerformanceController::class, 'update'])->middleware(['can:opr dailyperformance create'])->name('update');
             Route::delete('/{oprDailyPerformance}', [OprDailyPerformanceController::class, 'destroy'])->middleware(['can:opr dailyperformance delete'])->name('destroy');
-            Route::get('/export', [OprDailyPerformanceController::class, 'export'])->middleware(['can:opr daily download'])->name('export');
+            Route::get('/export', [OprDailyPerformanceController::class, 'export'])->middleware(['can:opr dailyperformance read'])->name('export');
         });
         Route::prefix('summary')->middleware('auth')->name('summary.')->group(function () {
             Route::prefix('non-express')->name('nonexpress.')->group(function () {
                 Route::get('/', [OprDailyPerformanceController::class, 'summary'])->middleware(['can:opr dailyperformance summary'])->name('index');
-                Route::get('/export', [OprDailyPerformanceController::class, 'exportsum'])->middleware(['can:opr daily download'])->name('export');
+                Route::get('/export', [OprDailyPerformanceController::class, 'exportsum'])->middleware(['can:opr dailyperformance read'])->name('export');
             });
             Route::prefix('express')->middleware('auth')->name('express.')->group(function () {
                 Route::get('/', [OprDailyExpressPerformanceController::class, 'summary'])->middleware(['can:opr dailyperformance summary'])->name('index');
-                Route::get('/export', [OprDailyExpressPerformanceController::class, 'exportsum'])->middleware(['can:opr daily download'])->name('export');
+                Route::get('/export', [OprDailyExpressPerformanceController::class, 'exportsum'])->middleware(['can:opr dailyperformance read'])->name('export');
             });
         });
     });
