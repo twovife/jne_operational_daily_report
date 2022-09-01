@@ -21,17 +21,7 @@
         </div>
     </div>
 
-    @if (Session::has('errors'))
-        <div class="p-4 mb-3 text-sm text-rose-700 bg-rose-100 rounded-lg dark:bg-rose-200 dark:text-rose-800"
-            role="alert">
-            <div class="text-lg text-red-600">
-                {{ __('Whoops! Terjadi Kesalahan .') }}
-            </div>
-            @foreach ($errors->all() as $error)
-                <span class="font-medium">- </span> {{ $error }}
-            @endforeach
-        </div>
-    @endif
+    <x-error-input-alert :status="session('errors')"></x-error-input-alert>
 
 
     <div class="rounded bg-white px-4 py-3 w-full mb-3">
@@ -64,16 +54,10 @@
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 required">HUB</label>
                     <select id="hub" name="hub" required=""
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        @if (Auth::user()->roles->where('name', 'opr pod')->first())
-                            <option value="{{ Auth::user()->employee->kurir->hub }}">
-                                {{ Auth::user()->employee->kurir->hub }}
-                            </option>
-                        @else
-                            <option value="">Choose a HUB</option>
-                            @foreach ($hubs as $hub)
-                                <option value="{{ $hub->hub }}">{{ $hub->hub }}</option>
-                            @endforeach
-                        @endif
+                        <option value="">Choose a HUB</option>
+                        @foreach ($hubs as $hub)
+                            <option value="{{ $hub->hub }}">{{ $hub->hub }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div>

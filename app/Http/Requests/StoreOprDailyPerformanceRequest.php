@@ -82,7 +82,7 @@ class StoreOprDailyPerformanceRequest extends FormRequest
         if ($data) {
             throw ValidationException::withMessages([
                 'inbound_date' => trans('Zona & Tanggal sudah terinput'),
-            ]);
+            ])->redirectTo(route('opr.dailyperformance.nonexpress.edit', $data->id));
         }
     }
 }

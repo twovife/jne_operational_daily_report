@@ -19,6 +19,16 @@
     </div>
 
     <x-error-input-alert :status="session('errors')"></x-error-input-alert>
+    @if (session()->has('green'))
+        <x-alert-message :message="session('green')" :color="'green'"></x-alert-message>
+    @endif
+    @if (session()->has('yellow'))
+        <x-alert-message :message="session('yellow')" :color="'yellow'"></x-alert-message>
+    @endif
+    @if (session()->has('red'))
+        <x-alert-message :message="session('red')" :color="'red'"></x-alert-message>
+    @endif
+
 
     <form action="{{ route('opr.dailyperformance.nonexpress.update', $data->id) }}" method="POST">
         @csrf
@@ -40,6 +50,7 @@
                     <select id="zone" name="zone" required
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
                         <option value="{{ $data->zone }}" selected>{{ $data->zone }}</option>
+                        <option value="">Choose Another Zone</option>
                         <option value="A">A</option>
                         <option value="B">B</option>
                         <option value="C">C</option>
@@ -53,10 +64,10 @@
                     <select id="hub" name="hub" required=""
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
                         <option value="{{ $data->hub }}" selected>{{ $data->hub }}</option>
-                        <option value="NGADILUWIH">NGADILUWIH</option>
-                        <option value="PARE">PARE</option>
-                        <option value="BANJARAN">BANJARAN</option>
-                        <option value="BANYAKAN">BANYAKAN</option>
+                        <option value="">Choose Another HUB</option>
+                        @foreach ($hubs as $hub)
+                            <option value="{{ $hub->hub }}">{{ $hub->hub }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div>
@@ -192,7 +203,7 @@
                 </div>
 
 
-                <div>
+                <div class="flex gap-2">
                     @can('opr dailyperformance update')
                         <x-btn-action type="submit" :btntype="'success'">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -203,7 +214,7 @@
                             <x-btn-label>{{ $data->date_0 ? 'Update' : 'Add' }} </x-btn-label>
                         </x-btn-action>
                     @else
-                        @if (Auth::user()->roles->where('name', 'opr pod')->first())
+                        @can('opr dailyperformance update')
                             <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_0 ? true : false">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -212,7 +223,7 @@
                                 </svg>
                                 <x-btn-label>Add</x-btn-label>
                             </x-btn-action>
-                        @endif
+                        @endcan
                     @endcan
                 </div>
             </div>
@@ -306,7 +317,7 @@
                         required>
                 </div>
 
-                <div>
+                <div class="flex gap-2">
                     @can('opr dailyperformance update')
                         <x-btn-action type="submit" :btntype="'success'">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -317,7 +328,7 @@
                             <x-btn-label>{{ $data->date_1 ? 'Update' : 'Add' }} </x-btn-label>
                         </x-btn-action>
                     @else
-                        @if (Auth::user()->roles->where('name', 'opr pod')->first())
+                        @can('opr dailyperformance update')
                             <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_1 ? true : false">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -326,7 +337,7 @@
                                 </svg>
                                 <x-btn-label>Add</x-btn-label>
                             </x-btn-action>
-                        @endif
+                        @endcan
                     @endcan
                 </div>
             </div>
@@ -420,7 +431,7 @@
                         required>
                 </div>
 
-                <div>
+                <div class="flex gap-2">
                     @can('opr dailyperformance update')
                         <x-btn-action type="submit" :btntype="'success'">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -431,7 +442,7 @@
                             <x-btn-label>{{ $data->date_2 ? 'Update' : 'Add' }} </x-btn-label>
                         </x-btn-action>
                     @else
-                        @if (Auth::user()->roles->where('name', 'opr pod')->first())
+                        @can('opr dailyperformance update')
                             <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_2 ? true : false">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -440,7 +451,7 @@
                                 </svg>
                                 <x-btn-label>Add</x-btn-label>
                             </x-btn-action>
-                        @endif
+                        @endcan
                     @endcan
                 </div>
             </div>
@@ -534,7 +545,7 @@
                         required>
                 </div>
 
-                <div>
+                <div class="flex gap-2">
                     @can('opr dailyperformance update')
                         <x-btn-action type="submit" :btntype="'success'">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -545,7 +556,7 @@
                             <x-btn-label>{{ $data->date_3 ? 'Update' : 'Add' }} </x-btn-label>
                         </x-btn-action>
                     @else
-                        @if (Auth::user()->roles->where('name', 'opr pod')->first())
+                        @can('opr dailyperformance update')
                             <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_3 ? true : false">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -554,9 +565,8 @@
                                 </svg>
                                 <x-btn-label>Add</x-btn-label>
                             </x-btn-action>
-                        @endif
+                        @endcan
                     @endcan
-
                 </div>
             </div>
         </div>
@@ -648,7 +658,7 @@
                         required>
                 </div>
 
-                <div>
+                <div class="flex gap-2">
                     @can('opr dailyperformance update')
                         <x-btn-action type="submit" :btntype="'success'">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -659,7 +669,7 @@
                             <x-btn-label>{{ $data->date_4 ? 'Update' : 'Add' }} </x-btn-label>
                         </x-btn-action>
                     @else
-                        @if (Auth::user()->roles->where('name', 'opr pod')->first())
+                        @can('opr dailyperformance update')
                             <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_4 ? true : false">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -668,9 +678,8 @@
                                 </svg>
                                 <x-btn-label>Add</x-btn-label>
                             </x-btn-action>
-                        @endif
+                        @endcan
                     @endcan
-
                 </div>
             </div>
         </div>
@@ -762,7 +771,7 @@
                         required>
                 </div>
 
-                <div>
+                <div class="flex gap-2">
                     @can('opr dailyperformance update')
                         <x-btn-action type="submit" :btntype="'success'">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -773,7 +782,7 @@
                             <x-btn-label>{{ $data->date_5 ? 'Update' : 'Add' }} </x-btn-label>
                         </x-btn-action>
                     @else
-                        @if (Auth::user()->roles->where('name', 'opr pod')->first())
+                        @can('opr dailyperformance update')
                             <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_5 ? true : false">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -782,9 +791,8 @@
                                 </svg>
                                 <x-btn-label>Add</x-btn-label>
                             </x-btn-action>
-                        @endif
+                        @endcan
                     @endcan
-
                 </div>
             </div>
         </div>
@@ -876,7 +884,7 @@
                         required>
                 </div>
 
-                <div>
+                <div class="flex gap-2">
                     @can('opr dailyperformance update')
                         <x-btn-action type="submit" :btntype="'success'">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -887,7 +895,7 @@
                             <x-btn-label>{{ $data->date_6 ? 'Update' : 'Add' }} </x-btn-label>
                         </x-btn-action>
                     @else
-                        @if (Auth::user()->roles->where('name', 'opr pod')->first())
+                        @can('opr dailyperformance update')
                             <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_6 ? true : false">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -896,9 +904,8 @@
                                 </svg>
                                 <x-btn-label>Add</x-btn-label>
                             </x-btn-action>
-                        @endif
+                        @endcan
                     @endcan
-
                 </div>
             </div>
         </div>
@@ -990,7 +997,7 @@
                         required>
                 </div>
 
-                <div>
+                <div class="flex gap-2">
                     @can('opr dailyperformance update')
                         <x-btn-action type="submit" :btntype="'success'">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -1001,7 +1008,7 @@
                             <x-btn-label>{{ $data->date_7 ? 'Update' : 'Add' }} </x-btn-label>
                         </x-btn-action>
                     @else
-                        @if (Auth::user()->roles->where('name', 'opr pod')->first())
+                        @can('opr dailyperformance update')
                             <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_7 ? true : false">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -1010,9 +1017,8 @@
                                 </svg>
                                 <x-btn-label>Add</x-btn-label>
                             </x-btn-action>
-                        @endif
+                        @endcan
                     @endcan
-
                 </div>
             </div>
         </div>
@@ -1026,7 +1032,7 @@
         <div onkeyup="thisIsChange(this)"
             class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
             <h2 class="text-xl mb-3">
-                H+ >7
+                > H+7
             </h2>
             <div class="grid gap-6 mb-6 grid-cols-4 md:grid-cols-8 items-end">
                 <div>
@@ -1104,29 +1110,15 @@
                         required>
                 </div>
 
-                <div>
-                    @can('opr dailyperformance update')
-                        <x-btn-action type="submit" :btntype="'success'">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            <x-btn-label>{{ $data->date_7 ? 'Update' : 'Add' }} </x-btn-label>
-                        </x-btn-action>
-                    @else
-                        @if (Auth::user()->roles->where('name', 'opr pod')->first())
-                            <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_7 ? true : false">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                                <x-btn-label>Add</x-btn-label>
-                            </x-btn-action>
-                        @endif
-                    @endcan
-
+                <div class="flex gap-2">
+                    <x-btn-action type="submit" :btntype="'success'">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <x-btn-label>{{ $data->date_8 ? 'Update' : 'Add' }} </x-btn-label>
+                    </x-btn-action>
                 </div>
             </div>
         </div>

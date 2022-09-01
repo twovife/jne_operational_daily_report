@@ -54,16 +54,10 @@
                         Hub</label>
                     <select value="{{ old('hub') }}" id="hub" name="hub" required=""
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
-                        @if (Auth::user()->roles->where('name', 'opr pod')->first())
-                            <option value="{{ Auth::user()->employee->hub }}">{{ Auth::user()->employee->hub }}
-                            </option>
-                        @else
-                            <option value="">Choose a HUB</option>
-                            <option value="NGADILUWIH">NGADILUWIH</option>
-                            <option value="PARE">PARE</option>
-                            <option value="BANJARAN">BANJARAN</option>
-                            <option value="BANYAKAN">BANYAKAN</option>
-                        @endif
+                        <option value="">Choose a HUB</option>
+                        @foreach ($hubs as $hub)
+                            <option value="{{ $hub->hub }}">{{ $hub->hub }}</option>
+                        @endforeach
 
                     </select>
                 </div>

@@ -7,7 +7,7 @@ use App\Models\OprUndel;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class StoreOprUndelRequest extends FormRequest
+class StoreOprBreachRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,16 +28,13 @@ class StoreOprUndelRequest extends FormRequest
     {
         return [
             'date' => ['required', 'date'],
-            'shipper' => ['required', 'string'],
-            'no_awb' => ['required', 'string'],
             'date_inbound' => ['required', 'date'],
-            'consignee' => ['required', 'string'],
-            'consignee_addr' => ['required', 'string'],
-            'phone' => ['required', 'string'],
+            'hub' => ['required', 'string'],
+            'no_awb' => ['required', 'string'],
+            'origin' => ['required', 'string'],
             'goods_desc' => ['required', 'string'],
-            'undel_code' => ['required', 'string'],
-            'undel_desc' => ['required', 'string'],
-            'opr_customer_account_id' => ['required', 'integer'],
+            'status' => ['required', 'string'],
+            'file_input' => ['required', 'image', 'file', 'max:2048']
         ];
     }
 

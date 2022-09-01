@@ -33,13 +33,16 @@ class OprDailyPerformanceController extends Controller
             $query->where('hub', request('hub'));
         }
 
-        if (Auth::user()->roles->where('name', 'opr pod')->first()) {
-            $query->where('hub', Auth::user()->employee->hub);
+        if (Auth::user()->employee->kurir) {
+            $hub = OprHub::where('hub', Auth::user()->employee->kurir->hub)->get();
+            $query->where('hub', Auth::user()->employee->kurir->hub);
+        } else {
+            $hub = OprHub::all();
         }
         // return OprDailyPerformance::with('OprDailyPerformanceDetail')->get();
         return view('operasional.daily-report.performa-delivery', [
             'performances' => $query->paginate(20),
-            'hubs' => OprHub::all()
+            'hubs' => $hub
         ]);
     }
 
@@ -50,8 +53,13 @@ class OprDailyPerformanceController extends Controller
      */
     public function create()
     {
+        if (Auth::user()->employee->kurir) {
+            $hub = OprHub::where('hub', Auth::user()->employee->kurir->hub)->get();
+        } else {
+            $hub = OprHub::all();
+        }
         return view('operasional.daily-report.performa-delivery-create', [
-            'hubs' => OprHub::all()
+            'hubs' => $hub
         ]);
     }
 
@@ -98,9 +106,14 @@ class OprDailyPerformanceController extends Controller
      */
     public function edit(OprDailyPerformance $oprDailyPerformance)
     {
-        // dd($oprDailyPerformance);
+        if (Auth::user()->employee->kurir) {
+            $hub = OprHub::where('hub', Auth::user()->employee->kurir->hub)->get();
+        } else {
+            $hub = OprHub::all();
+        }
         return view('operasional.daily-report.performa-delivery-edit', [
-            'data' => $oprDailyPerformance
+            'data' => $oprDailyPerformance,
+            'hubs' => $hub
         ]);
         // return $oprDailyPerformance;
     }

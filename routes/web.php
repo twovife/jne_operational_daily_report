@@ -31,7 +31,7 @@ Route::middleware('auth')->get('/', [DashboardController::class, '__invoke']);
 Route::prefix('opr')->middleware('auth')->name('opr.')->group(function () {
     Route::prefix('daily-performance')->middleware('auth')->name('dailyperformance.')->group(function () {
         Route::prefix('express')->middleware('auth')->name('express.')->group(function () {
-            Route::get('/', [OprDailyExpressPerformanceController::class, 'index'])->name('index');
+            Route::get('/', [OprDailyExpressPerformanceController::class, 'index'])->middleware(['can:opr dailyperformance read'])->name('index');
             Route::get('/create', [OprDailyExpressPerformanceController::class, 'create'])->middleware(['can:opr dailyperformance read'])->name('create');
             Route::post('/', [OprDailyExpressPerformanceController::class, 'store'])->middleware(['can:opr dailyperformance create'])->name('store');
             Route::get('/{oprDailyExpressPerformance}/edit', [OprDailyExpressPerformanceController::class, 'edit'])->middleware(['can:opr dailyperformance read'])->name('edit');
@@ -81,6 +81,7 @@ Route::prefix('opr')->middleware('auth')->name('opr.')->group(function () {
         Route::get('/{oprBreach}/edit', [OprBreachController::class, 'edit'])->middleware(['can:opr undel read'])->name('edit');
         Route::put('/{oprBreach}', [OprBreachController::class, 'update'])->middleware(['can:opr undel create'])->name('update');
         Route::delete('/{oprBreach}', [OprBreachController::class, 'destroy'])->middleware(['can:opr undel delete'])->name('destroy');
+        Route::delete('/{oprBreach}/arrival', [OprBreachController::class, 'arrivaldestroy'])->middleware(['can:opr undel delete'])->name('arrivaldestroy');
     });
 
     Route::prefix('openstatus')->name('openstatus.')->group(function () {

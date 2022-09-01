@@ -1,5 +1,4 @@
 <x-sidebar-layout>
-
     <div class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
         <div class="flex justify-start items-center mb-3 gap-4">
             <h2 class="text-xl">
@@ -35,29 +34,17 @@
         </div>
     </div>
 
-    @if (Session::has('errors'))
-        <div class="p-4 mb-3 text-sm text-rose-700 bg-rose-100 rounded-lg dark:bg-rose-200 dark:text-rose-800"
-            role="alert">
-            <div class="text-lg text-red-600">
-                {{ __('Whoops! Terjadi Kesalahan .') }}
-            </div>
-            @foreach ($errors->all() as $error)
-                <span class="font-medium">- </span> {{ $error }}
-            @endforeach
-        </div>
+    <x-error-input-alert :status="session('errors')"></x-error-input-alert>
+    @if (session()->has('green'))
+        <x-alert-message :message="session('green')" :color="'green'"></x-alert-message>
+    @endif
+    @if (session()->has('yellow'))
+        <x-alert-message :message="session('yellow')" :color="'yellow'"></x-alert-message>
+    @endif
+    @if (session()->has('red'))
+        <x-alert-message :message="session('red')" :color="'red'"></x-alert-message>
     @endif
 
-    @if (Session::has('green'))
-        <div class="p-4 mb-3 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
-            role="alert">
-            <span class="font-medium">Berhasil !!! </span> {{ Session::get('green') }}
-        </div>
-    @elseif (Session::has('yellow'))
-        <div class="p-4 mb-3 text-sm text-amber-700 bg-amber-100 rounded-lg dark:bg-amber-200 dark:text-amber-800"
-            role="alert">
-            <span class="font-medium">Perhaian !!! </span> {{ Session::get('yellow') }}
-        </div>
-    @endif
 
     <div class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
         <form action="{{ route('opr.openstatus.unstatus.update', $data->id) }}" method="POST">
@@ -77,15 +64,10 @@
                     <select id="hub" name="hub" required=""
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
                         <option value="{{ $data->hub }}">{{ $data->hub }}</option>
-                        @if (Auth::user()->roles->where('name', 'opr pod')->first())
-                            <option value="{{ Auth::user()->employee->hub }}">{{ Auth::user()->employee->hub }}
-                            </option>
-                        @else
-                            <option value="">Choose a HUB</option>
-                            @foreach ($hubs as $hub)
-                                <option value="{{ $hub->hub }}">{{ $hub->hub }}</option>
-                            @endforeach
-                        @endif
+                        <option value="">Choose Another HUB</option>
+                        @foreach ($hubs as $hub)
+                            <option value="{{ $hub->hub }}">{{ $hub->hub }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div>
@@ -155,8 +137,7 @@
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <td class="py-4 px-6">
                                 <div class="flex justify-center items-center gap-4">
-                                    <button data-id="{{ $data_detail->id }}" type="button"
-                                        onclick="showModal(this)"
+                                    <button data-id="{{ $data_detail->id }}" type="button" onclick="showModal(this)"
                                         class="text-indigo-500 flex items-center justify-center hover:text-white hover:bg-indigo-500 p-1 rounded">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor"
                                             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -287,10 +268,10 @@
                                 placeholder="ex : Lupa Status / Unsycron System" required>
                         </div>
                         <div>
-                            <label for="folluw_up"
+                            <label for="follow_up"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Follow
                                 Up</label>
-                            <input type="text" id="folluw_up" name="folluw_up"
+                            <input type="text" id="follow_up" name="follow_up"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
                                 placeholder="ex : Done / Syncron System" required>
                         </div>
@@ -390,10 +371,10 @@
                                 placeholder="ex: lupa status / unsyncron system" required>
                         </div>
                         <div>
-                            <label for="folluw_up"
+                            <label for="follow_up"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Follow
                                 Up</label>
-                            <input type="text" id="folluw_up" name="folluw_up"
+                            <input type="text" id="follow_up" name="follow_up"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
                                 placeholder="ex: syncron system / done" required>
                         </div>
@@ -520,7 +501,7 @@
                             targetEl.querySelector('#user_kurir').value = data.user_kurir
                             targetEl.querySelector('#remark').value = data.remark
                             targetEl.querySelector('#remark_status').value = data.remark_status
-                            targetEl.querySelector('#folluw_up').value = data.folluw_up
+                            targetEl.querySelector('#follow_up').value = data.follow_up
                             targetEl.querySelector('#closed_date').value = data.closed_date
                         })
                 },

@@ -29,13 +29,15 @@ class OprOpenStatusController extends Controller
             $query->where('hub', request('hub'));
         }
 
-        if (Auth::user()->roles->where('name', 'opr pod')->first()) {
+        if (Auth::user()->employee->kurir) {
+            $hub = OprHub::where('hub', Auth::user()->employee->kurir->hub)->get();
             $query->where('hub', Auth::user()->employee->kurir->hub);
+        } else {
+            $hub = OprHub::all();
         }
-
         return view('operasional.unstatus.index', [
             'datas' => $query->paginate(20),
-            'hubs' => OprHub::all()
+            'hubs' => $hub
         ]);
     }
 
@@ -46,17 +48,20 @@ class OprOpenStatusController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->roles->where('name', 'opr pod')->first()) {
+
+        if (Auth::user()->employee->kurir) {
+            $hub = OprHub::where('hub', Auth::user()->employee->kurir->hub)->get();
             $courier_lists = HrEmployee::with('kurir')->whereHas('kurir', function ($query) {
                 $query->where('hub', Auth::user()->employee->kurir->hub)->orderBy('hub')->orderBy('nama');
             });
         } else {
+            $hub = OprHub::all();
             $courier_lists = HrEmployee::with('kurir')->whereHas('kurir', function ($query) {
                 $query->whereNotNull('id');
             });
         }
         return view('operasional.unstatus.create', [
-            'hubs' => OprHub::all(),
+            'hubs' => $hub,
             'employees' => $courier_lists->orderBy('divisi')->orderBy('nama')->get(),
         ]);
     }
@@ -118,20 +123,21 @@ class OprOpenStatusController extends Controller
      */
     public function edit(OprOpenStatus $oprOpenStatus)
     {
-        // return OprOpenStatus::with('details',''details.employee)->find(3);
-        // return $oprOpenStatus;
-        if (Auth::user()->roles->where('name', 'opr pod')->first()) {
+
+        if (Auth::user()->employee->kurir) {
+            $hub = OprHub::where('hub', Auth::user()->employee->kurir->hub)->get();
             $courier_lists = HrEmployee::with('kurir')->whereHas('kurir', function ($query) {
                 $query->where('hub', Auth::user()->employee->kurir->hub)->orderBy('hub')->orderBy('nama');
             });
         } else {
+            $hub = OprHub::all();
             $courier_lists = HrEmployee::with('kurir')->whereHas('kurir', function ($query) {
                 $query->whereNotNull('id');
             });
         }
         $data = OprOpenStatus::with('details', 'details.employee')->find($oprOpenStatus->id);
         return view('operasional.unstatus.edit', [
-            'hubs' => OprHub::all(),
+            'hubs' => $hub,
             'data' => $data,
             'employees' => $courier_lists->orderBy('divisi')->orderBy('nama')->get(),
         ]);

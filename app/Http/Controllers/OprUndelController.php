@@ -181,13 +181,12 @@ class OprUndelController extends Controller
         $oprUndel->breach()->delete();
         $oprUndel->actions()->delete();
         $oprUndel->delete();
-        return redirect()->route('opr.daily-report.undel.index')->with('green', 'Data Berhasil dihapus');
+        return redirect()->route('opr.undel.index')->with('green', 'Data Berhasil dihapus');
     }
 
     public function actDestroy(OprUndelAction $oprUndelAction)
     {
-        // return OprUndelAction::all();
-        // return $oprUndelAction;
+
         $oprUndelAction->delete();
         return redirect()->route('opr.undel.edit', $oprUndelAction->opr_undel_id)->with('green', 'Data berhasil ditambahkan');
     }

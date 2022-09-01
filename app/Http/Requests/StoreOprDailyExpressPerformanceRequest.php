@@ -80,8 +80,8 @@ class StoreOprDailyExpressPerformanceRequest extends FormRequest
         $data = OprDailyExpressPerformance::where('inbound_date', $this->only('inbound_date'))->where('zone', $this->only('zone'))->where('hub', $this->only('hub'))->first();
         if ($data) {
             throw ValidationException::withMessages([
-                'inbound_date' => trans('Zona & Tanggal sudah terinput'),
-            ]);
+                'inbound_date' => trans('Zona & Tanggal sudah terinput sebelumnya'),
+            ])->redirectTo(route('opr.dailyperformance.express.edit', $data->id));
         }
     }
 }

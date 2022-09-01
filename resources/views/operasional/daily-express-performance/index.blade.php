@@ -31,24 +31,22 @@
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
                         placeholder="John" value="{{ request('thru') }}">
                 </div>
-                @if (Auth::user()->roles->where('name', '!=', 'opr pod')->first())
-                    <div>
-                        <label for="hub"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select an
-                            option</label>
-                        <select id="hub" name="hub"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                <div>
+                    <label for="hub" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select
+                        an
+                        option</label>
+                    <select id="hub" name="hub"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
 
-                            @if (request('hub'))
-                                <option value="{{ request('hub') }}">{{ request('hub') }}</option>
-                            @endif
-                            <option value="">Choose a HUB</option>
-                            @foreach ($hubs as $hub)
-                                <option value="{{ $hub->hub }}">{{ $hub->hub }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                @endif
+                        @if (request('hub'))
+                            <option value="{{ request('hub') }}">{{ request('hub') }}</option>
+                        @endif
+                        <option value="">Choose a HUB</option>
+                        @foreach ($hubs as $hub)
+                            <option value="{{ $hub->hub }}">{{ $hub->hub }}</option>
+                        @endforeach
+                    </select>
+                </div>
                 <div class="flex items-end space-y-2 lg:space-y-0 space-x-0 lg:space-x-2">
                     <x-btn-action type="submit">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"

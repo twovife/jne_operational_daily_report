@@ -35,23 +35,26 @@ class OprOpenStatusDetailController extends Controller
         }
 
 
-        if (Auth::user()->roles->where('name', 'opr pod')->first()) {
+        if (Auth::user()->employee->kurir) {
             $query->whereHas('openpod', function ($que) {
-                $que->where('hub',  Auth::user()->employee->hub);
+                $que->where('hub', Auth::user()->employee->kurir->hub);
             });
             $courier_lists = HrEmployee::with('kurir')->whereHas('kurir', function ($query) {
                 $query->where('hub', Auth::user()->employee->kurir->hub)->orderBy('hub')->orderBy('nama');
             });
+            $hub = OprHub::where('hub', Auth::user()->employee->kurir->hub)->get();
         } else {
             $courier_lists = HrEmployee::with('kurir')->whereHas('kurir', function ($query) {
                 $query->whereNotNull('id');
             });
+            $hub = OprHub::all();
         }
+
 
         // return $query->get();
         return view('operasional.unstatus-detail.index', [
             'datas' => $query->paginate(20),
-            'hubs' => OprHub::all(),
+            'hubs' => $hub,
             'employees' => $courier_lists->orderBy('divisi')->orderBy('nama')->get(),
         ]);
     }

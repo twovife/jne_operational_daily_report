@@ -42,7 +42,10 @@
                         Zone</label>
                     <select value="{{ old('zone') }} id="zone" name="zone" required
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
-                        <option value="">Choose a Zone</option>
+                        @if (old('zone'))
+                            <option selected value="{{ old('zone') }}">{{ old('zone') }}</option>
+                        @endif
+                        <option value="">Choose Another Zone</option>
                         <option value="A">A</option>
                         <option value="B">B</option>
                         <option value="C">C</option>
@@ -55,17 +58,13 @@
                         Hub</label>
                     <select value="{{ old('hub') }}" id="hub" name="hub" required=""
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
-                        @if (Auth::user()->roles->where('name', 'opr pod')->first())
-                            <option value="{{ Auth::user()->employee->hub }}">{{ Auth::user()->employee->hub }}
-                            </option>
-                        @else
-                            <option value="">Choose a HUB</option>
-                            <option value="NGADILUWIH">NGADILUWIH</option>
-                            <option value="PARE">PARE</option>
-                            <option value="BANJARAN">BANJARAN</option>
-                            <option value="BANYAKAN">BANYAKAN</option>
+                        @if (old('hub'))
+                            <option value="{{ old('hub') }}">{{ old('hub') }}</option>
                         @endif
-
+                        <option value="">Choose Another HUB</option>
+                        @foreach ($hubs as $hub)
+                            <option value="{{ $hub->hub }}">{{ $hub->hub }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div>
@@ -155,7 +154,7 @@
                 <div>
                     <label for="return_0"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 required">Return</label>
-                    <input data-name="sumit" value="{{ old('r_0') }}" type="number" id="return_0"
+                    <input data-name="sumit" value="{{ old('return_0') }}" type="number" id="return_0"
                         name="return_0"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
                         required="">
@@ -163,7 +162,7 @@
                 <div>
                     <label for="wh_0"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 required">WH1</label>
-                    <input data-name="sumit" value="{{ old('r_0') }}" type="number" id="wh_0"
+                    <input data-name="sumit" value="{{ old('wh_0') }}" type="number" id="wh_0"
                         name="wh_0"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
                         required="">

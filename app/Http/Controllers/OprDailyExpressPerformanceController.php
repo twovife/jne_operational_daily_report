@@ -29,12 +29,16 @@ class OprDailyExpressPerformanceController extends Controller
             $query->where('hub', request('hub'));
         }
 
-        if (Auth::user()->roles->where('name', 'opr pod')->first()) {
-            $query->where('hub', Auth::user()->employee->hub);
+        if (Auth::user()->employee->kurir) {
+            $hub = OprHub::where('hub', Auth::user()->employee->kurir->hub)->get();
+            $query->where('hub', Auth::user()->employee->kurir->hub);
+        } else {
+            $hub = OprHub::all();
         }
+
         return view('operasional.daily-express-performance.index', [
             'performances' => $query->paginate(20),
-            'hubs' => OprHub::all()
+            'hubs' => $hub
         ]);
     }
 
@@ -45,8 +49,13 @@ class OprDailyExpressPerformanceController extends Controller
      */
     public function create()
     {
+        if (Auth::user()->employee->kurir) {
+            $hub = OprHub::where('hub', Auth::user()->employee->kurir->hub)->get();
+        } else {
+            $hub = OprHub::all();
+        }
         return view('operasional.daily-express-performance.create', [
-            'hubs' => OprHub::all()
+            'hubs' => $hub
         ]);
     }
 
@@ -92,8 +101,15 @@ class OprDailyExpressPerformanceController extends Controller
      */
     public function edit(OprDailyExpressPerformance $oprDailyExpressPerformance)
     {
+
+        if (Auth::user()->employee->kurir) {
+            $hub = OprHub::where('hub', Auth::user()->employee->kurir->hub)->get();
+        } else {
+            $hub = OprHub::all();
+        }
         return view('operasional.daily-express-performance.edit', [
-            'data' => $oprDailyExpressPerformance
+            'data' => $oprDailyExpressPerformance,
+            'hubs' => $hub
         ]);
     }
 
@@ -238,8 +254,6 @@ class OprDailyExpressPerformanceController extends Controller
     public function summary()
     {
         $query = VOprSummaryExpressDailyPerformances::paginate(20);
-
-
         if (request('from') || request('thru')) {
             $query->whereBetween('inbound_date', [request('from'), request('thru')]);
         };

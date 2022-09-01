@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreOprBreachRequest;
 use App\Http\Requests\UpdateOprBreachRequest;
 use App\Models\HrEmployee;
 use App\Models\OprArrivalBreach;
 use App\Models\OprBreach;
 use App\Models\OprCustomerAccount;
 use App\Models\OprHub;
+use App\Models\OprUndel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class OprBreachController extends Controller
 {
@@ -80,19 +83,9 @@ class OprBreachController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreOprBreachRequest $request)
     {
-        // return $request->all();
-        $validate = $request->validate([
-            'date' => ['required', 'date'],
-            'date_inbound' => ['required', 'date'],
-            'hub' => ['required', 'string'],
-            'no_awb' => ['required', 'string'],
-            'origin' => ['required', 'string'],
-            'goods_desc' => ['required', 'string'],
-            'status' => ['required', 'string'],
-            'file_input' => ['required', 'image', 'file', 'max:2048']
-        ]);
+        $request->authenticate();
         $data = $request->all();
         if ($request->file('file_input')) {
             $data['img_name'] = $request->file('file_input')->store('brach-images');
@@ -189,5 +182,11 @@ class OprBreachController extends Controller
     public function destroy(OprBreach $oprBreach)
     {
         //
+    }
+    public function arrivaldestroy(OprBreach $oprBreach)
+    {
+        $oprBreach->arrivebreach->delete();
+        $oprBreach->delete();
+        return redirect()->route('opr.breach.index')->with('green', 'Data Telah di Hapus');
     }
 }

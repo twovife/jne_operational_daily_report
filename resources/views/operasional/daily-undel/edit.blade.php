@@ -1,11 +1,4 @@
 <x-sidebar-layout>
-    @if (session()->has('green'))
-        <x-alert-message :message="session('green')" :color="'green'"></x-alert-message>
-    @endif
-    @if (session()->has('yellow'))
-        <x-alert-message :message="session('yellow')" :color="'yellow'"></x-alert-message>
-    @endif
-
     <div class="rounded bg-white px-4 py-3 w-full mb-3">
         <div class="flex justify-start items-center mb-3 gap-4">
             <h2 class="text-xl font-semibold text-gray-900">
@@ -36,6 +29,16 @@
         </div>
     </div>
 
+    <x-error-input-alert :status="session('errors')"></x-error-input-alert>
+    @if (session()->has('green'))
+        <x-alert-message :message="session('green')" :color="'green'"></x-alert-message>
+    @endif
+    @if (session()->has('yellow'))
+        <x-alert-message :message="session('yellow')" :color="'yellow'"></x-alert-message>
+    @endif
+    @if (session()->has('red'))
+        <x-alert-message :message="session('red')" :color="'red'"></x-alert-message>
+    @endif
 
     <form action="{{ route('opr.undel.update', $data->id) }}" method="POST">
         @can('opr undel update')
