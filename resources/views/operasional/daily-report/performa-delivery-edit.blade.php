@@ -126,7 +126,7 @@
             <h2 class="text-xl mb-3">
                 H+0
             </h2>
-            <div class="grid gap-6 mb-6 grid-cols-4 md:grid-cols-8 items-end">
+            <div class="grid gap-2 mb-6 grid-cols-4 md:grid-cols-10 items-end">
                 <div>
                     <label for="total_0" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Total
                         Cnote</label>
@@ -137,8 +137,7 @@
                 </div>
                 <div>
                     <label for="unrunsheet_0"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
-                        received</label>
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un Runsheet</label>
                     <input value="{{ $data->unrunsheet_0 }}" data-name="sumit" data-id="ur" type="number"
                         id="unrunsheet_0" name="unrunsheet_0"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -214,7 +213,7 @@
                             <x-btn-label>{{ $data->date_0 ? 'Update' : 'Add' }} </x-btn-label>
                         </x-btn-action>
                     @else
-                        @can('opr dailyperformance update')
+                        @can('opr dailyperformance create')
                             <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_0 ? true : false">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -240,7 +239,7 @@
             <h2 class="text-xl mb-3">
                 H+1
             </h2>
-            <div class="grid gap-6 mb-6 grid-cols-4 md:grid-cols-8 items-end">
+            <div class="grid gap-2 mb-6 grid-cols-4 md:grid-cols-10 items-end">
                 <div>
                     <label for="total_1"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Total
@@ -252,8 +251,7 @@
                 </div>
                 <div>
                     <label for="unrunsheet_1"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
-                        received</label>
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un Runsheet</label>
                     <input value="{{ $data->unrunsheet_1 }}" data-name="sumit" data-id="ur" type="number" x
                         id="unrunsheet_1" name="unrunsheet_1"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -328,7 +326,7 @@
                             <x-btn-label>{{ $data->date_1 ? 'Update' : 'Add' }} </x-btn-label>
                         </x-btn-action>
                     @else
-                        @can('opr dailyperformance update')
+                        @can('opr dailyperformance create')
                             <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_1 ? true : false">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -354,7 +352,7 @@
             <h2 class="text-xl mb-3">
                 H+2
             </h2>
-            <div class="grid gap-6 mb-6 grid-cols-4 md:grid-cols-8 items-end">
+            <div class="grid gap-2 mb-6 grid-cols-4 md:grid-cols-10 items-end">
                 <div>
                     <label for="total_2"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Total
@@ -366,8 +364,7 @@
                 </div>
                 <div>
                     <label for="unrunsheet_2"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
-                        received</label>
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un Runsheet</label>
                     <input value="{{ $data->unrunsheet_2 }}" data-name="sumit" data-id="ur" type="number" x
                         id="unrunsheet_1" name="unrunsheet_2"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -442,7 +439,7 @@
                             <x-btn-label>{{ $data->date_2 ? 'Update' : 'Add' }} </x-btn-label>
                         </x-btn-action>
                     @else
-                        @can('opr dailyperformance update')
+                        @can('opr dailyperformance create')
                             <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_2 ? true : false">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -468,7 +465,7 @@
             <h2 class="text-xl mb-3">
                 H+3
             </h2>
-            <div class="grid gap-6 mb-6 grid-cols-4 md:grid-cols-8 items-end">
+            <div class="grid gap-2 mb-6 grid-cols-4 md:grid-cols-10 items-end">
                 <div>
                     <label for="total_3"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Total
@@ -480,8 +477,7 @@
                 </div>
                 <div>
                     <label for="unrunsheet_3"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
-                        received</label>
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un Runsheet</label>
                     <input value="{{ $data->unrunsheet_3 }}" data-name="sumit" data-id="ur" type="number" x
                         id="unrunsheet_1" name="unrunsheet_3"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -556,7 +552,7 @@
                             <x-btn-label>{{ $data->date_3 ? 'Update' : 'Add' }} </x-btn-label>
                         </x-btn-action>
                     @else
-                        @can('opr dailyperformance update')
+                        @can('opr dailyperformance create')
                             <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_3 ? true : false">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -582,7 +578,7 @@
             <h2 class="text-xl mb-3">
                 H+4
             </h2>
-            <div class="grid gap-6 mb-6 grid-cols-4 md:grid-cols-8 items-end">
+            <div class="grid gap-2 mb-6 grid-cols-4 md:grid-cols-10 items-end">
                 <div>
                     <label for="total_4"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Total
@@ -594,8 +590,7 @@
                 </div>
                 <div>
                     <label for="unrunsheet_4"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
-                        received</label>
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un Runsheet</label>
                     <input value="{{ $data->unrunsheet_4 }}" data-name="sumit" data-id="ur" type="number" x
                         id="unrunsheet_1" name="unrunsheet_4"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -669,7 +664,7 @@
                             <x-btn-label>{{ $data->date_4 ? 'Update' : 'Add' }} </x-btn-label>
                         </x-btn-action>
                     @else
-                        @can('opr dailyperformance update')
+                        @can('opr dailyperformance create')
                             <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_4 ? true : false">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -695,7 +690,7 @@
             <h2 class="text-xl mb-3">
                 H+5
             </h2>
-            <div class="grid gap-6 mb-6 grid-cols-4 md:grid-cols-8 items-end">
+            <div class="grid gap-2 mb-6 grid-cols-4 md:grid-cols-10 items-end">
                 <div>
                     <label for="total_5"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Total
@@ -707,8 +702,7 @@
                 </div>
                 <div>
                     <label for="unrunsheet_5"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
-                        received</label>
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un Runsheet</label>
                     <input value="{{ $data->unrunsheet_5 }}" data-name="sumit" data-id="ur" type="number" x
                         id="unrunsheet_1" name="unrunsheet_5"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -782,7 +776,7 @@
                             <x-btn-label>{{ $data->date_5 ? 'Update' : 'Add' }} </x-btn-label>
                         </x-btn-action>
                     @else
-                        @can('opr dailyperformance update')
+                        @can('opr dailyperformance create')
                             <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_5 ? true : false">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -808,7 +802,7 @@
             <h2 class="text-xl mb-3">
                 H+6
             </h2>
-            <div class="grid gap-6 mb-6 grid-cols-4 md:grid-cols-8 items-end">
+            <div class="grid gap-2 mb-6 grid-cols-4 md:grid-cols-10 items-end">
                 <div>
                     <label for="total_6"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Total
@@ -820,8 +814,7 @@
                 </div>
                 <div>
                     <label for="unrunsheet_6"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
-                        received</label>
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un Runsheet</label>
                     <input value="{{ $data->unrunsheet_6 }}" data-name="sumit" data-id="ur" type="number" x
                         id="unrunsheet_1" name="unrunsheet_6"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -895,7 +888,7 @@
                             <x-btn-label>{{ $data->date_6 ? 'Update' : 'Add' }} </x-btn-label>
                         </x-btn-action>
                     @else
-                        @can('opr dailyperformance update')
+                        @can('opr dailyperformance create')
                             <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_6 ? true : false">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -921,7 +914,7 @@
             <h2 class="text-xl mb-3">
                 H+7
             </h2>
-            <div class="grid gap-6 mb-6 grid-cols-4 md:grid-cols-8 items-end">
+            <div class="grid gap-2 mb-6 grid-cols-4 md:grid-cols-10 items-end">
                 <div>
                     <label for="total_7"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Total
@@ -933,8 +926,7 @@
                 </div>
                 <div>
                     <label for="unrunsheet_7"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
-                        received</label>
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un Runsheet</label>
                     <input value="{{ $data->unrunsheet_7 }}" data-name="sumit" data-id="ur" type="number" x
                         id="unrunsheet_1" name="unrunsheet_7"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -1008,7 +1000,7 @@
                             <x-btn-label>{{ $data->date_7 ? 'Update' : 'Add' }} </x-btn-label>
                         </x-btn-action>
                     @else
-                        @can('opr dailyperformance update')
+                        @can('opr dailyperformance create')
                             <x-btn-action type="submit" :btntype="'success'" :disabled="$data->date_7 ? true : false">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -1034,7 +1026,7 @@
             <h2 class="text-xl mb-3">
                 > H+7
             </h2>
-            <div class="grid gap-6 mb-6 grid-cols-4 md:grid-cols-8 items-end">
+            <div class="grid gap-2 mb-6 grid-cols-4 md:grid-cols-10 items-end">
                 <div>
                     <label for="total_8"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Total
@@ -1046,8 +1038,7 @@
                 </div>
                 <div>
                     <label for="unrunsheet_8"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un
-                        received</label>
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Un Runsheet</label>
                     <input value="{{ $data->unrunsheet_8 }}" data-name="sumit" data-id="ur" type="number" x
                         id="unrunsheet_1" name="unrunsheet_8"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

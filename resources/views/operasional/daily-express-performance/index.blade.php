@@ -93,8 +93,7 @@
                     </svg>
                     <x-btn-label>Export</x-btn-label>
                 </x-btn-action>
-                <form id="exportReport" action="{{ route('opr.dailyperformance.summary.express.export') }}"
-                    method="GET">
+                <form id="exportReport" action="{{ route('opr.dailyperformance.express.export') }}" method="GET">
                     <input type="hidden" name="from" value="{{ request('from') }}">
                     <input type="hidden" name="thru" value="{{ request('thru') }}">
                     <input type="hidden" name="hub" value="{{ request('hub') }}">
@@ -104,7 +103,7 @@
 
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-blue-200 dark:bg-gray-700 dark:text-gray-400">
                     <tr class="divide-x">
                         <th rowspan="2" scope="col" class="px-6 py-3 text-center">
                             Date Inbound
@@ -124,147 +123,156 @@
                         <th rowspan="2" scope="col" class="px-6 py-3 text-center">
                             Total Nominal COD
                         </th>
-                        <th colspan="14" scope="col" class="px-6 py-3 text-center bg-gray-100 dark:bg-gray-600">
+                        <th colspan="15" scope="col" class="px-6 py-3 text-center bg-blue-100 dark:bg-gray-600">
                             H 0
                         </th>
-                        <th colspan="14" scope="col" class="px-6 py-3 text-center">
+                        <th colspan="15" scope="col" class="px-6 py-3 text-center">
                             H+1
                         </th>
-                        <th colspan="14" scope="col" class="px-6 py-3 text-center bg-gray-100 dark:bg-gray-600">
-                            H+2
+                        <th colspan="15" scope="col" class="px-6 py-3 text-center bg-blue-100 dark:bg-gray-600">
+                            > H+1
                         </th>
 
                     </tr>
                     <tr class="divide-x">
                         {{-- h0 --}}
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
+                            Status
+                        </th>
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             TTL Cnote
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Un Runsheet
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Delivered
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Sukses Return
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             CR
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Undel
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Un Status
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Return
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             WH1
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Sukses Del
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Unrunsheet
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Return
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Hold WH
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Failed Delivery
                         </th>
 
                         {{-- h1 --}}
-                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3 text-center">
+                            Status
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-center">
                             TTL Cnote
                         </th>
-                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3 text-center">
                             Un Runsheet
                         </th>
-                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3 text-center">
                             Delivered
                         </th>
-                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3 text-center">
                             Sukses Return
                         </th>
-                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3 text-center">
                             CR
                         </th>
-                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3 text-center">
                             Undel
                         </th>
-                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3 text-center">
                             Un Status
                         </th>
-                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3 text-center">
                             Return
                         </th>
-                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3 text-center">
                             WH1
                         </th>
-                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3 text-center">
                             %Sukses Del
                         </th>
-                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3 text-center">
                             %Unrunsheet
                         </th>
-                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3 text-center">
                             %Return
                         </th>
-                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3 text-center">
                             %Hold WH
                         </th>
-                        <th scope="col" class="bg-gray-100 dark:bg-gray-600 px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3 text-center">
                             %Failed Delivery
                         </th>
 
                         {{-- h2 --}}
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
+                            Status
+                        </th>
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             TTL Cnote
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Un Runsheet
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Delivered
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Sukses Return
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             CR
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Undel
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Un Status
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             Return
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             WH1
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Sukses Del
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Unrunsheet
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Return
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Hold WH
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="bg-blue-100 dark:bg-gray-600 px-6 py-3 text-center">
                             %Failed Delivery
                         </th>
                     </tr>
@@ -281,7 +289,7 @@
                                 </a>
                             </th>
                             <td class="px-6 py-4">
-                                {{ $performance->closed ? 'H+' . $performance->closed : 'Open' }}
+                                {{ is_null($performance->closed) ? 'Open' : 'H+' . $performance->closed }}
                             </td>
                             <td class="px-6 py-4">
                                 {{ $performance->zone }}
@@ -292,11 +300,14 @@
                             <td class="px-6 py-4">
                                 {{ $performance->total_shipment_cod }}
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-4 border-r">
                                 {{ $performance->total_nominal_cod }}
                             </td>
 
                             {{-- h-0 --}}
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                {{ $performance->islate->islate_d0 == '0' ? 'late' : ($performance->islate->islate_d0 == '1' ? 'on time' : '') }}
+                            </td>
                             <td class="px-6 py-4">
                                 {{ $performance->total_0 }}
                             </td>
@@ -325,24 +336,28 @@
                                 {{ $performance->wh_0 }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ floor((($performance->delivered_0 + $performance->successreturn_0) / $performance->total_0) * 100) }}%
+                                {{ round((($performance->delivered_0 + $performance->successreturn_0) / $performance->total_0) * 100, 2) }}%
                             </td>
                             <td class="px-6 py-4">
-                                {{ floor(($performance->unrunsheet_0 / $performance->total_0) * 100) }}%
+                                {{ round(($performance->unrunsheet_0 / $performance->total_0) * 100, 2) }}%
                             </td>
                             <td class="px-6 py-4">
-                                {{ floor(($performance->return_0 / $performance->total_0) * 100) }}%
+                                {{ round(($performance->return_0 / $performance->total_0) * 100, 2) }}%
                             </td>
                             <td class="px-6 py-4">
-                                {{ floor(($performance->wh_0 / $performance->total_0) * 100) }}%
+                                {{ round(($performance->wh_0 / $performance->total_0) * 100, 2) }}%
                             </td>
-                            <td class="px-6 py-4">
-                                {{ floor((($performance->unrunsheet_0 + $performance->cr_0 + $performance->undel_0 + $performance->open_0 + $performance->return_0 + $performance->wh_0) / $performance->total_0) * 100) }}%
+                            <td class="px-6 py-4 border-r">
+                                {{ round((($performance->unrunsheet_0 + $performance->cr_0 + $performance->undel_0 + $performance->open_0 + $performance->return_0 + $performance->wh_0) / $performance->total_0) * 100, 2) }}%
                             </td>
 
 
                             {{-- h-1 --}}
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                {{ $performance->islate->islate_d1 == '0' ? 'late' : ($performance->islate->islate_d1 == '1' ? 'on time' : '') }}
+                            </td>
+                            <td class="px-6
+                                py-4">
                                 {{ $performance->total_1 }}
                             </td>
                             <td class="px-6 py-4">
@@ -370,24 +385,28 @@
                                 {{ $performance->wh_1 }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ $performance->date_1 ? floor((($performance->delivered_1 + $performance->successreturn_1) / $performance->total_1) * 100) . '%' : '' }}
+                                {{ $performance->date_1 ? round((($performance->delivered_1 + $performance->successreturn_1) / $performance->total_1) * 100, 2) . '%' : '' }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ $performance->date_1 ? floor(($performance->unrunsheet_1 / $performance->total_1) * 100) . '%' : '' }}
+                                {{ $performance->date_1 ? round(($performance->unrunsheet_1 / $performance->total_1) * 100, 2) . '%' : '' }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ $performance->date_1 ? floor(($performance->return_1 / $performance->total_1) * 100) . '%' : '' }}
+                                {{ $performance->date_1 ? round(($performance->return_1 / $performance->total_1) * 100, 2) . '%' : '' }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ $performance->date_1 ? floor(($performance->wh_1 / $performance->total_1) * 100) . '%' : '' }}
+                                {{ $performance->date_1 ? round(($performance->wh_1 / $performance->total_1) * 100, 2) . '%' : '' }}
                             </td>
-                            <td class="px-6 py-4">
-                                {{ $performance->date_1 ? floor((($performance->unrunsheet_1 + $performance->cr_1 + $performance->undel_1 + $performance->open_1 + $performance->return_1 + $performance->wh_1) / $performance->total_1) * 100) . '%' : '' }}
+                            <td class="px-6 py-4 border-r">
+                                {{ $performance->date_1 ? round((($performance->unrunsheet_1 + $performance->cr_1 + $performance->undel_1 + $performance->open_1 + $performance->return_1 + $performance->wh_1) / $performance->total_1) * 100, 2) . '%' : '' }}
                             </td>
 
 
                             {{-- h-2 --}}
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                {{ $performance->islate->islate_d2 == '0' ? 'late' : ($performance->islate->islate_d2 == '1' ? 'on time' : '') }}
+                            </td>
+                            <td class="px-6
+                                py-4">
                                 {{ $performance->total_2 }}
                             </td>
                             <td class="px-6 py-4">
@@ -415,19 +434,19 @@
                                 {{ $performance->wh_2 }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ $performance->date_2 ? floor((($performance->delivered_2 + $performance->successreturn_2) / $performance->total_2) * 100) . '%' : '' }}
+                                {{ $performance->date_2 ? round((($performance->delivered_2 + $performance->successreturn_2) / $performance->total_2) * 100, 2) . '%' : '' }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ $performance->date_2 ? floor(($performance->unrunsheet_2 / $performance->total_2) * 100) . '%' : '' }}
+                                {{ $performance->date_2 ? round(($performance->unrunsheet_2 / $performance->total_2) * 100, 2) . '%' : '' }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ $performance->date_2 ? floor(($performance->return_2 / $performance->total_2) * 100) . '%' : '' }}
+                                {{ $performance->date_2 ? round(($performance->return_2 / $performance->total_2) * 100, 2) . '%' : '' }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ $performance->date_2 ? floor(($performance->wh_2 / $performance->total_2) * 100) . '%' : '' }}
+                                {{ $performance->date_2 ? round(($performance->wh_2 / $performance->total_2) * 100, 2) . '%' : '' }}
                             </td>
-                            <td class="px-6 py-4">
-                                {{ $performance->date_2 ? floor((($performance->unrunsheet_2 + $performance->cr_2 + $performance->undel_2 + $performance->open_2 + $performance->return_2 + $performance->wh_2) / $performance->total_2) * 100) . '%' : '' }}
+                            <td class="px-6 py-4 border-r">
+                                {{ $performance->date_2 ? round((($performance->unrunsheet_2 + $performance->cr_2 + $performance->undel_2 + $performance->open_2 + $performance->return_2 + $performance->wh_2) / $performance->total_2) * 100, 2) . '%' : '' }}
                             </td>
 
                         </tr>

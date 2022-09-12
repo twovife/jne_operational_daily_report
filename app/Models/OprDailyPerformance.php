@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class OprDailyPerformance extends Model
 {
@@ -108,4 +109,10 @@ class OprDailyPerformance extends Model
         'closed',
         'user_id',
     ];
+
+
+    public function islate()
+    {
+        return $this->hasOne(VOprStatusDailyPerformance::class, 'id', 'id');
+    }
 }

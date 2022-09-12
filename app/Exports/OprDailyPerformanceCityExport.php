@@ -2,19 +2,20 @@
 
 namespace App\Exports;
 
+use App\Models\OprDailyCityPerformance;
 use App\Models\OprDailyPerformance;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\FromView;
 
-class OprDailyPerformanceExport implements FromView
+class OprDailyPerformanceCityExport implements FromView
 {
     /**
      * @return \Illuminate\Support\Collection
      */
     public function view(): View
     {
-        $query = OprDailyPerformance::with('islate')->orderBy('inbound_date', 'asc')->orderBy('hub', 'asc')->orderBy('zone', 'asc');
+        $query = OprDailyCityPerformance::with('islate')->orderBy('inbound_date', 'asc')->orderBy('hub', 'asc')->orderBy('zone', 'asc');
 
         if (request('from') || request('thru')) {
             $query->whereBetween('inbound_date', [request('from'), request('thru')]);
@@ -29,7 +30,7 @@ class OprDailyPerformanceExport implements FromView
         }
 
 
-        return view('operasional.daily-report.export', [
+        return view('operasional.daily-city.export', [
             'performances' => $query->get()
         ]);
     }

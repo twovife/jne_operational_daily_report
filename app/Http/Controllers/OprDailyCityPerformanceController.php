@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\OprDailyPerformanceExpressExport;
-use App\Exports\OprDailyPerformanceSummaryExpressExport;
-use App\Models\OprDailyExpressPerformance;
-use App\Http\Requests\StoreOprDailyExpressPerformanceRequest;
-use App\Http\Requests\UpdateOprDailyExpressPerformanceRequest;
+use App\Exports\OprDailyPerformanceCityExport;
+use App\Exports\OprDailyPerformanceSummaryCityExport;
+use App\Models\OprDailyCityPerformance;
+use App\Http\Requests\StoreOprDailyCityPerformanceRequest;
+use App\Http\Requests\UpdateOprDailyCityPerformanceRequest;
 use App\Models\OprHub;
-use App\Models\VOprSummaryExpressDailyPerformances;
+use App\Models\VOprSummaryCityDailyPerformance;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Facades\Excel;
 
-class OprDailyExpressPerformanceController extends Controller
+class OprDailyCityPerformanceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,7 +22,7 @@ class OprDailyExpressPerformanceController extends Controller
      */
     public function index()
     {
-        $query = OprDailyExpressPerformance::with('islate')->orderByDesc('inbound_date')->orderBy('hub', 'asc')->orderBy('zone', 'asc');
+        $query = OprDailyCityPerformance::with('islate')->orderByDesc('inbound_date')->orderBy('hub', 'asc')->orderBy('zone', 'asc');
 
         if (request('from') || request('thru')) {
             $query->whereBetween('inbound_date', [request('from'), request('thru')]);
@@ -39,7 +39,7 @@ class OprDailyExpressPerformanceController extends Controller
             $hub = OprHub::all();
         }
 
-        return view('operasional.daily-express-performance.index', [
+        return view('operasional.daily-city.index', [
             'performances' => $query->paginate(20),
             'hubs' => $hub
         ]);
@@ -57,7 +57,7 @@ class OprDailyExpressPerformanceController extends Controller
         } else {
             $hub = OprHub::all();
         }
-        return view('operasional.daily-express-performance.create', [
+        return view('operasional.daily-city.create', [
             'hubs' => $hub
         ]);
     }
@@ -65,10 +65,10 @@ class OprDailyExpressPerformanceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreOprDailyExpressPerformanceRequest  $request
+     * @param  \App\Http\Requests\StoreOprDailyCityPerformanceRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreOprDailyExpressPerformanceRequest $request)
+    public function store(StoreOprDailyCityPerformanceRequest $request)
     {
         $request->authenticate();
 
@@ -80,18 +80,18 @@ class OprDailyExpressPerformanceController extends Controller
         $data['date_0'] = date('Y-m-d');
 
 
-        $query = OprDailyExpressPerformance::create($data);
+        $query = OprDailyCityPerformance::create($data);
 
-        return redirect()->route('opr.dailyperformance.express.edit', $query->id)->with('green', 'Your data has been created');
+        return redirect()->route('opr.dailyperformance.ctc.edit', $query->id)->with('green', 'Your data has been created');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\OprDailyExpressPerformance  $oprDailyExpressPerformance
+     * @param  \App\Models\OprDailyCityPerformance  $oprDailyCityPerformance
      * @return \Illuminate\Http\Response
      */
-    public function show(OprDailyExpressPerformance $oprDailyExpressPerformance)
+    public function show(OprDailyCityPerformance $oprDailyCityPerformance)
     {
         //
     }
@@ -99,19 +99,18 @@ class OprDailyExpressPerformanceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\OprDailyExpressPerformance  $oprDailyExpressPerformance
+     * @param  \App\Models\OprDailyCityPerformance  $oprDailyCityPerformance
      * @return \Illuminate\Http\Response
      */
-    public function edit(OprDailyExpressPerformance $oprDailyExpressPerformance)
+    public function edit(OprDailyCityPerformance $oprDailyCityPerformance)
     {
-
         if (Auth::user()->employee->kurir) {
             $hub = OprHub::where('hub', Auth::user()->employee->kurir->hub)->get();
         } else {
             $hub = OprHub::all();
         }
-        return view('operasional.daily-express-performance.edit', [
-            'data' => $oprDailyExpressPerformance,
+        return view('operasional.daily-city.edit', [
+            'data' => $oprDailyCityPerformance,
             'hubs' => $hub
         ]);
     }
@@ -119,11 +118,11 @@ class OprDailyExpressPerformanceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateOprDailyExpressPerformanceRequest  $request
-     * @param  \App\Models\OprDailyExpressPerformance  $oprDailyExpressPerformance
+     * @param  \App\Http\Requests\UpdateOprDailyCityPerformanceRequest  $request
+     * @param  \App\Models\OprDailyCityPerformance  $oprDailyCityPerformance
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateOprDailyExpressPerformanceRequest $request, OprDailyExpressPerformance $oprDailyExpressPerformance)
+    public function update(UpdateOprDailyCityPerformanceRequest $request, OprDailyCityPerformance $oprDailyCityPerformance)
     {
         switch ($request->d_day) {
             case '0':
@@ -257,41 +256,40 @@ class OprDailyExpressPerformanceController extends Controller
             }
         }
 
-        $oprDailyExpressPerformance->update($data);
-        return redirect()->route('opr.dailyperformance.express.edit', $oprDailyExpressPerformance->id)->with('green', 'Your data has been updated');
+        $oprDailyCityPerformance->update($data);
+        return redirect()->route('opr.dailyperformance.ctc.edit', $oprDailyCityPerformance->id)->with('green', 'Your data has been updated');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\OprDailyExpressPerformance  $oprDailyExpressPerformance
+     * @param  \App\Models\OprDailyCityPerformance  $oprDailyCityPerformance
      * @return \Illuminate\Http\Response
      */
-    public function destroy(OprDailyExpressPerformance $oprDailyExpressPerformance)
+    public function destroy(OprDailyCityPerformance $oprDailyCityPerformance)
     {
-        $oprDailyExpressPerformance->delete();
-        return redirect()->route('opr.dailyperformance.express.index')->with('green', 'Your data has been deleted');
+        //
     }
 
     public function export()
     {
-        return Excel::download(new OprDailyPerformanceExpressExport, 'daily_report_yes.xlsx');
+        return Excel::download(new OprDailyPerformanceCityExport, 'daily_report_ctc.xlsx');
     }
 
     public function exportsum()
     {
-        return Excel::download(new OprDailyPerformanceSummaryExpressExport, 'daily_report_summary_yes.xlsx');
+        return Excel::download(new OprDailyPerformanceSummaryCityExport, 'daily_report_summary_yes.xlsx');
     }
 
     public function summary()
     {
-        $query = VOprSummaryExpressDailyPerformances::orderBy('inbound_date', 'asc');
+        $query = VOprSummaryCityDailyPerformance::orderBy('inbound_date', 'asc');
         if (request('from') || request('thru')) {
             $query->whereBetween('inbound_date', [request('from'), request('thru')]);
         };
 
         return view('operasional.daily-express-performance.monitoring', [
-            'performances' =>  $query
+            'performances' =>  $query->paginate(20)
         ]);
     }
 }

@@ -7,6 +7,7 @@
         <x-slot name="sidebarItem">
             <x-sidebar-dropdown-item :href="route('opr.dailyperformance.summary.express.index')" :active="request()->routeIs('opr.dailyperformance.summary.express.*')">Yes</x-sidebar-dropdown-item>
             <x-sidebar-dropdown-item :href="route('opr.dailyperformance.summary.nonexpress.index')" :active="request()->routeIs('opr.dailyperformance.summary.nonexpress.*')">Non Yes</x-sidebar-dropdown-item>
+            <x-sidebar-dropdown-item :href="route('opr.dailyperformance.summary.ctc.index')" :active="request()->routeIs('opr.dailyperformance.summary.ctc.*')">CTC</x-sidebar-dropdown-item>
         </x-slot>
     </x-sidebar-dropdown>
     <hr>
@@ -17,10 +18,12 @@
     <span class="text-gray-800 font-semibold text-sm dark:text-white">Delivery</span>
 </div>
 <x-sidebar-dropdown :active="request()->routeIs('opr.dailyperformance.nonexpress.*') ||
-    request()->routeIs('opr.dailyperformance.express.*')" :name="'Daily Performance'">
+    request()->routeIs('opr.dailyperformance.express.*') ||
+    request()->routeIs('opr.dailyperformance.ctc.*')" :name="'Daily Performance'">
     <x-slot name="sidebarItem">
         <x-sidebar-dropdown-item :href="route('opr.dailyperformance.express.index')" :active="request()->routeIs('opr.dailyperformance.express.*')">Yes</x-sidebar-dropdown-item>
         <x-sidebar-dropdown-item :href="route('opr.dailyperformance.nonexpress.index')" :active="request()->routeIs('opr.dailyperformance.nonexpress.*')">Non Yes</x-sidebar-dropdown-item>
+        <x-sidebar-dropdown-item :href="route('opr.dailyperformance.ctc.index')" :active="request()->routeIs('opr.dailyperformance.ctc.*')">CTC</x-sidebar-dropdown-item>
     </x-slot>
 </x-sidebar-dropdown>
 

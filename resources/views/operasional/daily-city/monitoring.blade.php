@@ -18,7 +18,7 @@
                 Filters
             </h2>
         </div>
-        <form action="{{ route('opr.dailyperformance.summary.ctc.index') }}">
+        <form action="{{ route('opr.dailyperformance.summary.nonexpress.index') }}">
             <div class="grid lg:grid-cols-6 mb-3 space-y-2 lg:space-y-0 space-x-0 lg:space-x-2"">
                 <div>
                     <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Date
@@ -53,14 +53,14 @@
                 Summary Performa Delivery Non Yes
             </h2>
             <div class="flex justify-start space-x-2">
-                <x-btn-link :href="route('opr.dailyperformance.ctc.index')">
+                <x-btn-link :href="route('opr.dailyperformance.nonexpress.index')">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z">
                         </path>
                     </svg>
-                    <x-btn-label>Performa Delivery CTC</x-btn-label>
+                    <x-btn-label>Performa Delivery</x-btn-label>
                 </x-btn-link>
                 <x-btn-action onclick="downloadIt()" type="button" :btntype="'success'">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -70,7 +70,8 @@
                     </svg>
                     <x-btn-label>Export</x-btn-label>
                 </x-btn-action>
-                <form id="exportReport" action="{{ route('opr.dailyperformance.summary.ctc.export') }}" method="GET">
+                <form id="exportReport" action="{{ route('opr.dailyperformance.summary.nonexpress.export') }}"
+                    method="GET">
                     <input type="hidden" name="from" value="{{ request('from') }}">
                     <input type="hidden" name="thru" value="{{ request('thru') }}">
                 </form>

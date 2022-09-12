@@ -74,16 +74,17 @@ class OprOpenStatusController extends Controller
      */
     public function store(StoreOprOpenStatusRequest $request)
     {
+
         $request->authenticate();
+        $countAwb = $request->awb ? count($request->awb) : 0;
         $data = [
             'date' => $request->date,
             'hub' => $request->hub,
             'ttl_runsheet' => $request->ttl_runsheet,
-            'open_pod' => count($request->awb),
         ];
-
-        if (count($request->awb) > 0) {
-            $length = count($request->awb);
+        $countOpen = 0;
+        if ($countAwb > 0) {
+            $length = $countAwb;
             for ($i = 0; $i < $length; $i++) {
                 $dataDetail[] = [
                     'awb' => $request->awb[$i],
@@ -94,11 +95,16 @@ class OprOpenStatusController extends Controller
                     'follow_up' => $request->follow_up[$i],
                     'closed_date' => $request->closed_date[$i],
                 ];
+                if ($request->date <= $request->closed_date[$i]) {
+                    $countOpen++;
+                }
             }
         }
 
+        $data['open_pod'] = $countOpen;
+
         $query = OprOpenStatus::create($data);
-        if (count($request->awb) > 0) {
+        if ($countAwb > 0) {
             $query->details()->createMany($dataDetail);
         }
 

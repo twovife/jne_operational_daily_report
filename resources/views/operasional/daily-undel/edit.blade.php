@@ -222,7 +222,8 @@
                 </div>
                 <div>
                     <label for="sla"
-                        class="block required mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">SLA</label>
+                        class="block required mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">SLA
+                        Hold</label>
                     <input disabled type="sla" id="sla"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 disabled:bg-gray-200"
                         placeholder="John" value="{{ $data->sla }}">
@@ -251,7 +252,7 @@
         </div>
     </form>
     @if ($data->status != 1)
-        <form action="{{ route('opr.undel.action', $data->id) }}" method="POST">
+        <form action="{{ route('opr.undel.action', $data->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="rounded bg-white px-4 py-3 w-full mb-3">
@@ -269,11 +270,18 @@
                         <label for="last_action"
                             class="block required mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Last
                             Action</label>
-                        <input type="text" id="last_action" name="last_action"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Last Action" required="">
+                        <select required="" id="last_action" name="last_action" required=""
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="CRISCROS">CRISCROS</option>
+                            <option value="HOLD WH">HOLD WH</option>
+                            <option value="HOLD UNDEL">HOLD UNDEL</option>
+                            <option value="MISSROUTE">MISSROUTE</option>
+                            <option value="REDEL">REDEL</option>
+                            <option value="RETURN">RETURN</option>
+                            <option value="TAKE SELF">TAKE SELF</option>
+                        </select>
                     </div>
-                    <div>
+                    <div class="col-span-2">
                         <label for="follow_up"
                             class="block required mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Follow
                             Up</label>
@@ -281,7 +289,7 @@
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="follow-up to customer" required="">
                     </div>
-                    <div class="lg:col-span-2">
+                    <div class="col-span-2">
                         <label for="description"
                             class="block required mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Description</label>
                         <input type="text" id="description" name="description"
@@ -298,6 +306,15 @@
                             <option value="2">Closed</option>
                             <option value="3">Breach</option>
                         </select>
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                            for="_img_input">Upload file</label>
+                        <input
+                            class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                            aria-describedby="_img_input_help" id="_img_input" name="_img_input" type="file">
+                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="_img_input_help">PNG, JPG or JPEG
+                            (MAX. 1MB).</p>
                     </div>
                 </div>
 
@@ -336,6 +353,9 @@
                         <th scope="col" class="py-3 px-6">
                             Created At
                         </th>
+                        <th scope="col" class="py-3 px-6">
+                            Img Link
+                        </th>
                     </tr>
                 </thead>
                 <tbody class="text-center">
@@ -345,14 +365,6 @@
                             <td class="py-4 px-6">
                                 <div class="flex justify-center items-center gap-2">
                                     @if ($data->status != 1)
-                                        <button type="button"
-                                            class="flex items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm w-full sm:w-auto px-2 py-1.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                            </svg>
-                                        </button>
                                         <button type="button" onclick="deleteModal(this)"
                                             data-id="{{ $aksi->id }}"
                                             class="flex items-center text-white bg-rose-700 hover:bg-rose-800 focus:ring focus:outline-none focus:ring-rose-200 font-medium rounded-lg text-sm w-full sm:w-auto px-2 py-1.5 text-center dark:bg-rose-600 dark:hover:bg-rose-700 dark:focus:ring-rose-800">
@@ -383,6 +395,11 @@
                             </td>
                             <td class="py-4 px-6">
                                 {{ $aksi->created_at }}
+                            </td>
+                            <td class="py-4 px-6">
+                                <a target="_blank"
+                                    class="underline hover:cursor-pointer hover:text-blue-500 focus:text-blue-500"
+                                    href="{{ asset('storage/' . $aksi->img_name) }}">Link</a>
                             </td>
                         </tr>
                     @endforeach

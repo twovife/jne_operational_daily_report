@@ -26,7 +26,7 @@ class OprUndel extends Model
         'date_return',
         'created_at',
         'updated_at',
-        'status'
+        'status',
     ];
 
     public function actions()

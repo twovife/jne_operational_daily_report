@@ -3,13 +3,13 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OprBreachController;
 use App\Http\Controllers\OprCustomerAccountController;
+use App\Http\Controllers\OprDailyCityPerformanceController;
 use App\Http\Controllers\OprDailyExpressPerformanceController;
 use App\Http\Controllers\OprDailyPerformanceController;
 use App\Http\Controllers\OprOpenStatusController;
 use App\Http\Controllers\OprOpenStatusDetailController;
 use App\Http\Controllers\OprUndelController;
 use App\Http\Controllers\UserController;
-use App\Models\OprDailyExpressPerformance;
 use App\Models\User;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +39,17 @@ Route::prefix('opr')->middleware('auth')->name('opr.')->group(function () {
             Route::delete('/{oprDailyExpressPerformance}', [OprDailyExpressPerformanceController::class, 'destroy'])->middleware(['can:opr dailyperformance delete'])->name('destroy');
             Route::get('/export', [OprDailyExpressPerformanceController::class, 'export'])->middleware(['can:opr dailyperformance read'])->name('export');
         });
+
+        Route::prefix('ctc')->middleware('auth')->name('ctc.')->group(function () {
+            Route::get('/', [OprDailyCityPerformanceController::class, 'index'])->middleware(['can:opr dailyperformance read'])->name('index');
+            Route::get('/create', [OprDailyCityPerformanceController::class, 'create'])->middleware(['can:opr dailyperformance read'])->name('create');
+            Route::post('/', [OprDailyCityPerformanceController::class, 'store'])->middleware(['can:opr dailyperformance create'])->name('store');
+            Route::get('/{oprDailyCityPerformance}/edit', [OprDailyCityPerformanceController::class, 'edit'])->middleware(['can:opr dailyperformance read'])->name('edit');
+            Route::put('/{oprDailyCityPerformance}', [OprDailyCityPerformanceController::class, 'update'])->middleware(['can:opr dailyperformance create'])->name('update');
+            Route::delete('/{oprDailyCityPerformance}', [OprDailyCityPerformanceController::class, 'destroy'])->middleware(['can:opr dailyperformance delete'])->name('destroy');
+            Route::get('/export', [OprDailyCityPerformanceController::class, 'export'])->middleware(['can:opr dailyperformance read'])->name('export');
+        });
+
         Route::prefix('non-express')->middleware('auth')->name('nonexpress.')->group(function () {
             Route::get('/', [OprDailyPerformanceController::class, 'index'])->middleware(['can:opr dailyperformance read'])->name('index');
             Route::get('/create', [OprDailyPerformanceController::class, 'create'])->middleware(['can:opr dailyperformance read'])->name('create');
@@ -56,6 +67,10 @@ Route::prefix('opr')->middleware('auth')->name('opr.')->group(function () {
             Route::prefix('express')->middleware('auth')->name('express.')->group(function () {
                 Route::get('/', [OprDailyExpressPerformanceController::class, 'summary'])->middleware(['can:opr dailyperformance summary'])->name('index');
                 Route::get('/export', [OprDailyExpressPerformanceController::class, 'exportsum'])->middleware(['can:opr dailyperformance read'])->name('export');
+            });
+            Route::prefix('ctc')->middleware('auth')->name('ctc.')->group(function () {
+                Route::get('/', [OprDailyCityPerformanceController::class, 'summary'])->middleware(['can:opr dailyperformance summary'])->name('index');
+                Route::get('/export', [OprDailyCityPerformanceController::class, 'exportsum'])->middleware(['can:opr dailyperformance read'])->name('export');
             });
         });
     });

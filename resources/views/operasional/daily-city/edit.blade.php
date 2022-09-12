@@ -30,7 +30,7 @@
     @endif
 
 
-    <form action="{{ route('opr.dailyperformance.express.update', $data->id) }}" method="POST">
+    <form action="{{ route('opr.dailyperformance.ctc.update', $data->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full mb-3">
@@ -115,7 +115,7 @@
 
 
     {{-- 0 --}}
-    <form action="{{ route('opr.dailyperformance.express.update', $data->id) }}" method="POST">
+    <form action="{{ route('opr.dailyperformance.ctc.update', $data->id) }}" method="POST">
         @csrf
         @method('PUT')
         <input type="hidden" name="d_day" value="0">
@@ -228,7 +228,7 @@
     </form>
 
     {{-- 1 --}}
-    <form action="{{ route('opr.dailyperformance.express.update', $data->id) }}" method="POST">
+    <form action="{{ route('opr.dailyperformance.ctc.update', $data->id) }}" method="POST">
         @csrf
         @method('PUT')
         <input type="hidden" name="d_day" value="1">
@@ -341,7 +341,7 @@
     </form>
 
     {{-- 2 --}}
-    <form action="{{ route('opr.dailyperformance.express.update', $data->id) }}" method="POST">
+    <form action="{{ route('opr.dailyperformance.ctc.update', $data->id) }}" method="POST">
         @csrf
         @method('PUT')
         <input type="hidden" name="d_day" value="2">

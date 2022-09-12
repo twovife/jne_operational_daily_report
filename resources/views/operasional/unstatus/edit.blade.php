@@ -224,6 +224,7 @@
                     <!-- Modal body -->
 
                     <div class="p-6 grid grid-cols-4 gap-4">
+                        <input type="hidden" name="islate" id="islate">
                         <div>
                             <label for="awb"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">AWB</label>
@@ -266,6 +267,7 @@
                             <input type="text" id="remark_status" name="remark_status"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
                                 placeholder="ex : Lupa Status / Unsycron System" required>
+
                         </div>
                         <div>
                             <label for="follow_up"
@@ -484,7 +486,6 @@
 
 
 
-
     <x-slot name="javascript">
         <script>
             // js for edit
@@ -503,6 +504,7 @@
                             targetEl.querySelector('#remark_status').value = data.remark_status
                             targetEl.querySelector('#follow_up').value = data.follow_up
                             targetEl.querySelector('#closed_date').value = data.closed_date
+                            targetEl.querySelector('#islate').value = data.islate
                         })
                 },
             };
@@ -524,7 +526,7 @@
             const form = document.getElementById('formInput');
             form.addEventListener('submit', (e) => {
                 // e.preventDefault()
-                const url = `/opr/openstatus/detail/${e.target.querySelector('#id').value}`
+                const url = `{{ url('/') }}/opr/openstatus/detail/${e.target.querySelector('#id').value}`
                 let input = document.createElement("input");
                 input.type = "hidden";
                 input.name = "_method";
@@ -553,7 +555,7 @@
             function deleteModal(e) {
                 modalDel.show()
                 const id = e.getAttribute('data-id');
-                let url = `/opr/openstatus/detail/${id}`;
+                let url = `{{ url('/') }}/opr/openstatus/detail/${id}`;
                 deleteEl.querySelector('#delForm').setAttribute('action', url);
             }
 

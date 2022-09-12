@@ -15,6 +15,7 @@ class OprUndelAction extends Model
         'last_action',
         'follow_up',
         'description',
+        'img_name'
     ];
 
     public function OprUndel()

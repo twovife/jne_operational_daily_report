@@ -5,10 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OprDailyExpressPerformance extends Model
+class OprDailyCityPerformance extends Model
 {
     use HasFactory;
-
 
     protected $fillable = [
         'inbound_date',
@@ -52,6 +51,6 @@ class OprDailyExpressPerformance extends Model
 
     public function islate()
     {
-        return $this->hasOne(VOprStatusExpressDailyPerformance::class, 'id', 'id');
+        return $this->hasOne(VOprStatusCityDailyPerformance::class, 'id', 'id');
     }
 }

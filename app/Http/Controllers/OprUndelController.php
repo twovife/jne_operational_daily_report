@@ -193,8 +193,18 @@ class OprUndelController extends Controller
 
     public function action(Request $request, OprUndel $oprUndel)
     {
-        // return $oprUndel;
+        $validate = $request->validate([
+            '_img_input' => ['image', 'file', 'max:2048']
+        ], [
+            '_img_input.image' => 'bukan file yang benar',
+            '_img_input.max' => 'ukuran file terlalu besar'
+        ]);
+
         if ($request->data_status == 1) {
+            if ($request->file('_img_input')) {
+                $imags = $request->file('_img_input')->store('action-images');
+            }
+
             $oprUndel->update([
                 'status' => null
             ]);
@@ -204,10 +214,14 @@ class OprUndelController extends Controller
                 'last_action' => $request->last_action,
                 'follow_up' => $request->follow_up,
                 'description' => $request->description,
+                'img_name' => $imags
             ]);
             return redirect()->route('opr.undel.edit', $oprUndel->id)->with('green', 'Data berhasil ditambahkan');
         }
         if ($request->data_status == 2) {
+            if ($request->file('_img_input')) {
+                $imags = $request->file('_img_input')->store('action-images');
+            }
             $oprUndel->update([
                 'status' => 1
             ]);
@@ -217,10 +231,14 @@ class OprUndelController extends Controller
                 'last_action' => $request->last_action,
                 'follow_up' => $request->follow_up,
                 'description' => $request->description,
+                'img_name' => $imags
             ]);
             return redirect()->route('opr.undel.edit', $oprUndel->id)->with('green', 'Data berhasil ditambahkan & Menutup Tiket');
         }
         if ($request->data_status == 3) {
+            if ($request->file('_img_input')) {
+                $imags = $request->file('_img_input')->store('action-images');
+            }
             $oprUndel->update([
                 'status' => 1
             ]);
@@ -230,6 +248,7 @@ class OprUndelController extends Controller
                 'last_action' => $request->last_action,
                 'follow_up' => $request->follow_up,
                 'description' => $request->description,
+                'img_name' => $imags
             ]);
             $oprUndel->breach()->create([
                 'opr_undel_id' => $oprUndel->id,

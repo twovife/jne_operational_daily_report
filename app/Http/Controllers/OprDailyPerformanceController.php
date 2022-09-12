@@ -23,7 +23,7 @@ class OprDailyPerformanceController extends Controller
      */
     public function index()
     {
-        $query = OprDailyPerformance::orderByDesc('inbound_date')->orderBy('hub', 'asc')->orderBy('zone', 'asc');
+        $query = OprDailyPerformance::with('islate')->orderByDesc('inbound_date')->orderBy('hub', 'asc')->orderBy('zone', 'asc');
 
         if (request('from') || request('thru')) {
             $query->whereBetween('inbound_date', [request('from'), request('thru')]);
@@ -39,7 +39,7 @@ class OprDailyPerformanceController extends Controller
         } else {
             $hub = OprHub::all();
         }
-        // return OprDailyPerformance::with('OprDailyPerformanceDetail')->get();
+
         return view('operasional.daily-report.performa-delivery', [
             'performances' => $query->paginate(20),
             'hubs' => $hub
@@ -362,12 +362,41 @@ class OprDailyPerformanceController extends Controller
                     break;
                 }
         }
-        $indikasiClosed = request('unrunsheet_' . $request->d_day) + request('cr_' . $request->d_day) + request('undel_' . $request->d_day) + request('open_' . $request->d_day) + request('wh_' . $request->d_day);
+
+        $indikasiClosed = request('unrunsheet_' . $request->d_day) + request('cr_' . $request->d_day) + request('undel_' . $request->d_day) + request('open_' . $request->d_day);
         $data = $request->all();
         $data['date_' . $request->d_day] = date('Y-m-d');
+
         if ($indikasiClosed == 0) {
             $data['closed'] = $request->d_day;
+            for ($i = $request->d_day + 1; $i <= 8; $i++) {
+                $data['date_' . $i] = date('Y-m-d');
+                $data['total_' . $i] = $request->total_1 ?? $request->total_2 ?? $request->total_3 ?? $request->total_4 ?? $request->total_5 ?? $request->total_6 ?? $request->total_7 ?? $request->total_8;
+                $data['delivered_' . $i] = $request->delivered_1 ?? $request->delivered_2 ?? $request->delivered_3 ?? $request->delivered_4 ?? $request->delivered_5 ?? $request->delivered_6 ?? $request->delivered_7 ?? $request->delivered_8;
+                $data['successreturn_' . $i] = $request->successreturn_1 ?? $request->successreturn_2 ?? $request->successreturn_3 ?? $request->successreturn_4 ?? $request->successreturn_5 ?? $request->successreturn_6 ?? $request->successreturn_7 ?? $request->successreturn_8;
+                $data['unrunsheet_' . $i] = $request->unrunsheet_1 ?? $request->unrunsheet_2 ?? $request->unrunsheet_3 ?? $request->unrunsheet_4 ?? $request->unrunsheet_5 ?? $request->unrunsheet_6 ?? $request->unrunsheet_7 ?? $request->unrunsheet_8;
+                $data['cr_' . $i] = $request->cr_1 ?? $request->cr_2 ?? $request->cr_3 ?? $request->cr_4 ?? $request->cr_5 ?? $request->cr_6 ?? $request->cr_7 ?? $request->cr_8;
+                $data['undel_' . $i] = $request->undel_1 ?? $request->undel_2 ?? $request->undel_3 ?? $request->undel_4 ?? $request->undel_5 ?? $request->undel_6 ?? $request->undel_7 ?? $request->undel_8;
+                $data['open_' . $i] = $request->open_1 ?? $request->open_2 ?? $request->open_3 ?? $request->open_4 ?? $request->open_5 ?? $request->open_6 ?? $request->open_7 ?? $request->open_8;
+                $data['return_' . $i] = $request->return_1 ?? $request->return_2 ?? $request->return_3 ?? $request->return_4 ?? $request->return_5 ?? $request->return_6 ?? $request->return_7 ?? $request->return_8;
+                $data['wh_' . $i] = $request->wh_1 ?? $request->wh_2 ?? $request->wh_3 ?? $request->wh_4 ?? $request->wh_5 ?? $request->wh_6 ?? $request->wh_7 ?? $request->wh_8;
+            }
+        } else {
+            $data['closed'] = null;
+            for ($i = $request->d_day + 1; $i <= 8; $i++) {
+                $data['date_' . $i] = null;
+                $data['total_' . $i] = null;
+                $data['delivered_' . $i] = null;
+                $data['successreturn_' . $i] = null;
+                $data['unrunsheet_' . $i] = null;
+                $data['cr_' . $i] = null;
+                $data['undel_' . $i] = null;
+                $data['open_' . $i] = null;
+                $data['return_' . $i] = null;
+                $data['wh_' . $i] = null;
+            }
         }
+        // return $data;
         $oprDailyPerformance->update($data);
         return redirect()->route('opr.dailyperformance.nonexpress.edit', $oprDailyPerformance->id)->with('green', 'Your data has been updated');
     }
@@ -387,7 +416,7 @@ class OprDailyPerformanceController extends Controller
 
     public function export()
     {
-        return Excel::download(new OprDailyPerformanceExport, 'daily_report_nonexpress.xlsx');
+        return Excel::download(new OprDailyPerformanceExport, 'daily_report_non_yes.xlsx');
     }
 
     public function exportsum()
@@ -398,7 +427,7 @@ class OprDailyPerformanceController extends Controller
     public function summary()
     {
 
-        $query = VOprSummaryDailyPerformance::paginate(20);
+        $query = VOprSummaryDailyPerformance::orderBy('inbound_date', 'asc');
 
 
         if (request('from') || request('thru')) {
