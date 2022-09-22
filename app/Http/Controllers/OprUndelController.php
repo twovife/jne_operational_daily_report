@@ -45,7 +45,7 @@ class OprUndelController extends Controller
         }
 
         return view('operasional.daily-undel.index', [
-            'performances' => $query->orderBy('date_return')->paginate(),
+            'performances' => $query->orderBy('status', 'asc')->orderBy('date_return')->paginate(),
             'hubs' => $hub
         ]);
     }
@@ -90,7 +90,7 @@ class OprUndelController extends Controller
         $date = Carbon::createFromFormat('Y-m-d', $request->date_inbound);
         $data['sla'] = $customer->sla_hold;
         $data['date_return'] = $date->addDays($customer->sla_hold);
-        $data['status'] = 0;
+        $data['status'] = '0';
         $query = OprUndel::create($data);
         if (!$query) {
             throw ValidationException::withMessages([
