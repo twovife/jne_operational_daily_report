@@ -88,9 +88,7 @@ class OprCustomerAccountController extends Controller
     {
 
         $params = request('search');
-        $query = OprCustomerAccount::where('nomor_account', 'like', '%' . $params . '%')
-            ->orWhere('customer_name', 'like', '%' . $params . '%')
-            ->orWhere('customer_grouping', 'like', '%' . $params . '%')->get();
+        $query = OprCustomerAccount::where('nomor_account', 'like', '%' . $params . '%')->get();
         // return count($query) > 0 ? 'yes' : 'no';
 
         if (!$params) {
