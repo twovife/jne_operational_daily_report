@@ -73,12 +73,24 @@ class OprDailyCityPerformanceController extends Controller
         $request->authenticate();
 
         $data = $request->all();
-        if ($request->unrunsheet_0 && $request->cr_0 && $request->undel_0 && $request->open_0 && $request->wh_0) {
-            $data['closed'] = 0;
-        }
-
         $data['date_0'] = date('Y-m-d');
+        $indikasiClosed = $request->unrunsheet_0 + $request->cr_0 + $request->undel_0 + $request->open_0;
 
+        if ($indikasiClosed == 0) {
+            $data['closed'] = 0;
+            for ($i = 1; $i <= 2; $i++) {
+                $data['date_' . $i] = date('Y-m-d');
+                $data['total_' . $i] = $request->total_0;
+                $data['delivered_' . $i] = $request->delivered_0;
+                $data['successreturn_' . $i] = $request->successreturn_0;
+                $data['unrunsheet_' . $i] = $request->unrunsheet_0;
+                $data['cr_' . $i] = $request->cr_0;
+                $data['undel_' . $i] = $request->undel_0;
+                $data['open_' . $i] = $request->open_0;
+                $data['return_' . $i] = $request->return_0;
+                $data['wh_' . $i] = $request->wh_0;
+            }
+        }
 
         $query = OprDailyCityPerformance::create($data);
 
@@ -268,7 +280,8 @@ class OprDailyCityPerformanceController extends Controller
      */
     public function destroy(OprDailyCityPerformance $oprDailyCityPerformance)
     {
-        //
+        $oprDailyCityPerformance->delete();
+        return redirect()->route('opr.dailyperformance.ctc.index')->with('green', 'Your data has been deleted');
     }
 
     public function export()

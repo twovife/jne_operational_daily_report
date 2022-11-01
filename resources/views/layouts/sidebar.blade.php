@@ -120,7 +120,7 @@
                                 <div>{{ Auth::user()->employee->nama ?? '' }} <i> login as
                                         : {{ Auth::user()->username ?? '' }}</i>
                                 </div>
-                                <div class="font-medium truncate">{{ Auth::user()->employee->divisi }}</div>
+                                <div class="font-medium truncate">{{ Auth::user()->employee->divisi ?? '' }}</div>
                             </div>
                             <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownButton">
                                 <li>

@@ -5,7 +5,7 @@
                 Input Data Performa Delivery
             </h2>
             <div class="flex justify-start">
-                <x-btn-link :href="route('opr.dailyperformance.express.index')">
+                <x-btn-link :href="route('opr.dailyperformance.ctc.index')">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -463,7 +463,7 @@
                     <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to
                         delete this data?</h3>
                     <div class="flex justify-center items-center">
-                        <form action="{{ route('opr.dailyperformance.express.destroy', $data->id) }}" method="post">
+                        <form action="{{ route('opr.dailyperformance.ctc.destroy', $data->id) }}" method="post">
                             @csrf
                             @method('delete')
                             <button type="submit"

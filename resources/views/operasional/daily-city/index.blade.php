@@ -301,7 +301,7 @@
                                 {{ $performance->total_shipment_cod }}
                             </td>
                             <td class="px-6 py-4 border-r">
-                                {{ $performance->total_nominal_cod }}
+                                Rp. {{ $performance->total_nominal_cod }}
                             </td>
 
                             {{-- h-0 --}}
