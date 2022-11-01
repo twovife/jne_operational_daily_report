@@ -37,7 +37,7 @@ class OprBreachController extends Controller
             });
         }
 
-        if (Auth::user()->employee->kurir->id) {
+        if (Auth::user()->employee->kurir) {
             $breaches->whereHas('undelivery', function ($query) {
                 $query->where('hub',  Auth::user()->employee->kurir->hub);
             })->orWhereHas('arrivebreach', function ($query) {

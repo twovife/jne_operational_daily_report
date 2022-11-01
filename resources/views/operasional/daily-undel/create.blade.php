@@ -242,7 +242,7 @@
     <x-slot name="javascript">
         <script>
             let typingTimer;
-            let doneTypingInterval = 2000;
+            let doneTypingInterval = 700;
             const formInput = document.querySelector('#search');
             const fillData = document.querySelector('#fillData');
             const custID = document.querySelector('#opr_customer_account_id');
@@ -269,7 +269,7 @@
             async function doneTyping() {
                 const inputValue = formInput.value;
                 if (inputValue.length > 2) {
-                    await axios.get('/opr/daily-report/customer/apishow', {
+                    await axios.get('/jne-apps/opr/daily-report/customer/apishow', {
                         params: {
                             search: inputValue
                         },
