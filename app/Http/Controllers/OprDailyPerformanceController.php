@@ -450,7 +450,7 @@ class OprDailyPerformanceController extends Controller
         };
 
         return view('operasional.daily-report.monitoring', [
-            'performances' =>  $query
+            'performances' =>  $query->paginate(20)
         ]);
     }
 }

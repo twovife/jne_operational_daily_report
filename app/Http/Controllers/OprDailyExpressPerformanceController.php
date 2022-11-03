@@ -304,7 +304,7 @@ class OprDailyExpressPerformanceController extends Controller
         };
 
         return view('operasional.daily-express-performance.monitoring', [
-            'performances' =>  $query
+            'performances' =>  $query->paginate(20)
         ]);
     }
 }
