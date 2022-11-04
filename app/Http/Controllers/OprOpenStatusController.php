@@ -74,6 +74,8 @@ class OprOpenStatusController extends Controller
      */
     public function store(StoreOprOpenStatusRequest $request)
     {
+        // count awb adalah total awb yang terdeteksi open
+        // count open adalah awb yang runseetnya < closed open pod
 
         $request->authenticate();
         $countAwb = $request->awb ? count($request->awb) : 0;
@@ -95,7 +97,7 @@ class OprOpenStatusController extends Controller
                     'follow_up' => $request->follow_up[$i],
                     'closed_date' => $request->closed_date[$i],
                 ];
-                if ($request->date <= $request->closed_date[$i]) {
+                if ($request->date < $request->closed_date[$i]) {
                     $countOpen++;
                 }
             }

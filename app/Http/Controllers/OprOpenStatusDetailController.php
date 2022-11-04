@@ -120,17 +120,20 @@ class OprOpenStatusDetailController extends Controller
     public function update(UpdateOprOpenStatusDetailRequest $request, OprOpenStatusDetail $oprOpenStatusDetail)
     {
         // return $request->all();
+        if ($oprOpenStatusDetail->closed_date != $request->closed_date) {
+            if ($request->islate == 0 && $oprOpenStatusDetail->load('openpod')->openpod->date >= $oprOpenStatusDetail->closed_date) {
+                $updatePod = OprOpenStatus::find($oprOpenStatusDetail->opr_open_status_id);
+                $updatePod->open_pod = $updatePod->open_pod - 1;
+                $updatePod->save();
+            }
+            if ($request->islate == 1 && $oprOpenStatusDetail->load('openpod')->openpod->date < $oprOpenStatusDetail->closed_date) {
+                $updatePod = OprOpenStatus::find($oprOpenStatusDetail->opr_open_status_id);
+                $updatePod->open_pod = $updatePod->open_pod + 1;
+                $updatePod->save();
+            }
+        }
         $oprOpenStatusDetail->update($request->all());
-        if ($request->islate == 1 && $oprOpenStatusDetail->load('openpod')->openpod->date >= $oprOpenStatusDetail->closed_date) {
-            $updatePod = OprOpenStatus::find($oprOpenStatusDetail->opr_open_status_id);
-            $updatePod->open_pod = $updatePod->open_pod - 1;
-            $updatePod->save();
-        }
-        if ($request->islate == 0 && $oprOpenStatusDetail->load('openpod')->openpod->date < $oprOpenStatusDetail->closed_date) {
-            $updatePod = OprOpenStatus::find($oprOpenStatusDetail->opr_open_status_id);
-            $updatePod->open_pod = $updatePod->open_pod + 1;
-            $updatePod->save();
-        }
+
 
         return redirect()->route('opr.openstatus.unstatus.edit', $oprOpenStatusDetail->opr_open_status_id)->with('green', 'data berhasil di ubah');
         // return $request->all();
