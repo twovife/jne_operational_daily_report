@@ -72,7 +72,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                     </svg>
-                    <x-btn-label>Craete</x-btn-label>
+                    <x-btn-label>Create</x-btn-label>
                 </x-btn-link>
                 @can('opr dailyperformance summary')
                     <x-btn-link :href="route('opr.dailyperformance.summary.ctc.index')">

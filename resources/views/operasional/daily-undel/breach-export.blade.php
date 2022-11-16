@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 </head>
 
 <body>
@@ -12,20 +13,20 @@
         <thead>
             <tr>
                 <td>Undel Id</td>
-                <td>Action Date</td>
-                <td>Last Action</td>
-                <td>Follow up</td>
-                <td>Description</td>
+                <td>Breach Date</td>
+                <td>Status</td>
+                <td>Reason</td>
+                <td>Img</td>
             </tr>
         </thead>
         <tbody>
             @foreach ($performances as $performance)
                 <tr>
                     <td>{{ $performance->opr_undel_id }}</td>
-                    <td>{{ $performance->action_date }}</td>
-                    <td>{{ $performance->last_action }}</td>
-                    <td>{{ $performance->follow_up }}</td>
-                    <td>{{ $performance->description }}</td>
+                    <td>{{ $performance->date }}</td>
+                    <td>{{ $performance->status }}</td>
+                    <td>{{ $performance->reason }}</td>
+                    <td>{{ asset('storage/' . $performance->img_name) }}</td>
                 </tr>
             @endforeach
         </tbody>

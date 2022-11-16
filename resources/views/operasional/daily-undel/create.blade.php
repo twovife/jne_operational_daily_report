@@ -269,7 +269,7 @@
             async function doneTyping() {
                 const inputValue = formInput.value;
                 if (inputValue.length > 2) {
-                    await axios.get('/jne-apps/opr/daily-report/customer/apishow', {
+                    await axios.get(`{{ route('opr.daily-report.customer.apishow') }}`, {
                         params: {
                             search: inputValue
                         },

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\OprOpenExport;
 use App\Models\OprOpenStatus;
 use App\Http\Requests\StoreOprOpenStatusRequest;
 use App\Http\Requests\UpdateOprOpenStatusRequest;
 use App\Models\HrEmployee;
 use App\Models\OprHub;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OprOpenStatusController extends Controller
 {
@@ -162,6 +164,11 @@ class OprOpenStatusController extends Controller
     {
         $oprOpenStatus->update($request->all());
         return redirect()->route('opr.openstatus.unstatus.edit', $oprOpenStatus->id);
+    }
+
+    public function export()
+    {
+        return Excel::download(new OprOpenExport, 'open_pod.xlsx');
     }
 
     /**

@@ -70,21 +70,6 @@
             <h2 class="text-xl">
                 Performa Delivery
             </h2>
-            <div class="flex justify-start space-x-2">
-                <x-btn-action onclick="downloadIt()" type="button" :btntype="'success'">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                    </svg>
-                    <x-btn-label>Export</x-btn-label>
-                </x-btn-action>
-                <form id="exportReport" action="{{ route('opr.openstatus.detail.index') }}" method="GET">
-                    <input type="hidden" name="from" value="{{ request('from') }}">
-                    <input type="hidden" name="thru" value="{{ request('thru') }}">
-                    <input type="hidden" name="hub" value="{{ request('hub') }}">
-                </form>
-            </div>
         </div>
 
 
@@ -288,7 +273,7 @@
             const options = {
                 onShow: async () => {
                     const id = editEl.getAttribute('data-id');
-                    axios.get(`/opr/openstatus/detail/${id}/edit`)
+                    axios.get(`{{ route('home') }}/opr/openstatus/detail/${id}/edit`)
                         .then((response) => {
                             const data = response.data.data
                             editEl.querySelector('#id').value = data.id
@@ -323,7 +308,7 @@
             const form = document.getElementById('formInput');
             form.addEventListener('submit', (e) => {
                 // e.preventDefault()
-                const url = `/opr/openstatus/detail/${e.target.querySelector('#id').value}`
+                const url = `{{ route('home') }}/opr/openstatus/detail/${e.target.querySelector('#id').value}`
                 let input = document.createElement("input");
                 input.type = "hidden";
                 input.name = "_method";

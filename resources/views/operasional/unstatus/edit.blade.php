@@ -555,7 +555,7 @@
             function deleteModal(e) {
                 modalDel.show()
                 const id = e.getAttribute('data-id');
-                let url = `{{ url('/') }}/opr/openstatus/detail/${id}`;
+                let url = `{{ route('home') }}/opr/openstatus/detail/${id}`;
                 deleteEl.querySelector('#delForm').setAttribute('action', url);
             }
 

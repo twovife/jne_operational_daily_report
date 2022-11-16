@@ -70,15 +70,17 @@
                     </svg>
                     <x-btn-label>Craete</x-btn-label>
                 </x-btn-link>
-                <x-btn-action onclick="downloadIt()" type="button" :btntype="'success'">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                    </svg>
-                    <x-btn-label>Export</x-btn-label>
-                </x-btn-action>
-                <form id="exportReport" action="{{ route('opr.openstatus.unstatus.index') }}" method="GET">
+                @if (request('from') && request('thru'))
+                    <x-btn-action onclick="downloadIt()" type="button" :btntype="'success'">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                        </svg>
+                        <x-btn-label>Export</x-btn-label>
+                    </x-btn-action>
+                @endif
+                <form id="exportReport" action="{{ route('opr.openstatus.unstatus.export') }}" method="GET">
                     <input type="hidden" name="from" value="{{ request('from') }}">
                     <input type="hidden" name="thru" value="{{ request('thru') }}">
                     <input type="hidden" name="hub" value="{{ request('hub') }}">

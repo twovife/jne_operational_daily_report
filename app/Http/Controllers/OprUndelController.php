@@ -11,6 +11,7 @@ use App\Models\OprCustomerAccount;
 use App\Models\OprHub;
 use App\Models\OprUndel;
 use App\Models\OprUndelAction;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +31,7 @@ class OprUndelController extends Controller
         $query = OprUndel::with('aging', 'customer_account', 'shipper_name', 'actions');
 
         if (request('from') || request('thru')) {
-            $query->whereBetween('inbound_date', [request('from'), request('thru')]);
+            $query->whereBetween('date', [request('from'), request('thru')]);
         };
 
         if (request('hub')) {
@@ -45,7 +46,7 @@ class OprUndelController extends Controller
         }
 
         return view('operasional.daily-undel.index', [
-            'performances' => $query->orderBy('status', 'asc')->orderBy('date_return')->paginate(),
+            'performances' => $query->orderBy('status')->orderBy('date')->paginate(),
             'hubs' => $hub
         ]);
     }
@@ -90,7 +91,7 @@ class OprUndelController extends Controller
         $date = Carbon::createFromFormat('Y-m-d', $request->date_inbound);
         $data['sla'] = $customer->sla_hold;
         $data['date_return'] = $date->addDays($customer->sla_hold);
-        $data['status'] = '0';
+        $data['status'] = 0;
         $query = OprUndel::create($data);
         if (!$query) {
             throw ValidationException::withMessages([
@@ -206,7 +207,7 @@ class OprUndelController extends Controller
             }
 
             $oprUndel->update([
-                'status' => null
+                'status' => 0
             ]);
             $oprUndel->actions()->create([
                 'opr_undel_id' => $oprUndel->id,
@@ -214,7 +215,7 @@ class OprUndelController extends Controller
                 'last_action' => $request->last_action,
                 'follow_up' => $request->follow_up,
                 'description' => $request->description,
-                'img_name' => $imags
+                'img_name' => $imags ?? ''
             ]);
             return redirect()->route('opr.undel.edit', $oprUndel->id)->with('green', 'Data berhasil ditambahkan');
         }
@@ -231,7 +232,7 @@ class OprUndelController extends Controller
                 'last_action' => $request->last_action,
                 'follow_up' => $request->follow_up,
                 'description' => $request->description,
-                'img_name' => $imags
+                'img_name' => $imags ?? ''
             ]);
             return redirect()->route('opr.undel.edit', $oprUndel->id)->with('green', 'Data berhasil ditambahkan & Menutup Tiket');
         }
@@ -260,8 +261,17 @@ class OprUndelController extends Controller
         }
     }
 
-    public function export()
+    public function export(Request $request)
     {
+
+        $validasi = $request->validate([
+            'from' => ['required'],
+            'thru' => ['required'],
+        ], [
+            'from' => 'Tanggal Harus Terisi',
+            'thru' => 'Tanggal Harus Terisi',
+        ]);
+
         return Excel::download(new OprUndeliveryExport, 'undelivery.xlsx');
     }
 

@@ -25,8 +25,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth')->get('/', [DashboardController::class, '__invoke']);
-
+Route::middleware('auth')->get('/', [DashboardController::class, '__invoke'])->name('home');
 
 Route::prefix('opr')->middleware('auth')->name('opr.')->group(function () {
     Route::prefix('daily-performance')->middleware('auth')->name('dailyperformance.')->group(function () {
@@ -97,6 +96,7 @@ Route::prefix('opr')->middleware('auth')->name('opr.')->group(function () {
         Route::put('/{oprBreach}', [OprBreachController::class, 'update'])->middleware(['can:opr undel create'])->name('update');
         Route::delete('/{oprBreach}', [OprBreachController::class, 'destroy'])->middleware(['can:opr undel delete'])->name('destroy');
         Route::delete('/{oprBreach}/arrival', [OprBreachController::class, 'arrivaldestroy'])->middleware(['can:opr undel delete'])->name('arrivaldestroy');
+        Route::get('/export', [OprBreachController::class, 'export'])->middleware(['can:opr undel read'])->name('download');
     });
 
     Route::prefix('openstatus')->name('openstatus.')->group(function () {
@@ -108,6 +108,7 @@ Route::prefix('opr')->middleware('auth')->name('opr.')->group(function () {
             Route::put('/{oprOpenStatus}', [OprOpenStatusController::class, 'update'])->middleware(['can:opr unstatus create'])->name('update');
             Route::delete('/{oprOpenStatus}', [OprOpenStatusController::class, 'destroy'])->middleware(['can:opr unstatus delete'])->name('destroy');
             Route::get('/{oprOpenStatus}/download', [OprOpenStatusController::class, 'download'])->middleware(['can:opr unstatus read'])->name('download');
+            Route::get('/export', [OprOpenStatusController::class, 'export'])->middleware(['can:opr unstatus read'])->name('export');
         });
         Route::prefix('detail')->name('detail.')->group(function () {
             Route::get('/', [OprOpenStatusDetailController::class, 'index'])->middleware(['can:opr unstatus read'])->name('index');
@@ -129,7 +130,6 @@ Route::prefix('opr')->middleware('auth')->name('opr.')->group(function () {
 });
 
 
-
 Route::prefix('su')->name('su.')->middleware(['role:super admin'])->group(function () {
     Route::prefix('user')->name('user.')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
@@ -139,8 +139,6 @@ Route::prefix('su')->name('su.')->middleware(['role:super admin'])->group(functi
 });
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+// Route::get('/dashboard', [DashboardController::class, '__invoke'])->name('dashboard');
 
 require __DIR__ . '/auth.php';

@@ -70,7 +70,8 @@
                     </svg>
                     <x-btn-label>Export</x-btn-label>
                 </x-btn-action>
-                <form id="exportReport" action="{{ route('opr.dailyperformance.summary.ctc.export') }}" method="GET">
+                <form id="exportReport" action="{{ route('opr.dailyperformance.summary.express.export') }}"
+                    method="GET">
                     <input type="hidden" name="from" value="{{ request('from') }}">
                     <input type="hidden" name="thru" value="{{ request('thru') }}">
                 </form>

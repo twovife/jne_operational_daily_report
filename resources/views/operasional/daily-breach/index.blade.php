@@ -59,7 +59,7 @@
                     class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
                     Create
                 </a>
-                <form action="{{ route('opr.undel.create') }}" method="GET">
+                {{-- <form action="{{ route('opr.undel.create') }}" method="GET">
                     <input type="hidden" name="from" value="{{ request('from') }}">
                     <input type="hidden" name="thru" value="{{ request('thru') }}">
                     <input type="hidden" name="hub" value="{{ request('hub') }}">
@@ -67,6 +67,21 @@
                         class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:focus:ring-yellow-900">
                         Export</button>
 
+                </form> --}}
+                @if (request('from'))
+                    <x-btn-action onclick="downloadIt()" type="button" :btntype="'success'">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                        </svg>
+                        <x-btn-label>Export</x-btn-label>
+                    </x-btn-action>
+                @endif
+                <form id="exportReport" action="{{ route('opr.breach.download') }}" method="GET">
+                    <input type="hidden" name="from" value="{{ request('from') }}">
+                    <input type="hidden" name="thru" value="{{ request('thru') }}">
+                    <input type="hidden" name="hub" value="{{ request('hub') }}">
                 </form>
             </div>
         </div>
@@ -163,4 +178,12 @@
         </div>
 
     </div>
+
+    <x-slot name="javascript">
+        <script>
+            function downloadIt() {
+                document.getElementById('exportReport').submit()
+            }
+        </script>
+    </x-slot>
 </x-sidebar-layout>

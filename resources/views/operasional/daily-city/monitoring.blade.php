@@ -50,7 +50,7 @@
     <div class="rounded bg-white dark:bg-gray-800 dark:text-white px-4 py-3 w-full">
         <div class="flex justify-between items-center mb-3">
             <h2 class="text-xl">
-                Summary Performa Delivery Non Yes
+                Summary Performa Delivery Non CTC
             </h2>
             <div class="flex justify-start space-x-2">
                 <x-btn-link :href="route('opr.dailyperformance.nonexpress.index')">
@@ -70,8 +70,7 @@
                     </svg>
                     <x-btn-label>Export</x-btn-label>
                 </x-btn-action>
-                <form id="exportReport" action="{{ route('opr.dailyperformance.summary.nonexpress.export') }}"
-                    method="GET">
+                <form id="exportReport" action="{{ route('opr.dailyperformance.summary.ctc.export') }}" method="GET">
                     <input type="hidden" name="from" value="{{ request('from') }}">
                     <input type="hidden" name="thru" value="{{ request('thru') }}">
                 </form>

@@ -2,17 +2,20 @@
 
 namespace App\Exports;
 
-use App\Models\OprUndel;
+use App\Models\OprOpenStatus;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\WithTitle;
 
-class OprUndeliveryMainExport implements FromView, WithTitle
+class OprOpenMainExport implements FromView, WithTitle
 {
+    /**
+     * @return \Illuminate\Support\Collection
+     */
     public function view(): View
     {
-        $query = OprUndel::with('aging', 'customer_account', 'shipper_name', 'actions');
+        $query = OprOpenStatus::withCount('details');
 
         if (request('from') || request('thru')) {
             $query->whereBetween('date', [request('from'), request('thru')]);
@@ -25,9 +28,9 @@ class OprUndeliveryMainExport implements FromView, WithTitle
         if (Auth::user()->employee->kurir) {
             $query->where('hub', Auth::user()->employee->kurir->hub);
         }
-
-        return view('operasional.daily-undel.export', [
-            'performances' => $query->orderBy('date')->get(),
+        // dd($query->get());
+        return view('operasional.unstatus.export', [
+            'performances' => $query->get()
         ]);
     }
 

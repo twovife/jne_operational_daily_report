@@ -397,9 +397,11 @@
                                 {{ $aksi->created_at }}
                             </td>
                             <td class="py-4 px-6">
-                                <a target="_blank"
-                                    class="underline hover:cursor-pointer hover:text-blue-500 focus:text-blue-500"
-                                    href="{{ asset('storage/' . $aksi->img_name) }}">Link</a>
+                                @if ($aksi->img_name)
+                                    <a target="_blank"
+                                        class="underline hover:cursor-pointer hover:text-blue-500 focus:text-blue-500"
+                                        href="{{ asset('storage/' . $aksi->img_name) }}">Link</a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -568,7 +570,7 @@
             function deleteModal(e) {
                 modalDel.show()
                 const id = e.getAttribute('data-id');
-                let url = `/opr/undel/${id}/action`;
+                let url = `{{ route('home') }}/opr/undel/${id}/action`;
                 deleteEl.querySelector('#delForm').setAttribute('action', url);
             }
 

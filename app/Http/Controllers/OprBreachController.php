@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\OprBreachExport;
 use App\Http\Requests\StoreOprBreachRequest;
 use App\Http\Requests\UpdateOprBreachRequest;
 use App\Models\HrEmployee;
@@ -13,6 +14,7 @@ use App\Models\OprUndel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OprBreachController extends Controller
 {
@@ -179,6 +181,11 @@ class OprBreachController extends Controller
      * @param  \App\Models\OprBreach  $oprBreach
      * @return \Illuminate\Http\Response
      */
+
+    public function export()
+    {
+        return Excel::download(new OprBreachExport, 'opr_breach.xlsx');
+    }
     public function destroy(OprBreach $oprBreach)
     {
         //

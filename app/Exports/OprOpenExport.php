@@ -2,11 +2,11 @@
 
 namespace App\Exports;
 
-
 use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class OprUndeliveryExport implements WithMultipleSheets
+class OprOpenExport implements WithMultipleSheets
 {
     use Exportable;
     /**
@@ -15,9 +15,8 @@ class OprUndeliveryExport implements WithMultipleSheets
     public function sheets(): array
     {
         return [
-            new OprUndeliveryMainExport,
-            new OprUndeliverySecondaryExport,
-            new OprUndeliveryBreachExport,
+            new OprOpenMainExport,
+            new OprOpenSecondaryExport
         ];
     }
 }

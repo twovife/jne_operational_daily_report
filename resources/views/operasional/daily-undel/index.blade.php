@@ -11,6 +11,14 @@
             <span class="font-medium">Perhaian !!! </span> {{ Session::get('yellow') }}
         </div>
     @endif
+
+    @if ($errors->any())
+        <div class="p-4 mb-3 text-sm text-rose-700 bg-rose-100 rounded-lg dark:bg-rose-200 dark:text-rose-800"
+            role="alert">
+            <span class="font-medium">Perhaian !!! </span> Tanggal wajib di isi ketika download data
+        </div>
+    @endif
+
     <div class="rounded bg-white px-4 py-3 w-full mb-3">
         <div class="flex justify-between items-center mb-3">
             <h2 class="text-xl text-gray-900">
@@ -20,14 +28,15 @@
         <form action="{{ route('opr.undel.index') }}">
             <div class="grid lg:grid-cols-6 mb-3 space-y-2 lg:space-y-0 space-x-0 lg:space-x-2">
                 <div>
-                    <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Date
+                    <label for="from" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Date
                         From</label>
                     <input type="date" name="from"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
                         placeholder="John" value="{{ request('from') }}">
+
                 </div>
                 <div>
-                    <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Date
+                    <label for="thru" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Date
                         Thru</label>
                     <input type="date" name="thru"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
@@ -72,14 +81,16 @@
                     </svg>
                     <x-btn-label>Craete</x-btn-label>
                 </x-btn-link>
-                <x-btn-action onclick="downloadIt()" type="button" :btntype="'success'">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                    </svg>
-                    <x-btn-label>Export</x-btn-label>
-                </x-btn-action>
+                @if (request('from'))
+                    <x-btn-action onclick="downloadIt()" type="button" :btntype="'success'">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                        </svg>
+                        <x-btn-label>Export</x-btn-label>
+                    </x-btn-action>
+                @endif
                 <form id="exportReport" action="{{ route('opr.undel.exportmain') }}" method="GET">
                     <input type="hidden" name="from" value="{{ request('from') }}">
                     <input type="hidden" name="thru" value="{{ request('thru') }}">
